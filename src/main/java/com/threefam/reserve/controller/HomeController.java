@@ -1,2 +1,4 @@
-package com.threefam.reserve.controller;public class HomeController {
+package com.threefam.reserve.controller;
+
+public class HomeController {
 }
