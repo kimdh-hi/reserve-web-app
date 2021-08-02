@@ -1,16 +1,4 @@
 spring:
-  profiles:
-    include: oauth
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/oauthtest
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: create
-
   security:
     oauth2:
       client:
@@ -21,4 +9,3 @@ spring:
             scope:
               - email
               - profile
-
