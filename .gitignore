@@ -33,5 +33,5 @@ build/
 .vscode/
 
 /resources/email.properties
-applcation.yml
+application.yml
 application-oauth.yml
