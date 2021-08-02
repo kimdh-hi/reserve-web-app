@@ -34,4 +34,4 @@ build/
 
 /resources/email.properties
 applcation.yml
-application-oauth.yml
+application_oauth.yml
