@@ -1,7 +1,7 @@
 package com.threefam.reserve.config.security;
 
 import com.threefam.reserve.service.UserService;
-import com.threefam.reserve.service.security.OAuth2Service;
+import com.threefam.reserve.oauth.OAuth2Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
