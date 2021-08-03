@@ -23,11 +23,11 @@ public class Vaccine extends BaseEntity{
 
     private Integer quantity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
-    @Builder(builderMethodName = "creataeVaccine")
+    @Builder(builderMethodName = "createVaccine")
     public Vaccine(String vaccineName, Integer quantity, Hospital hospital) {
         this.vaccineName = vaccineName;
         this.quantity = quantity;

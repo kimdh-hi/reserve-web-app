@@ -23,19 +23,25 @@ public class Hospital extends BaseEntity{
     @Column(name = "hospital_name")
     private String hospitalName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reserve_id")
     private Reserve reserve;
 
     @ElementCollection
-    @CollectionTable(name = "avaliable_times")
+    @CollectionTable(name = "available_times")
     private List<String> availableTimes = new ArrayList<>();
 
+    private String address;
+
+    private String detailAddress;
+
     @Builder(builderMethodName = "createHospital")
-    public Hospital(String hospitalName, Reserve reserve, List<String> availableTimes) {
+    public Hospital(String hospitalName, Reserve reserve, List<String> availableTimes,String address,String detailAddress) {
         this.hospitalName = hospitalName;
         this.reserve = reserve;
         this.availableTimes = availableTimes;
         this.createAt = LocalDateTime.now();
+        this.address=address;
+        this.detailAddress=detailAddress;
     }
 }

@@ -25,7 +25,7 @@ public class Reserve extends BaseEntity {
 
     private String reserveName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")
     private Admin admin;
 

@@ -19,7 +19,6 @@ public class Admin extends BaseEntity{
     private Long id;
 
     @OneToMany(mappedBy = "admin")
-
     private List<Reserve> reserves = new ArrayList<>();
 
     private Long userId;

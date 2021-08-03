@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/loginForm")
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/")
-                .failureHandler(userLoginFailHandler)  //loginfail 페이지로 forward될것
+                .failureHandler(userLoginFailHandler)  //loginfail 페이지로 forward될것 postmapping 필요
                 .and()
                 .logout()// 로그아웃
                 .logoutUrl("/logout")
@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2Login()
                 .loginPage("/loginForm")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/")  //회원 가입 폼으로
                 .userInfoEndpoint()
                 .userService(oauth2Service);
 
