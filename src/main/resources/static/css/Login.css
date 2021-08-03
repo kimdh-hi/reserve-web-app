@@ -8,8 +8,15 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'SLEIGothicTTF';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SLEIGothicTTF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
-  font-family: 'MaruBuri-Regular';
+  font-family: 'SLEIGothicTTF';
 }
 
 body {
@@ -18,8 +25,6 @@ body {
   line-height: 1.6em;
   margin:0;
   height: 100vh;
-  background: url(/Front/images/flower.jpg) no-repeat;
-  background-position: right;
 }
 a {
   text-decoration: none;
@@ -29,7 +34,14 @@ h1, h2, h3, h3, h4, h5, h6 {
   font-weight: 500;
   margin-top: 0;
 }
-
+.home{
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  object-fit:fill;
+}
 /* 인증 & 예약 공통 */
 .frame {
   position: absolute;
@@ -41,7 +53,6 @@ h1, h2, h3, h3, h4, h5, h6 {
   align-items: center;
   /* width: 100%; */
 }
-
 .init {
   width: 400px;
   height: 330px;
@@ -66,6 +77,10 @@ h1, h2, h3, h3, h4, h5, h6 {
   text-align: center;
   margin: 15px 0;
 }
+.sns-info b {
+  font-family: 'MaruBuri-Regular';
+}
+
 .sns-info .sns {
   margin: 10px;
 }
