@@ -39,6 +39,9 @@ public class Hospital extends BaseEntity{
 
     private String detailAddress;
 
+    @OneToMany(mappedBy = "hospital", cascade = CascadeType.PERSIST)
+    private List<Vaccine> vaccines = new ArrayList<>();
+
 
     @Builder(builderMethodName = "createHospital")
     public Hospital(String hospitalName, Reserve reserve, List<String> availableTimes, List<String> availableDates, String address, String detailAddress) {

@@ -30,8 +30,8 @@ public class AdminServiceImpl implements AdminService {
                 .quantity(hospitalAddDto.getQuantity())
                 .hospital(hospital)
                 .build();
+        vaccine.addHospital(hospital);
         Hospital savedHospital = hospitalRepository.save(hospital);
-        vaccineRepository.save(vaccine);
 
         return savedHospital.getId();
     }
