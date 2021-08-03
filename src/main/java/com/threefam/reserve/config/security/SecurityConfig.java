@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")
                 .failureHandler(userLoginFailHandler)  //loginfail 페이지로 forward될것
                 .and()
-                .logout()
+                .logout()// 로그아웃
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .and()

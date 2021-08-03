@@ -1,13 +1,17 @@
 package com.threefam.reserve.domain;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
+/**
+ * USER가 예약하는 예약
+ *
+ */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "reserve")
@@ -19,13 +23,17 @@ public class Reserve extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String reserveName;
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "admin_id")
+    private Admin admin;
 
-    @OneToMany(mappedBy = "reserve")
-    private List<ReserveItem> reserveItems = new ArrayList<>();
+    @Builder(builderMethodName = "createReserve")
+    public Reserve(String reserveName, Admin admin) {
+        this.admin = admin;
+        this.reserveName = reserveName;
+        this.createAt = LocalDateTime.now();
+    }
 
-    @Enumerated(EnumType.STRING)
-    private ReserveStatus status;
 }
