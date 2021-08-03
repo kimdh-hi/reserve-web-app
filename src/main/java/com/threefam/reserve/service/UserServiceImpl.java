@@ -1,6 +1,6 @@
 package com.threefam.reserve.service;
 
-import com.threefam.reserve.domain.User;
+import com.threefam.reserve.domain.entity.User;
 import com.threefam.reserve.dto.security.PrincipalDetails;
 import com.threefam.reserve.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

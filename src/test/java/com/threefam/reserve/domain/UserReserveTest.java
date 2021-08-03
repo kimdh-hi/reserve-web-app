@@ -1,5 +1,8 @@
 package com.threefam.reserve.domain;
 
+import com.threefam.reserve.domain.entity.*;
+import com.threefam.reserve.domain.value.Gender;
+import com.threefam.reserve.domain.value.Role;
 import com.threefam.reserve.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,12 +61,15 @@ public class UserReserveTest {
         Hospital hospital = Hospital.createHospital()
                 .hospitalName("중앙병원")
                 .availableTimes(List.of("12:00", "13:00", "14:00")) // 예약가능 시간
+                .availableDates(List.of("2021/01/01","2021/01/02","2021/01/03","2021/01/04"))
                 .reserve(savedReserve)
+                .address("서울특별시 강서구")
+                .detailAddress("중앙빌딩")
                 .build();
         Hospital savedHospital = hospitalRepository.save(hospital);
 
         // 백신 생성
-        Vaccine vaccine = Vaccine.creataeVaccine()
+        Vaccine vaccine = Vaccine.createVaccine()
                 .vaccineName("화이자")
                 .quantity(100)
                 .hospital(hospital)

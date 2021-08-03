@@ -1,4 +1,4 @@
-package com.threefam.reserve.domain;
+package com.threefam.reserve.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;

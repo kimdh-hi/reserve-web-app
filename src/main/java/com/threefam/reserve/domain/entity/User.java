@@ -1,5 +1,7 @@
-package com.threefam.reserve.domain;
+package com.threefam.reserve.domain.entity;
 
+import com.threefam.reserve.domain.value.Gender;
+import com.threefam.reserve.domain.value.Role;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -16,7 +17,7 @@ import java.util.List;
 public class User extends BaseEntity{
 
     @Column(name = "user_id")
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Long id; // X
 
     @Column(nullable = false)

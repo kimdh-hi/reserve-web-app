@@ -1,10 +1,12 @@
 package com.threefam.reserve.domain;
 
+import com.threefam.reserve.domain.entity.Hospital;
+import com.threefam.reserve.domain.entity.Reserve;
+import com.threefam.reserve.domain.entity.Vaccine;
 import com.threefam.reserve.repository.HospitalRepository;
 import com.threefam.reserve.repository.ReserveRepository;
 import com.threefam.reserve.repository.VaccineRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -62,7 +64,7 @@ public class ReserveTest {
 
         Hospital savedHospital = hospitalRepository.save(hospital);
 
-        Vaccine vaccine = Vaccine.creataeVaccine()
+        Vaccine vaccine = Vaccine.createVaccine()
                 .vaccineName("화이자")
                 .quantity(100)
                 .hospital(savedHospital)

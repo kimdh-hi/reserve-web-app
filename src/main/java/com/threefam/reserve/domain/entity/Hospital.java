@@ -1,4 +1,4 @@
-package com.threefam.reserve.domain;
+package com.threefam.reserve.domain.entity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 public class Hospital extends BaseEntity{
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     @Column(name = "hospital_id")
     private Long id;
 
@@ -31,17 +31,24 @@ public class Hospital extends BaseEntity{
     @CollectionTable(name = "available_times")
     private List<String> availableTimes = new ArrayList<>();
 
+    @ElementCollection
+    @CollectionTable(name = "available_dates")
+    private List<String> availableDates = new ArrayList<>();
+
     private String address;
 
     private String detailAddress;
 
+
     @Builder(builderMethodName = "createHospital")
-    public Hospital(String hospitalName, Reserve reserve, List<String> availableTimes,String address,String detailAddress) {
+    public Hospital(String hospitalName, Reserve reserve, List<String> availableTimes, List<String> availableDates, String address, String detailAddress) {
         this.hospitalName = hospitalName;
         this.reserve = reserve;
         this.availableTimes = availableTimes;
+        this.availableDates = availableDates;
+        this.address = address;
+        this.detailAddress = detailAddress;
+
         this.createAt = LocalDateTime.now();
-        this.address=address;
-        this.detailAddress=detailAddress;
     }
 }

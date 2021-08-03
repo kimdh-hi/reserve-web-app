@@ -1,5 +1,8 @@
 package com.threefam.reserve.domain;
 
+import com.threefam.reserve.domain.entity.User;
+import com.threefam.reserve.domain.value.Gender;
+import com.threefam.reserve.domain.value.Role;
 import com.threefam.reserve.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

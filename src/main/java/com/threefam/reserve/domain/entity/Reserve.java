@@ -1,4 +1,4 @@
-package com.threefam.reserve.domain;
+package com.threefam.reserve.domain.entity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -20,7 +20,7 @@ public class Reserve extends BaseEntity {
 
     @Column(name = "reserve_id")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     private String reserveName;

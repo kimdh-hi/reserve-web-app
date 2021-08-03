@@ -1,5 +1,6 @@
-package com.threefam.reserve.domain;
+package com.threefam.reserve.domain.entity;
 
+import com.threefam.reserve.domain.value.ReserveStatus;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,8 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * USER의 예약서
@@ -21,7 +20,7 @@ public class ReserveItem extends BaseEntity {
 
     @Column(name = "reserve_item_id")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -39,5 +38,7 @@ public class ReserveItem extends BaseEntity {
         this.user = user;
         this.reserve = reserve;
         this.status = status;
+
+        this.createAt = LocalDateTime.now();
     }
 }

@@ -1,5 +1,7 @@
-package com.threefam.reserve.domain;
+package com.threefam.reserve.domain.entity;
 
+import com.threefam.reserve.domain.entity.BaseEntity;
+import com.threefam.reserve.domain.entity.Reserve;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,9 +15,9 @@ import java.util.List;
 @Entity
 @Table(name = "admin")
 @Getter
-public class Admin extends BaseEntity{
+public class Admin extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Long id;
 
     @OneToMany(mappedBy = "admin")

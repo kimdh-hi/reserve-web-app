@@ -1,4 +1,4 @@
-package com.threefam.reserve.domain;
+package com.threefam.reserve.domain.entity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 public class Vaccine extends BaseEntity{
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     @Column(name = "vaccine_id")
     private Long id;
 
@@ -32,6 +32,7 @@ public class Vaccine extends BaseEntity{
         this.vaccineName = vaccineName;
         this.quantity = quantity;
         this.hospital = hospital;
+
         this.createAt = LocalDateTime.now();
     }
 }
