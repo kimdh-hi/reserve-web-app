@@ -27,6 +27,9 @@ public class User extends BaseEntity{
     private String password;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender; // radio
 
@@ -44,10 +47,11 @@ public class User extends BaseEntity{
     private Role role;
 
     @Builder(builderMethodName = "createUser")
-    public User(String email, String password,
+    public User(String email, String password, String name,
                 Gender gender, Integer age, String address, String detailAddress, Role role) {
         this.email = email;
         this.password = password;
+        this.name=name;
         this.gender = gender;
         this.age = age;
         this.address = address;

@@ -18,7 +18,8 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         this.user = user;
     }
 
-    public PrincipalDetails(Map<String,Object> attributes){
+    public PrincipalDetails(User user,Map<String,Object> attributes){
+        this.user=user;
         this.attributes=attributes;
     }
 
@@ -29,7 +30,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     @Override
     public String getName() {
-        return (String)attributes.get("hub");
+        return user.getName();
     }
 
     @Override
@@ -52,8 +53,6 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     @Override
     public String getUsername() {
-        if (user==null)
-            return (String)attributes.get("email");
         return user.getEmail();
     }
 
