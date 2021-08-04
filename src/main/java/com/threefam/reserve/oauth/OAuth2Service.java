@@ -1,7 +1,7 @@
 package com.threefam.reserve.oauth;
 
-import com.threefam.reserve.domain.Role;
-import com.threefam.reserve.domain.User;
+import com.threefam.reserve.domain.entity.User;
+import com.threefam.reserve.domain.value.Role;
 import com.threefam.reserve.dto.security.PrincipalDetails;
 import com.threefam.reserve.oauth.provider.GoogleUserInfo;
 import com.threefam.reserve.oauth.provider.KakaoUserInfo;
@@ -35,7 +35,7 @@ public class OAuth2Service extends DefaultOAuth2UserService {
             oAuth2UserInfo=new NaverUserInfo((Map) oAuth2User.getAttributes().get("response"));
         }
         else if(userRequest.getClientRegistration().getRegistrationId().equals("kakao")){
-            oAuth2UserInfo=new KakaoUserInfo((Map)oAuth2User.getAttributes().get("kakao_account"));
+            oAuth2UserInfo=new KakaoUserInfo(oAuth2User.getAttributes(),(Map)oAuth2User.getAttributes().get("kakao_account"));
         }
 
         User buildUser = User.createUser()

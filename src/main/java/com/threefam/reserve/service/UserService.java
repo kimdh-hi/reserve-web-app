@@ -1,9 +1,11 @@
 package com.threefam.reserve.service;
 
-import org.springframework.security.core.userdetails.UserDetails;
+import com.threefam.reserve.domain.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.Optional;
 
 public interface UserService extends UserDetailsService {
-
+    User createUser(User user);
+    User getUserByEmail(String email);
 }

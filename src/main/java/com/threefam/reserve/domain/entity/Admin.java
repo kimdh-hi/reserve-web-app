@@ -23,11 +23,10 @@ public class Admin extends BaseEntity {
     @OneToMany(mappedBy = "admin")
     private List<Reserve> reserves = new ArrayList<>();
 
-    private Long userId;
 
     @Builder(builderMethodName = "createAdmin")
-    public Admin(List<Reserve> reserves, Long userId) {
+    public Admin(List<Reserve> reservesd) {
         this.reserves = reserves;
-        this.userId = userId;
+
     }
 }

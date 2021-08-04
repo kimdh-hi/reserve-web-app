@@ -46,7 +46,6 @@ public class UserReserveTest {
 
         // USER의 권한이 ADMIN인 경우 어드민 테이블을 생성
         Admin admin = Admin.createAdmin()
-                .userId(savedUser.getId())
                 .build();
         Admin savedAdmin = adminRepository.save(admin);
 

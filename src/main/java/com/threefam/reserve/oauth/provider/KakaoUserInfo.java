@@ -8,19 +8,20 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class KakaoUserInfo implements OAuth2UserInfo{
 
-    private final Map<String,Object> attributes;
+    private final Map<String,Object> idAttributes;
+    private final Map<String,Object> normalAttributes;
+
 
     @Override
     public String getEmail() {
-        if((String)attributes.get("email")==null){
-            String email = UUID.randomUUID().toString();
-            return email+"@kakao.com";
+        if((String)normalAttributes.get("email")==null){
+            return idAttributes.get("id")+"@kakao.com";
         }
-        return (String)attributes.get("email");
+        return (String)normalAttributes.get("email");
     }
 
     @Override
     public String getName() {
-        return (String)((Map)attributes.get("profile")).get("nickname");
+        return (String)((Map)normalAttributes.get("profile")).get("nickname");
     }
 }
