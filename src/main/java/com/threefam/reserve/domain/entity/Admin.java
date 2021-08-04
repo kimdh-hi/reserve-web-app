@@ -1,7 +1,5 @@
 package com.threefam.reserve.domain.entity;
 
-import com.threefam.reserve.domain.entity.BaseEntity;
-import com.threefam.reserve.domain.entity.Reserve;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,13 +18,11 @@ public class Admin extends BaseEntity {
     @Id @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "admin")
-    private List<Reserve> reserves = new ArrayList<>();
-
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
+    private List<Hospital> hospitals = new ArrayList<>();
 
     @Builder(builderMethodName = "createAdmin")
-    public Admin(List<Reserve> reservesd) {
-        this.reserves = reserves;
-
+    public Admin(List<Hospital> hospitals) {
+        this.hospitals = hospitals;
     }
 }

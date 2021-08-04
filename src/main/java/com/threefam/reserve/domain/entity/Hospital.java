@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -23,10 +24,6 @@ public class Hospital extends BaseEntity{
     @Column(name = "hospital_name")
     private String hospitalName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reserve_id")
-    private Reserve reserve;
-
     @ElementCollection
     @CollectionTable(name = "available_times")
     private List<String> availableTimes = new ArrayList<>();
@@ -34,6 +31,16 @@ public class Hospital extends BaseEntity{
     @ElementCollection
     @CollectionTable(name = "available_dates")
     private List<String> availableDates = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "admin_id")
+    private Admin admin;
+
+    // 연관관계 편의 메서드
+    private void addAdmin(Admin admin) {
+        this.admin = admin;
+        admin.getHospitals().add(this);
+    }
 
     private String address;
 
@@ -44,14 +51,13 @@ public class Hospital extends BaseEntity{
 
 
     @Builder(builderMethodName = "createHospital")
-    public Hospital(String hospitalName, Reserve reserve, List<String> availableTimes, List<String> availableDates, String address, String detailAddress) {
+    public Hospital(String hospitalName, List<String> availableTimes,
+                    List<String> availableDates, String address, String detailAddress) {
         this.hospitalName = hospitalName;
-        this.reserve = reserve;
         this.availableTimes = availableTimes;
         this.availableDates = availableDates;
         this.address = address;
         this.detailAddress = detailAddress;
-
         this.createAt = LocalDateTime.now();
     }
 }
