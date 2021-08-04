@@ -28,10 +28,9 @@ public class Vaccine extends BaseEntity{
     private Hospital hospital;
 
     @Builder(builderMethodName = "createVaccine")
-    public Vaccine(String vaccineName, Integer quantity, Hospital hospital) {
+    public Vaccine(String vaccineName, Integer quantity) {
         this.vaccineName = vaccineName;
         this.quantity = quantity;
-        this.hospital = hospital;
 
         this.createAt = LocalDateTime.now();
     }

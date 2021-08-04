@@ -12,9 +12,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 어드민으로부터 병원등록 요청을 처리하기 위한 DTO
+ */
+
 @Data
 @NoArgsConstructor
-public class HospitaRequestlDto {
+public class HospitalRequestDto {
     // 병원이름, 예약가능날짜, 예약가능시간, 주소, 상세주소
     @NotEmpty(message = "병원이름을 입력해주세요.")
     private String hospitalName;
@@ -26,12 +30,12 @@ public class HospitaRequestlDto {
     private String address;
     @NotEmpty(message = "병원 상세주소를 입력해주세요.")
     private String detailAddress;
-    // 백신이름, 백신양,
+    // 백신이름, 잔여수량
     @NotEmpty(message = "백신 이름을 입력해주세요.")
     private List<String> vaccineNames = new ArrayList<>();
     @NotNull(message = "백신 예약가능 수량을 입력해주세요.")
     private List<Integer> vaccineQuantities = new ArrayList<>();
-
+    // 백신 종류마다 잔여수량을 달리하기 위해 Map 사용 (key:백신이름, value:잔여수령)
     private Map<String, Integer> vaccineInfoMap = new HashMap<>();
 
     public Hospital toEntityHospital() {
@@ -43,33 +47,6 @@ public class HospitaRequestlDto {
                 .detailAddress(this.detailAddress)
                 .build();
     }
-
-    @Builder(builderMethodName = "createHospitalDto")
-    public HospitaRequestlDto(String hospitalName, List<String> availableDates, List<String> availableTimes,
-                              String address, String detailAddress) {
-        this.hospitalName = hospitalName;
-        this.availableDates = availableDates;
-        this.availableTimes = availableTimes;
-        this.address = address;
-        this.detailAddress = detailAddress;
-    }
-
-    public HospitaRequestlDto createDto(String hospitalName, List<String> availableDates, List<String> availableTimes,
-                                        String address, String detailAddress, Map<String, Integer> vaccineInfoMap) {
-        this.hospitalName = hospitalName;
-        this.availableDates = availableDates;
-        this.availableTimes = availableTimes;
-        this.address = address;
-        this.detailAddress = detailAddress;
-        this.vaccineInfoMap = vaccineInfoMap;
-
-        return this;
-    }
 }
 
-//    @NotEmpty(message = "백신 이름을 입력해주세요.")
-//    private String vaccineName;
-//    @NotNull(message = "백신 예약가능 수량을 입력해주세요.")
-//    @Range(min = 0, message = "백신 예약가능 수량은 1개 이상부터 등록 가능합니다.")
-//    private Integer quantity;
 

@@ -29,14 +29,14 @@ public class ReserveItem extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reserve_id")
-    private Reserve reserve;
+    private Hospital Hospital;
 
     private ReserveStatus status;
 
     @Builder(builderMethodName = "createReserveItem")
-    public ReserveItem(User user, Reserve reserve, ReserveStatus status) {
+    public ReserveItem(User user, Hospital Hospital, ReserveStatus status) {
         this.user = user;
-        this.reserve = reserve;
+        this.Hospital = Hospital;
         this.status = status;
 
         this.createAt = LocalDateTime.now();
