@@ -94,6 +94,7 @@ public class HospitalRepositoryTest {
             System.out.println("dto.getHospitalName() = " + dto.getHospitalName());
             System.out.println("dto.getAddress() = " + dto.getAddress());
         }
+
         // 3개 등록 하나는 enabled=false
         Assertions.assertThat(list.size()).isEqualTo(2);
     }
