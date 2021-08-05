@@ -2,7 +2,7 @@ package com.threefam.reserve;
 
 import com.threefam.reserve.domain.entity.User;
 import com.threefam.reserve.domain.value.Role;
-import com.threefam.reserve.service.UserService;
+import com.threefam.reserve.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

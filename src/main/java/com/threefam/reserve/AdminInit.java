@@ -3,7 +3,7 @@ package com.threefam.reserve;
 import com.threefam.reserve.domain.entity.User;
 import com.threefam.reserve.domain.value.Gender;
 import com.threefam.reserve.domain.value.Role;
-import com.threefam.reserve.service.UserService;
+import com.threefam.reserve.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;

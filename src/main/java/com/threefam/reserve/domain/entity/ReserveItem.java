@@ -33,12 +33,24 @@ public class ReserveItem extends BaseEntity {
 
     private ReserveStatus status = ReserveStatus.COMP;
 
+    private String reserveDate;
+
+    private String reserveTime;
+
+
     @Builder(builderMethodName = "createReserveItem")
     public ReserveItem(User user, Hospital Hospital, ReserveStatus status) {
         this.user = user;
         this.Hospital = Hospital;
         this.status = status;
-
         this.createAt = LocalDateTime.now();
     }
+
+    //==비즈니스 로직==//
+    //예약 날짜 및 예약 시간 update
+    public void updateDateAndTime(String reserveDate,String reserveTime){
+        this.reserveDate=reserveDate;
+        this.reserveTime=reserveTime;
+    }
+
 }

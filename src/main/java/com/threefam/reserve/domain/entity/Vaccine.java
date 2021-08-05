@@ -1,5 +1,6 @@
 package com.threefam.reserve.domain.entity;
 
+import com.threefam.reserve.exception.vaccine.NotEnoughStockException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,5 +41,24 @@ public class Vaccine extends BaseEntity{
     public void addHospital(Hospital hospital) {
         this.hospital = hospital;
         hospital.getVaccines().add(this);
+    }
+
+    //==비즈니스 로직==//
+
+    //예약 취소 시, 사용
+    public void addStock(){
+        this.quantity+=1;
+    }
+
+    //예약 시, 사용
+    public void removeStock(){
+        int restStock=this.quantity-1;
+        if(restStock==0){
+            this.hospital.setEnabled(false);
+        }else if(restStock<0){
+            throw new NotEnoughStockException("예약 가능한 수량이 부족합니다.");
+        }
+
+        this.quantity=restStock;
     }
 }
