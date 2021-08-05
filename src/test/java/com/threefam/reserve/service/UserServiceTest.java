@@ -4,6 +4,7 @@ import com.threefam.reserve.domain.entity.User;
 import com.threefam.reserve.domain.value.Gender;
 import com.threefam.reserve.domain.value.Role;
 import com.threefam.reserve.repository.UserRepository;
+import com.threefam.reserve.service.user.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -18,9 +18,10 @@ public class Vaccine extends BaseEntity{
     @Column(name = "vaccine_id")
     private Long id;
 
-    @Column(name = "vaccine_name")
+    @Column(name = "vaccine_name", nullable = false)
     private String vaccineName;
 
+    @Column(nullable = false)
     private Integer quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)

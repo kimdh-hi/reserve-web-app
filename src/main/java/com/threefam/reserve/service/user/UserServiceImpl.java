@@ -1,4 +1,4 @@
-package com.threefam.reserve.service;
+package com.threefam.reserve.service.user;
 
 import com.threefam.reserve.domain.entity.User;
 import com.threefam.reserve.dto.security.PrincipalDetails;

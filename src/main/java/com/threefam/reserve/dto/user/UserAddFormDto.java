@@ -1,4 +1,4 @@
-package com.threefam.reserve.dto;
+package com.threefam.reserve.dto.user;
 
 import com.threefam.reserve.domain.value.Gender;
 import com.threefam.reserve.domain.value.Role;

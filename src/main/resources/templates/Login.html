@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>본인인증 및 예약하기</title>
@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  <a href="#none"><img class="home" th:src="@{/images/home.png}"></a>
+  <a th:href="@{/}"><img class="home" th:src="@{/images/home.png}"></a>
   <div class="frame">
     <!-- 본인 인증 -->
     <div class="init check">
@@ -24,7 +24,7 @@
       </div>
     </div>
     <!-- 예약하기 -->
-    <div class="init reserve">
+    <div sec:authorize="isAuthenticated()" class="init reserve">
       <a href="#none">예방접종 <span>예약하기</span></a>
       <a href="#none">접종예약 <span>조회/취소</span></a>
     </div>

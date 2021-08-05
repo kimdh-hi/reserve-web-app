@@ -1,8 +1,8 @@
 package com.threefam.reserve.controller;
 
-import com.threefam.reserve.dto.HospitalRequestDto;
-import com.threefam.reserve.dto.HospitalResponseDto;
-import com.threefam.reserve.service.AdminService;
+import com.threefam.reserve.dto.hospital.HospitalRequestDto;
+import com.threefam.reserve.dto.hospital.HospitalResponseDto;
+import com.threefam.reserve.service.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

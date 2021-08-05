@@ -1,11 +1,8 @@
 package com.threefam.reserve.service;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import com.threefam.reserve.dto.reserve.ReserveItemRequestDto;
 
-@Slf4j
-@Service
-public class ReserveService {
+public interface ReserveService {
 
-
+    Long reserve(ReserveItemRequestDto reserveItemRequestDto);
 }

@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -36,15 +37,23 @@ public class Hospital extends BaseEntity{
     @JoinColumn(name = "admin_id")
     private Admin admin;
 
+    @Column(nullable = false)
+    private String address;
+
+    @Column(nullable = false)
+    private String detailAddress;
+
+    private Boolean enabled = true; // 예약 가능 여부
+
+    public void setEnabled(boolean flag) {
+        this.enabled = flag;
+    }
+
     // 연관관계 편의 메서드
     private void addAdmin(Admin admin) {
         this.admin = admin;
         admin.getHospitals().add(this);
     }
-
-    private String address;
-
-    private String detailAddress;
 
     @OneToMany(mappedBy = "hospital", cascade = CascadeType.PERSIST)
     private List<Vaccine> vaccines = new ArrayList<>();

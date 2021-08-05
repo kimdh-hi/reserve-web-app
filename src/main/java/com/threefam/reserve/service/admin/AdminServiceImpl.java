@@ -1,9 +1,9 @@
-package com.threefam.reserve.service;
+package com.threefam.reserve.service.admin;
 
 import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.domain.entity.Vaccine;
-import com.threefam.reserve.dto.HospitalRequestDto;
-import com.threefam.reserve.dto.HospitalResponseDto;
+import com.threefam.reserve.dto.hospital.HospitalRequestDto;
+import com.threefam.reserve.dto.hospital.HospitalResponseDto;
 import com.threefam.reserve.repository.HospitalRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +47,7 @@ public class AdminServiceImpl implements AdminService {
     /**
      * 병원이름으로 병원 정보 얻어오기
      */
+    @Transactional(readOnly = true)
     @Override
     public HospitalResponseDto getHospitalInfo(String hospitalName) {
         Hospital findHospital = hospitalRepository.findByHospitalName(hospitalName)
