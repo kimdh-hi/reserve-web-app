@@ -31,7 +31,7 @@ public class ReserveItem extends BaseEntity {
     @JoinColumn(name = "reserve_id")
     private Hospital Hospital;
 
-    private ReserveStatus status;
+    private ReserveStatus status = ReserveStatus.COMP;
 
     @Builder(builderMethodName = "createReserveItem")
     public ReserveItem(User user, Hospital Hospital, ReserveStatus status) {

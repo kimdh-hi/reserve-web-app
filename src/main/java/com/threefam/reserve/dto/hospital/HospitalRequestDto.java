@@ -1,4 +1,4 @@
-package com.threefam.reserve.dto;
+package com.threefam.reserve.dto.hospital;
 
 import com.threefam.reserve.domain.entity.Hospital;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.threefam.reserve.dto;
+package com.threefam.reserve.dto.hospital;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

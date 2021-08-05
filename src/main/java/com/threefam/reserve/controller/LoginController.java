@@ -19,6 +19,7 @@ public class LoginController {
 
     /**
      *
+     *
      * oauth login이 잘 되는지 일단 테스트용 , responsbody로서 "ok"를 리턴하고 log.info를 활용하여 현재 인증된 사용자의 정보를 찍음.
      * 회원가입 폼이 완성 되면 없앨 예정!
      *
