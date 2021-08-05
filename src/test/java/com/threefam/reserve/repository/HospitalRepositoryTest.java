@@ -86,7 +86,7 @@ public class HospitalRepositoryTest {
 
         hospitalRepository.save(hospital3);
     }
-    
+
     @Test
     @DisplayName("모든 병원의 이름,주소 조회 쿼리 테스트")
     void 병원이름_주소_조회(){
@@ -99,7 +99,7 @@ public class HospitalRepositoryTest {
         // 3개 등록 하나는 enabled=false
         Assertions.assertThat(list.size()).isEqualTo(2);
     }
-    
+
     @Test
     @DisplayName("병원 이름으로 조회 테스트")
     void 병원이름_조회() {
