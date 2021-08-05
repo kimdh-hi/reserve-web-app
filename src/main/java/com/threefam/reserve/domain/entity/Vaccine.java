@@ -41,4 +41,5 @@ public class Vaccine extends BaseEntity{
         this.hospital = hospital;
         hospital.getVaccines().add(this);
     }
+    
 }

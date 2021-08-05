@@ -14,6 +14,7 @@ import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @SpringBootTest
@@ -85,7 +86,7 @@ public class HospitalRepositoryTest {
 
         hospitalRepository.save(hospital3);
     }
-
+    
     @Test
     @DisplayName("모든 병원의 이름,주소 조회 쿼리 테스트")
     void 병원이름_주소_조회(){
@@ -97,5 +98,17 @@ public class HospitalRepositoryTest {
 
         // 3개 등록 하나는 enabled=false
         Assertions.assertThat(list.size()).isEqualTo(2);
+    }
+    
+    @Test
+    @DisplayName("병원 이름으로 조회 테스트")
+    void 병원이름_조회() {
+        Hospital hospital = hospitalRepository.findByHospitalName("좋은병원")
+                .orElseThrow(() -> {
+                    throw new IllegalArgumentException("병원이름없음");
+                });
+        String hospitalName = hospital.getHospitalName();
+        List<Vaccine> vaccines = hospital.getVaccines();
+        System.out.println("vaccines.size() = " + vaccines.size());
     }
 }

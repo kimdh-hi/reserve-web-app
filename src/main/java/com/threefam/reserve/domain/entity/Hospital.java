@@ -45,6 +45,9 @@ public class Hospital extends BaseEntity{
 
     private Boolean enabled = true; // 예약 가능 여부
 
+    @OneToMany(mappedBy = "hospital", cascade = CascadeType.PERSIST)
+    private List<Vaccine> vaccines = new ArrayList<>();
+
     public void setEnabled(boolean flag) {
         this.enabled = flag;
     }
@@ -55,8 +58,7 @@ public class Hospital extends BaseEntity{
         admin.getHospitals().add(this);
     }
 
-    @OneToMany(mappedBy = "hospital", cascade = CascadeType.PERSIST)
-    private List<Vaccine> vaccines = new ArrayList<>();
+
 
 
     @Builder(builderMethodName = "createHospital")
