@@ -36,7 +36,6 @@ public class Vaccine extends BaseEntity{
 
         this.createAt = LocalDateTime.now();
     }
-
     // 연관관계 편의 메서드
     public void addHospital(Hospital hospital) {
         this.hospital = hospital;
@@ -61,4 +60,5 @@ public class Vaccine extends BaseEntity{
 
         this.quantity=restStock;
     }
+
 }
