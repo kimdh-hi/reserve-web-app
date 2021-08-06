@@ -3,17 +3,15 @@ package com.threefam.reserve.test;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/test")
@@ -35,6 +33,11 @@ public class TestController {
             }
         }
         return "ok";
+    }
+
+    @GetMapping("/test/ttt")
+    public String adasd() {
+        return "signUp_complete";
     }
 
     @Data
