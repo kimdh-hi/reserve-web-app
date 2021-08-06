@@ -4,16 +4,27 @@ import com.threefam.reserve.dto.security.PrincipalDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @Slf4j
 public class LoginController {
 
-    @GetMapping("/login")
+    @GetMapping("/adminLogin")
     public String loginForm() {
-        return "Login";
+        return "login/loginForm";
+    }
+
+    @PostMapping("/loginFail")
+    public String loginFail(@RequestParam String errorMsg, Model model){
+        model.addAttribute("errorMsg",errorMsg);
+
+        return "login/loginForm";
+
     }
 
 
