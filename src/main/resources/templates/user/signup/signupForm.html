@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>회원가입</title>
+  <link rel="icon" th:href="@{/css/images/home.png}">
+  <link rel="stylesheet" th:href="@{/css/signup.css}">
+</head>
+
+<body>
+
+  <div class="sign">
+    <h1 class="hS">회원가입</h1>
+
+    <form>
+      <div class="info">
+        <b>이메일</b>
+        <input type="email">
+      </div>
+
+      <div class="info">
+        <b>이름</b>
+        <input type="text">
+      </div>
+
+      <div class="info gender">
+        <b>성별</b>
+        <div>
+          <label><input type="radio" name="gender"><em></em>남자</label>
+          <label><input type="radio" name="gender"><em></em>여자</label>
+        </div>
+     </div>
+
+      <div class="info birth">
+        <b>생년월일</b>
+        <div>
+          <input type="number" placeholder="년(4자)">
+          <select>
+            <option value="">월</option>
+            <option value="">1월</option>
+            <option value="">2월</option>
+            <option value="">3월</option>
+            <option value="">4월</option>
+            <option value="">5월</option>
+            <option value="">6월</option>
+            <option value="">7월</option>
+            <option value="">8월</option>
+            <option value="">9월</option>
+            <option value="">10월</option>
+            <option value="">11월</option>
+            <option value="">12월</option>
+          </select>
+          <input type="number" placeholder="일">
+        </div>
+      </div>
+
+      <div class="info">
+        <b>주소</b>
+        <input type="text">
+      </div>
+
+      <div class="info">
+        <b>상세주소</b>
+        <input type="text">
+      </div>
+
+      <input type="submit" value="가입하기">
+    </form>
+  </div>
+
+</body>
+</html>
