@@ -75,7 +75,7 @@ input, select {
   height: 18px;
   margin-right: 3px;
   transform: translateY(3px);
-  background: url(/Front/images/icon-radio.png) no-repeat;
+  background: url(/images/icon-radio.png) no-repeat;
   background-position: left;
 }
 .info.gender input[name=gender]:checked + em {

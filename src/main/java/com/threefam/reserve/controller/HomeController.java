@@ -17,7 +17,7 @@ public class HomeController {
     @GetMapping("/")
     public String home(@AuthenticationPrincipal PrincipalDetails details) {
 
-        return "register";
+        return "index";
     }
 
     @GetMapping("/adminLogin")
@@ -30,7 +30,11 @@ public class HomeController {
         model.addAttribute("errorMsg",errorMsg);
 
         return "user/login/loginForm";
+    }
 
+    @GetMapping("/test/asd")
+    public String asdqwd() {
+        return "user/signup/signupForm";
     }
 
 }

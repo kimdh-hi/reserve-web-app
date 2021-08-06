@@ -59,10 +59,4 @@ public class UserController {
 
         return "redirect:/";
     }
-
-    @GetMapping("/jointest")
-    public String joinTest() {
-        return "signUp_complete";
-    }
-
 }
