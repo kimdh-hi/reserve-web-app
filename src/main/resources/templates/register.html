@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>병원 등록하기 (관리자)</title>
+  
+  <link rel="stylesheet" th:href="@{//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}">
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+  <script th:src="@{https://code.jquery.com/jquery-1.12.4.js}"></script>
+  <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.js}"></script>
+
+<script>
+  $.datepicker.setDefaults({
+    dateFormat: 'yy-mm-dd',
+    prevText: '이전 달',
+    nextText: '다음 달',
+    monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+    dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+    dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+    showMonthAfterYear: true,
+    yearSuffix: '년'
+  });
+</script>
+
+<script>
+  $(function () {
+    $("#datepicker1, #datepicker2").datepicker({
+      dateFormat: 'yy.mm.dd'
+    });
+  });
+</script>
+
+
+  <link rel="icon" th:href="@{/images/home.png}">
+  <link rel="stylesheet" th:href="@{/css/register.css}">
+
+</head>
+
+<body>
+  <div class="register">
+    <h1 class="hR">병원 등록하기</h1>
+
+    <div class="info">
+      <b>병원 이름</b>
+      <input type="text">
+    </div>
+
+    <div class="info">
+      <b>주소</b>
+      <input type="text">
+    </div>
+
+    <div class="info">
+      <b>상세주소</b>
+      <input type="text">
+    </div>
+
+    <div class="info date">
+      <b>예약 가능 날짜</b>
+      <div>
+        <input type="text" id="datepicker1">
+        <b>~</b>
+        <input type="text" id="datepicker2">  
+      </div>
+    </div>
+
+    <div class="info kind">
+      <b>백신종류/ 수량</b>
+      <div>
+        <label>아스트라제네카</label>
+        <input type="number" placeholder="수량을 입력하세요.">
+      </div>
+      <div>
+        <label>얀센</label>
+        <input type="number" placeholder="수량을 입력하세요.">
+      </div>
+      <div>
+        <label>화이자</label>
+        <input type="number" placeholder="수량을 입력하세요.">
+      </div>
+      <div>
+        <label>모더나</label>
+        <input type="number" placeholder="수량을 입력하세요.">
+      </div>
+    </div>
+
+    <input type="submit" value="등록하기">
+  </div>
+
+</body>
+</html>
