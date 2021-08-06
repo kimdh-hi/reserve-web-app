@@ -30,13 +30,13 @@ public class ReserveItemServiceImpl implements ReserveItemService{
 
         User user = findUser.stream().findFirst().orElseThrow(
                 () -> {
-                    throw new RuntimeException("존재하지 않는 사용자 입니다.");
+                    throw new IllegalArgumentException("존재하지 않는 사용자 입니다.");
                 }
         );
 
         Vaccine vaccine = findVaccine.stream().findFirst().orElseThrow(
                 () -> {
-                    throw new RuntimeException("존재하지 않는 백신 입니다.");
+                    throw new IllegalArgumentException("존재하지 않는 백신 입니다.");
                 }
         );
 
