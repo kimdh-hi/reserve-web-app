@@ -10,7 +10,7 @@
   <a th:href="@{/}"><img class="home" th:src="@{/images/home.png}"></a>
   <div class="frame">
     <!-- 본인 인증 -->
-    <div class="init check">
+    <div sec:authorize="!isAuthenticated()" class="init check">
       <h1>본인인증</h1>
 
       <!-- sns 연동 -->

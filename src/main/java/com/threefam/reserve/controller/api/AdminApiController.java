@@ -1,4 +1,4 @@
-package com.threefam.reserve.controller;
+package com.threefam.reserve.controller.api;
 
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
@@ -14,7 +14,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 @RestController
-public class AdminController {
+public class AdminApiController {
 
     private final AdminService adminService;
 
