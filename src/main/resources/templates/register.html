@@ -43,51 +43,53 @@
   <div class="register">
     <h1 class="hR">병원 등록하기</h1>
 
-    <div class="info">
-      <b>병원 이름</b>
-      <input type="text">
-    </div>
-
-    <div class="info">
-      <b>주소</b>
-      <input type="text">
-    </div>
-
-    <div class="info">
-      <b>상세주소</b>
-      <input type="text">
-    </div>
-
-    <div class="info date">
-      <b>예약 가능 날짜</b>
-      <div>
-        <input type="text" id="datepicker1">
-        <b>~</b>
-        <input type="text" id="datepicker2">  
+    <form th:action method="post">
+      <div class="info">
+        <b>병원 이름</b>
+        <input type="text">
       </div>
-    </div>
 
-    <div class="info kind">
-      <b>백신종류/ 수량</b>
-      <div>
-        <label>아스트라제네카</label>
-        <input type="number" placeholder="수량을 입력하세요.">
+      <div class="info">
+        <b>주소</b>
+        <input type="text">
       </div>
-      <div>
-        <label>얀센</label>
-        <input type="number" placeholder="수량을 입력하세요.">
-      </div>
-      <div>
-        <label>화이자</label>
-        <input type="number" placeholder="수량을 입력하세요.">
-      </div>
-      <div>
-        <label>모더나</label>
-        <input type="number" placeholder="수량을 입력하세요.">
-      </div>
-    </div>
 
-    <input type="submit" value="등록하기">
+      <div class="info">
+        <b>상세주소</b>
+        <input type="text">
+      </div>
+
+      <div class="info date">
+        <b>예약 가능 날짜</b>
+        <div>
+          <input type="text" id="datepicker1" name="datepicker1">
+          <b>~</b>
+          <input type="text" id="datepicker2" name="datepicker2">
+        </div>
+      </div>
+
+      <div class="info kind">
+        <b>백신종류/ 수량</b>
+        <div>
+          <label>아스트라제네카</label>
+          <input type="number" placeholder="수량을 입력하세요.">
+        </div>
+        <div>
+          <label>얀센</label>
+          <input type="number" placeholder="수량을 입력하세요.">
+        </div>
+        <div>
+          <label>화이자</label>
+          <input type="number" placeholder="수량을 입력하세요.">
+        </div>
+        <div>
+          <label>모더나</label>
+          <input type="number" placeholder="수량을 입력하세요.">
+        </div>
+      </div>
+
+      <input type="submit" value="등록하기">
+    </form>
   </div>
 
 </body>

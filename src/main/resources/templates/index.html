@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>본인인증 및 예약하기</title>
-  <link rel="stylesheet" th:href="@{/css/Login.css}">
+  <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 
 <body>
-  <a th:href="@{/}"><img class="home" th:src="@{/images/home.png}"></a>
+  <div>
+    <a th:href="@{/}"><img class="home" th:src="@{/images/home.png}"></a>
+    <a th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
+  </div>
   <div class="frame">
     <!-- 본인 인증 -->
-    <div class="init check">
+    <div class="init check" sec:authorize="!isAuthenticated()">
       <h1>본인인증</h1>
 
       <!-- sns 연동 -->
@@ -21,12 +24,14 @@
           <a th:href="@{/oauth2/authorization/naver}" data-text="naver"><i class="xi-naver"></i></a>
           <a th:href="@{/oauth2/authorization/kakao}" data-text="kakaotalk"><i class="xi-kakaotalk"></i></a>
         </div>
+        <a th:href="@{/adminLogin}">Admin이시라면 이쪽으로...</a>
       </div>
     </div>
     <!-- 예약하기 -->
     <div sec:authorize="isAuthenticated()" class="init reserve">
       <a href="#none">예방접종 <span>예약하기</span></a>
       <a href="#none">접종예약 <span>조회/취소</span></a>
+      <a href="#none" sec:authorize="hasRole('ROLE_ADMIN')"><span>병원등록</span></a>
     </div>
   </div>
 </body>
