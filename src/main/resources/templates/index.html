@@ -1,42 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-  <meta charset="UTF-8">
-  <title>본인인증 및 예약하기</title>
-  <link rel="stylesheet" th:href="@{/css/index.css}">
+    <meta charset="UTF-8">
+    <title>본인인증 및 예약하기</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 
 <body>
-  <div>
+<div>
     <a th:href="@{/}"><img class="home" th:src="@{/images/home.png}"></a>
     <a th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
-  </div>
-  <div class="frame">
+</div>
+<div class="frame">
     <!-- 본인 인증 -->
-<<<<<<< HEAD:src/main/resources/templates/Login.html
-    <div sec:authorize="!isAuthenticated()" class="init check">
-=======
     <div class="init check" sec:authorize="!isAuthenticated()">
->>>>>>> d734bc36f5140dbff44ba5b969b2bc801e359249:src/main/resources/templates/index.html
-      <h1>본인인증</h1>
+        <h1>본인인증</h1>
 
-      <!-- sns 연동 -->
-      <div class="sns-info">
-        계정 연동하기
-        <div class="sns">
-          <a th:href="@{/oauth2/authorization/google}" data-text="google"><i class="xi-google"></i></a>
-          <a th:href="@{/oauth2/authorization/naver}" data-text="naver"><i class="xi-naver"></i></a>
-          <a th:href="@{/oauth2/authorization/kakao}" data-text="kakaotalk"><i class="xi-kakaotalk"></i></a>
+        <!-- sns 연동 -->
+        <div class="sns-info">
+            계정 연동하기
+            <div class="sns">
+                <a th:href="@{/oauth2/authorization/google}" data-text="google"><i class="xi-google"></i></a>
+                <a th:href="@{/oauth2/authorization/naver}" data-text="naver"><i class="xi-naver"></i></a>
+                <a th:href="@{/oauth2/authorization/kakao}" data-text="kakaotalk"><i class="xi-kakaotalk"></i></a>
+            </div>
+            <a th:href="@{/adminLogin}">Admin이시라면 이쪽으로...</a>
         </div>
-        <a th:href="@{/adminLogin}">Admin이시라면 이쪽으로...</a>
-      </div>
     </div>
     <!-- 예약하기 -->
     <div sec:authorize="isAuthenticated()" class="init reserve">
-      <a href="#none">예방접종 <span>예약하기</span></a>
-      <a href="#none">접종예약 <span>조회/취소</span></a>
-      <a href="#none" sec:authorize="hasRole('ROLE_ADMIN')"><span>병원등록</span></a>
+        <a href="#none">예방접종 <span>예약하기</span></a>
+        <a href="#none">접종예약 <span>조회/취소</span></a>
+        <a href="#none" sec:authorize="hasRole('ROLE_ADMIN')"><span>병원등록</span></a>
     </div>
-  </div>
+</div>
 </body>
 </html>
