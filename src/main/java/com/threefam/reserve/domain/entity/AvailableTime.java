@@ -3,6 +3,7 @@ package com.threefam.reserve.domain.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -23,4 +24,13 @@ public class AvailableTime {
 
     // 한 타임동안 수용 가능한 인원
     private Integer acceptCount;
+
+    @Type(type = "yes_no")
+    private Boolean enabled = true;
+
+    // 양방향 연관관계 편의 메서드
+    private void addAvailableDate(AvailableDate availableDate) {
+        this.availableDate = availableDate;
+        availableDate.getAvailableTimes().add(this);
+    }
 }

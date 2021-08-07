@@ -3,6 +3,7 @@ package com.threefam.reserve.domain.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class AvailableDate {
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
+    // 양방향
     @OneToMany(mappedBy = "availableDate")
     private List<AvailableTime> availableTimes = new ArrayList<>();
 
@@ -30,5 +32,13 @@ public class AvailableDate {
     @Column(name = "accept_count")
     private Integer acceptCount;
 
+    @Type(type = "yes_no")
+    private Boolean enabled = true;
+
+    // 양방향 연관관계 편의 메서드
+    private void addHospital(Hospital hospital) {
+        this.hospital = hospital;
+        hospital.getAvailableDates().add(this);
+    }
 
 }

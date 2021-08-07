@@ -26,6 +26,7 @@ public class Hospital extends BaseEntity{
     @Column(name = "hospital_name")
     private String hospitalName;
 
+    // 양방향
     @OneToMany(mappedBy = "hospital")
     private List<AvailableDate> availableDates = new ArrayList<>();
 
@@ -55,7 +56,6 @@ public class Hospital extends BaseEntity{
         this.admin = admin;
         admin.getHospitals().add(this);
     }
-
 
     @Builder(builderMethodName = "createHospital")
     public Hospital(String hospitalName, String address, String detailAddress) {
