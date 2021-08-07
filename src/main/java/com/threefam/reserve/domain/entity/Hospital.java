@@ -26,13 +26,9 @@ public class Hospital extends BaseEntity{
     @Column(name = "hospital_name")
     private String hospitalName;
 
-    @ElementCollection
-    @CollectionTable(name = "available_times")
-    private List<String> availableTimes = new ArrayList<>();
-
-    @ElementCollection
-    @CollectionTable(name = "available_dates")
-    private List<String> availableDates = new ArrayList<>();
+    // 양방향
+    @OneToMany(mappedBy = "hospital")
+    private List<AvailableDate> availableDates = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")
@@ -48,7 +44,7 @@ public class Hospital extends BaseEntity{
     @Type(type = "yes_no")
     private Boolean enabled = true; // 예약 가능 여부
 
-    @OneToMany(mappedBy = "hospital", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "hospital", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Vaccine> vaccines = new ArrayList<>();
 
     public void setEnabled(boolean flag) {
@@ -61,15 +57,9 @@ public class Hospital extends BaseEntity{
         admin.getHospitals().add(this);
     }
 
-
-
-
     @Builder(builderMethodName = "createHospital")
-    public Hospital(String hospitalName, List<String> availableTimes,
-                    List<String> availableDates, String address, String detailAddress) {
+    public Hospital(String hospitalName, String address, String detailAddress) {
         this.hospitalName = hospitalName;
-        this.availableTimes = availableTimes;
-        this.availableDates = availableDates;
         this.address = address;
         this.detailAddress = detailAddress;
         this.createAt = LocalDateTime.now();

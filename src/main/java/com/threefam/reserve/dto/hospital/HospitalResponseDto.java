@@ -17,17 +17,15 @@ import java.util.Map;
 public class HospitalResponseDto {
     private String hospitalName;
     private List<String> availableDates;
-    private List<String> availableTimes;
     private String address;
     private String detailAddress;
 
     private Map<String, Integer> vaccineInfoMap = new HashMap<>();
 
-    public HospitalResponseDto createDto(String hospitalName, List<String> availableDates, List<String> availableTimes,
+    public HospitalResponseDto createDto(String hospitalName, List<String> availableDates,
                                  String address, String detailAddress, Map<String, Integer> vaccineInfoMap) {
         this.hospitalName = hospitalName;
         this.availableDates = availableDates;
-        this.availableTimes = availableTimes;
         this.address = address;
         this.detailAddress = detailAddress;
         this.vaccineInfoMap = vaccineInfoMap;
