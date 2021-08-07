@@ -7,9 +7,12 @@ import com.threefam.reserve.dto.user.UserAddFormDto;
 import com.threefam.reserve.dto.security.PrincipalDetails;
 import com.threefam.reserve.service.user.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +23,12 @@ public class UserController {
 
     private final UserService userService;
 
+    @ModelAttribute("genders")
+    public Gender[] genders(){
+        Gender[] genders = Gender.values();
+        return genders;
+    }
+
     /**
      *
      * 회원 가입 form 으로 보내줄 Controller. oauth로 로그인한 사람의 계정을 보고
@@ -29,7 +38,7 @@ public class UserController {
      * 회원 가입 페이지는 joinForm으로
      *
      */
-    @GetMapping("/join")
+    @GetMapping("/signup")
     public String joinForm(@AuthenticationPrincipal PrincipalDetails details, Model model){
 
         if(userService.getUserByEmail(details.getUsername())==null){
@@ -37,13 +46,17 @@ public class UserController {
             userAddFormDto.setEmail(details.getUsername());
             userAddFormDto.setName(details.getName());
             userAddFormDto.setPassword(details.getPassword());
-            return "joinForm";
+            model.addAttribute("userAddFormDto",userAddFormDto);
+            return "user/signup/signupForm";
         }
-        return "Login";
+        return "redirect:/";
     }
 
-    @PostMapping("/join")
-    public String join(@ModelAttribute UserAddFormDto form){
+    @PostMapping("/signup")
+    public String join(@Validated @ModelAttribute UserAddFormDto form, BindingResult result){
+        if(result.hasErrors()) {
+            return "user/signup/signupForm";
+        }
         User user = User.createUser()
                 .email(form.getEmail())
                 .password(form.getPassword())

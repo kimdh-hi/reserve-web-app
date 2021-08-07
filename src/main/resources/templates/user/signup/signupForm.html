@@ -8,6 +8,12 @@
   <title>회원가입</title>
   <link rel="icon" href="/images/home.png">
   <link rel="stylesheet" th:href="@{/css/signup.css}">
+  <style>
+        .field-error{
+            color:red;
+            font-weight:bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,59 +21,54 @@
 <div class="sign">
   <h1 class="hS">회원가입</h1>
 
-  <div class="info">
-    <b>이메일</b>
-    <input type="email">
-  </div>
-
-  <div class="info">
-    <b>이름</b>
-    <input type="text">
-  </div>
-
-  <div class="info gender">
-    <b>성별</b>
-    <div>
-      <label><input type="radio" name="gender"><em></em>남자</label>
-      <label><input type="radio" name="gender"><em></em>여자</label>
-      <label><input type="radio" name="gender"><em></em>선택안함</label>
+  <form th:action th:object="${userAddFormDto}" method="post">
+    <div class="info">
+      <label for="email"><b>이메일</b></label>
+      <input type="email" th:field="*{email}" id="email" th:readonly="${userAddFormDto.email!=null}">
     </div>
-  </div>
 
-  <div class="info birth">
-    <b>생년월일</b>
-    <div>
-      <input type="number" placeholder="년(4자)">
-      <select>
-        <option value="">월</option>
-        <option value="">1월</option>
-        <option value="">2월</option>
-        <option value="">3월</option>
-        <option value="">4월</option>
-        <option value="">5월</option>
-        <option value="">6월</option>
-        <option value="">7월</option>
-        <option value="">8월</option>
-        <option value="">9월</option>
-        <option value="">10월</option>
-        <option value="">11월</option>
-        <option value="">12월</option>
-      </select>
-      <input type="number" placeholder="일">
+    <div class="info">
+      <label for="name"><b>이름</b></label>
+      <input type="text" th:field="*{name}" id="name" th:readonly="${userAddFormDto.name!=null}">
     </div>
-  </div>
+    <input type="hidden" th:field="*{password}" th:if="${userAddFormDto.password!=null}">
 
-  <div class="info">
-    <b>주소</b>
-    <input type="text">
-  </div>
+    <div class="info gender">
+      <b>성별</b>
+      <div th:each="gender : ${genders}" >
+          <input type="radio" th:field="*{gender}" th:value="${gender.name()}" >
+        <label th:for="${#ids.prev('gender')}" th:text="${gender.description}">
+        </label>
+      </div>
+      <div class="field-error" th:errors="*{gender}">
+      </div>
+    </div>
 
-  <div class="info">
-    <b>상세주소</b>
-    <input type="text">
-  </div>
+    <div class="info birth">
+      <label for="age"><b>나이</b></label>
+      <div>
+        <input type="number" placeholder="나이를 입력하세요." th:field="*{age}" id="age" >
+      </div>
+      <div class="field-error" th:errors="*{age}">
+      </div>
+    </div>
 
-  <input type="submit" value="가입하기">
+    <div class="info">
+      <label for="address"><b>주소</b></label>
+      <input type="text" th:field="*{address}" id="address" >
+      <div class="field-error" th:errors="*{address}">
+      </div>
+    </div>
+
+    <div class="info">
+      <label for="detailAddress"><b>상세주소</b></label>
+      <input type="text" th:field="*{detailAddress}" id="detailAddress" >
+      <div class="field-error" th:errors="*{detailAddress}">
+      </div>
+    </div>
+
+    <input type="submit" value="가입하기">
+  </form>
 </div>
 
 </body>

@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2Login()
                 .loginPage("/index")
-                .defaultSuccessUrl("/")  //회원 가입 폼으로 만들 예정 일단 테스트(08/04)
+                .defaultSuccessUrl("/signup")  //회원 가입 폼으로 만들 예정 일단 테스트(08/04)
                 .userInfoEndpoint()
                 .userService(oauth2Service);
 

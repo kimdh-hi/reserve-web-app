@@ -37,4 +37,9 @@ public class HomeController {
         return "user/signup/signupForm";
     }
 
+    @GetMapping("/test/ad")
+    public String asdqd() {
+        return "admin/hospitalRegister";
+    }
+
 }
