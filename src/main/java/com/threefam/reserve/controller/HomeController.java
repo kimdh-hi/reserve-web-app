@@ -17,7 +17,7 @@ public class HomeController {
     @GetMapping("/")
     public String home(@AuthenticationPrincipal PrincipalDetails details) {
 
-        return "register";
+        return "index";
     }
 
     @GetMapping("/adminLogin")
