@@ -44,7 +44,7 @@ public class Hospital extends BaseEntity{
     @Type(type = "yes_no")
     private Boolean enabled = true; // 예약 가능 여부
 
-    @OneToMany(mappedBy = "hospital", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "hospital", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Vaccine> vaccines = new ArrayList<>();
 
     public void setEnabled(boolean flag) {

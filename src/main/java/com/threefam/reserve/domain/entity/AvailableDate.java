@@ -24,8 +24,11 @@ public class AvailableDate {
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
+    @Column(nullable = false)
+    private String date;
+
     // 양방향
-    @OneToMany(mappedBy = "availableDate")
+    @OneToMany(mappedBy = "availableDate", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AvailableTime> availableTimes = new ArrayList<>();
 
     // 일일 수용 가능 인원

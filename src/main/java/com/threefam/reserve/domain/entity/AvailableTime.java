@@ -1,6 +1,7 @@
 package com.threefam.reserve.domain.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
@@ -18,6 +19,9 @@ public class AvailableTime {
     @Column(name = "available_time_id")
     private Long id;
 
+    @Column(nullable = false)
+    private int time;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "available_date_id")
     private AvailableDate availableDate;
@@ -32,5 +36,15 @@ public class AvailableTime {
     private void addAvailableDate(AvailableDate availableDate) {
         this.availableDate = availableDate;
         availableDate.getAvailableTimes().add(this);
+    }
+
+    private void setAvailableTime(int time) {
+        this.time = time;
+    }
+
+    @Builder(builderMethodName = "createAvailableTime")
+    public AvailableTime(int time, Integer acceptCount) {
+        this.time = time;
+        this.acceptCount = acceptCount;
     }
 }

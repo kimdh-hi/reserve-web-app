@@ -1,5 +1,6 @@
 package com.threefam.reserve.service.admin;
 
+import com.threefam.reserve.domain.entity.AvailableTime;
 import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.domain.entity.Vaccine;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,9 +29,9 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     @Override
     public Long addHospital(HospitalRequestDto hospitalRequestDto) {
-
-        Hospital hospital = hospitalRequestDto.toEntityHospital();
-
+        // 병원 엔티티 생성
+        Hospital hospital = hospitalRequestDto.toHospitalEntity();
+        // 백신 엔티티 생성 및 병원 엔티티에 add
         Map<String, Integer> vaccineInfoMap = hospitalRequestDto.getVaccineInfoMap();
         for (String key : vaccineInfoMap.keySet()) {
             Vaccine vaccine = Vaccine.createVaccine()
@@ -39,9 +41,28 @@ public class AdminServiceImpl implements AdminService {
             vaccine.addHospital(hospital);
         }
 
+        // 예약가능시간
+        List<Integer> availableTimes = getAvailableTimes(hospitalRequestDto.getStartTime(), hospitalRequestDto.getEndTime());
+
+        // 예약가능날짜
+
+
         Hospital savedHospital = hospitalRepository.save(hospital);
 
         return savedHospital.getId();
+    }
+
+    /**
+     * 예약가능시간 처리 메서드
+     */
+    private List<Integer> getAvailableTimes(String startTime, String endTime) {
+        int start = Integer.parseInt(startTime);
+        int end = Integer.parseInt(endTime);
+        List<Integer> availableTimes = new ArrayList<>();
+        for (int i=start; i<=end;i++) {
+            availableTimes.add(i);
+        }
+        return availableTimes;
     }
 
     /**
@@ -60,13 +81,7 @@ public class AdminServiceImpl implements AdminService {
             map.put(vaccine.getVaccineName(), vaccine.getQuantity());
         }
 
-        return new HospitalResponseDto().createDto(
-                findHospital.getHospitalName(),
-                findHospital.getAvailableDates(),
-                findHospital.getAvailableTimes(),
-                findHospital.getAddress(),
-                findHospital.getDetailAddress(),
-                map
-        );
+        // 리턴 고쳐야 함
+        return null;
     }
 }

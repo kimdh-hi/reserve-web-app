@@ -19,30 +19,40 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 public class HospitalRequestDto {
-    // 병원이름, 예약가능날짜, 예약가능시간, 주소, 상세주소
     @NotEmpty(message = "병원이름을 입력해주세요.")
     private String hospitalName;
-    @NotNull(message = "예약가능 날짜를 선택해주세요.")
-    private List<String> availableDates;
-    @NotNull(message = "예약가능 시간을 선택해주세요.")
-    private List<String> availableTimes;
+
+    @NotNull(message = "예약가능 시작날짜를 선택해주세요.")
+    private String startDate;
+    @NotNull(message = "예약가능 종료날짜를 선택해주세요.")
+    private String endDate;
+    @NotNull(message = "일일 최대 예약가능 인원을 입력해주세요.")
+    private int dateAccept;
+
+    @NotNull(message = "예약가능 시작시간을 선택해주세요.")
+    private String startTime;
+    @NotNull(message = "예약가능 종료시간을 선택해주세요.")
+    private String endTime;
+    @NotNull(message = "시간당 최대 예약가능 인원을 입력해주세요.")
+    private int timeAccept;
+
     @NotEmpty(message = "병원 주소를 입력해주세요.")
     private String address;
     @NotEmpty(message = "병원 상세주소를 입력해주세요.")
     private String detailAddress;
-    // 백신이름, 잔여수량
+
+
     @NotEmpty(message = "백신 이름을 입력해주세요.")
     private List<String> vaccineNames = new ArrayList<>();
     @NotNull(message = "백신 예약가능 수량을 입력해주세요.")
     private List<Integer> vaccineQuantities = new ArrayList<>();
+
     // 백신 종류마다 잔여수량을 달리하기 위해 Map 사용 (key:백신이름, value:잔여수령)
     private Map<String, Integer> vaccineInfoMap = new HashMap<>();
 
-    public Hospital toEntityHospital() {
+    public Hospital toHospitalEntity() {
         return Hospital.createHospital()
                 .hospitalName(this.hospitalName)
-                .availableDates(this.availableDates)
-                .availableTimes(this.availableTimes)
                 .address(this.address)
                 .detailAddress(this.detailAddress)
                 .build();
