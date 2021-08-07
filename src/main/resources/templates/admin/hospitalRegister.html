@@ -75,13 +75,13 @@
         <b>예약 가능 날짜</b>
         <div>
           <input type="text" id="datepicker1" name="datepicker1" th:field="*{startDate}">
-          <div class="field-error" th:errors="*{startDate}">
-          </div>
           <b>~</b>
           <input type="text" id="datepicker2" name="datepicker2" th:field="*{endDate}">
-          <div class="field-error" th:errors="*{endDate}">
-          </div>
         </div>
+      </div>
+      <div class="field-error" th:errors="*{startDate}">
+      </div>
+      <div class="field-error" th:errors="*{endDate}">
       </div>
 
       <div class="info time">

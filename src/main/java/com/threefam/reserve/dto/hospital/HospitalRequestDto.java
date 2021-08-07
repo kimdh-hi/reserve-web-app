@@ -22,9 +22,9 @@ public class HospitalRequestDto {
     @NotEmpty(message = "병원이름을 입력해주세요.")
     private String hospitalName;
 
-    @NotNull(message = "예약가능 시작날짜를 선택해주세요.")
+    @NotEmpty(message = "예약가능 시작날짜를 선택해주세요.")
     private String startDate;
-    @NotNull(message = "예약가능 종료날짜를 선택해주세요.")
+    @NotEmpty(message = "예약가능 종료날짜를 선택해주세요.")
     private String endDate;
     @NotNull(message = "일일 최대 예약가능 인원을 입력해주세요.")
     private Integer dateAccept;
