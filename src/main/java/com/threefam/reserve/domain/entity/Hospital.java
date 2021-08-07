@@ -26,13 +26,8 @@ public class Hospital extends BaseEntity{
     @Column(name = "hospital_name")
     private String hospitalName;
 
-    @ElementCollection
-    @CollectionTable(name = "available_times")
-    private List<String> availableTimes = new ArrayList<>();
-
-    @ElementCollection
-    @CollectionTable(name = "available_dates")
-    private List<String> availableDates = new ArrayList<>();
+    @OneToMany(mappedBy = "hospital")
+    private List<AvailableDate> availableDates = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")
@@ -62,14 +57,9 @@ public class Hospital extends BaseEntity{
     }
 
 
-
-
     @Builder(builderMethodName = "createHospital")
-    public Hospital(String hospitalName, List<String> availableTimes,
-                    List<String> availableDates, String address, String detailAddress) {
+    public Hospital(String hospitalName, String address, String detailAddress) {
         this.hospitalName = hospitalName;
-        this.availableTimes = availableTimes;
-        this.availableDates = availableDates;
         this.address = address;
         this.detailAddress = detailAddress;
         this.createAt = LocalDateTime.now();
