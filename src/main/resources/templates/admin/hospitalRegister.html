@@ -32,6 +32,12 @@
     });
   });
 </script>
+  <style>
+        .field-error{
+            color:red;
+            font-weight:bold;
+        }
+    </style>
 
 
   <link rel="icon" th:href="@{/images/home.png}">
@@ -43,69 +49,97 @@
   <div class="register">
     <h1 class="hR">병원 등록하기</h1>
 
-    <form th:action method="post">
+    <form th:action th:object="${hospitalRequestDto}" method="post">
       <div class="info">
-        <b>병원 이름</b>
-        <input type="text">
+        <label for="hospitalName"><b>병원 이름</b></label>
+        <input type="text" id="hospitalName" th:field="*{hospitalName}">
+        <div class="field-error" th:errors="*{hospitalName}">
+        </div>
       </div>
 
       <div class="info">
-        <b>주소</b>
-        <input type="text">
+        <label fdr="address"><b>주소</b></label>
+        <input type="text" id="address" th:field="*{address}">
+        <div class="field-error" th:errors="*{address}">
+        </div>
       </div>
 
       <div class="info">
-        <b>상세주소</b>
-        <input type="text">
+        <label for="detailAddress"><b>상세주소</b></label>
+        <input type="text" id="detailAddress" th:field="*{detailAddress}">
+        <div class="field-error" th:errors="*{detailAddress}">
+        </div>
       </div>
 
       <div class="info date">
         <b>예약 가능 날짜</b>
         <div>
-          <input type="text" id="datepicker1" name="datepicker1">
+          <input type="text" id="datepicker1" name="datepicker1" th:field="*{startDate}">
+          <div class="field-error" th:errors="*{startDate}">
+          </div>
           <b>~</b>
-          <input type="text" id="datepicker2" name="datepicker2">
+          <input type="text" id="datepicker2" name="datepicker2" th:field="*{endDate}">
+          <div class="field-error" th:errors="*{endDate}">
+          </div>
         </div>
       </div>
 
       <div class="info time">
         <b>예약 가능 시간</b>
         <div>
-          <input type="time" min="00:00" max="24:00" required>
+          <input type="time" min="00:00" max="24:00" required th:field="*{startTime}">
           <b>~</b>
-          <input type="time" min="00:00" max="24:00" required>
+          <input type="time" min="00:00" max="24:00" required th:field="*{endTime}">
+          <div class="field-error" th:errors="*{endTime}">
+          </div>
         </div>
+      </div>
+      <div class="field-error" th:errors="*{startTime}">
+      </div>
+      <div class="field-error" th:errors="*{endTime}">
       </div>
 
       <div class="info max">
         <b>최대 예약 가능 수</b>
         <div>
           <label>일일</label>
-          <input type="number" placeholder="수량을 입력하세요.">
+          <input type="number" placeholder="수량을 입력하세요." th:field="*{dateAccept}">
+        </div>
+        <div class="field-error" th:errors="*{dateAccept}">
         </div>
         <div>
           <label>시간 당</label>
-          <input type="number" placeholder="수량을 입력하세요.">
+          <input type="number" placeholder="수량을 입력하세요." th:field="*{timeAccept}">
+        </div>
+        <div class="field-error" th:errors="*{timeAccept}">
         </div>
       </div>
 
       <div class="info kind">
         <b>백신종류/ 수량</b>
         <div>
-          <label>아스트라제네카</label>
-          <input type="number" placeholder="수량을 입력하세요.">
+          <label for="astrazeneka">아스트라제네카</label>
+          <input type="number" placeholder="수량을 입력하세요." th:field="*{astrazeneka}" id="astrazeneka">
+        </div>
+        <div class="field-error" th:errors="*{astrazeneka}">
         </div>
         <div>
-          <label>얀센</label>
-          <input type="number" placeholder="수량을 입력하세요.">
+          <label for="janssen">얀센</label>
+          <input type="number" placeholder="수량을 입력하세요." th:field="*{janssen}" id="janssen">
+        </div>
+        <div class="field-error" th:errors="*{janssen}">
         </div>
         <div>
-          <label>화이자</label>
-          <input type="number" placeholder="수량을 입력하세요.">
+          <label for="fizar">화이자</label>
+          <input type="number" placeholder="수량을 입력하세요." th:field="*{fizar}" id="fizar">
+        </div>
+        <div class="field-error" th:errors="*{fizar}">
         </div>
         <div>
-          <label>모더나</label>
-          <input type="number" placeholder="수량을 입력하세요.">
+          <label for="modena">모더나</label>
+          <input type="number" placeholder="수량을 입력하세요." th:field="*{modena}" id="modena">
+        </div>
+        <div class="field-error" th:errors="*{modena}">
         </div>
       </div>
 

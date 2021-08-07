@@ -27,14 +27,14 @@ public class HospitalRequestDto {
     @NotNull(message = "예약가능 종료날짜를 선택해주세요.")
     private String endDate;
     @NotNull(message = "일일 최대 예약가능 인원을 입력해주세요.")
-    private int dateAccept;
+    private Integer dateAccept;
 
     @NotNull(message = "예약가능 시작시간을 선택해주세요.")
     private String startTime;
     @NotNull(message = "예약가능 종료시간을 선택해주세요.")
     private String endTime;
     @NotNull(message = "시간당 최대 예약가능 인원을 입력해주세요.")
-    private int timeAccept;
+    private Integer timeAccept;
 
     @NotEmpty(message = "병원 주소를 입력해주세요.")
     private String address;
@@ -42,10 +42,19 @@ public class HospitalRequestDto {
     private String detailAddress;
 
 
-    @NotEmpty(message = "백신 이름을 입력해주세요.")
+
     private List<String> vaccineNames = new ArrayList<>();
-    @NotNull(message = "백신 예약가능 수량을 입력해주세요.")
+
     private List<Integer> vaccineQuantities = new ArrayList<>();
+
+    @NotNull(message = "수량을 입력해주세요.")
+    private Integer astrazeneka;
+    @NotNull(message = "수량을 입력해주세요.")
+    private Integer janssen;
+    @NotNull(message = "수량을 입력해주세요.")
+    private Integer fizar;
+    @NotNull(message = "수량을 입력해주세요.")
+    private Integer modena;
 
     // 백신 종류마다 잔여수량을 달리하기 위해 Map 사용 (key:백신이름, value:잔여수령)
     private Map<String, Integer> vaccineInfoMap = new HashMap<>();
