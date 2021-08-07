@@ -46,7 +46,6 @@ public class AdminServiceImpl implements AdminService {
 
         // 예약가능날짜
 
-
         Hospital savedHospital = hospitalRepository.save(hospital);
 
         return savedHospital.getId();

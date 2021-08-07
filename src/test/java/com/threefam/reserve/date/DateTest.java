@@ -32,7 +32,8 @@ public class DateTest {
             System.out.println("availableTime = " + availableTime);
         }
     }
-
+    
+    // 시작날짜 - 종료날짜 사이의 모든 날짜
     @Test
     void 예약가능날짜() throws ParseException {
         String s1 = "20210801";
@@ -60,6 +61,7 @@ public class DateTest {
         }
     }
 
+    // 공휴일 구해오기 (성진님 추천 블로그 그대로)
     @Test
     void 공휴일() {
         Set<String> holidays = holidayService.holidayArray("2021");
