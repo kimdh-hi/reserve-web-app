@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +33,8 @@ public class AdminServiceImpl implements AdminService {
     public Long addHospital(HospitalRequestDto hospitalRequestDto) {
         // 병원 엔티티 생성
         Hospital hospital = hospitalRequestDto.toHospitalEntity();
+        // 어드민 추가 (현재 세션 기반으로 처리)
+
         // 백신 엔티티 생성 및 병원 엔티티에 add
         Map<String, Integer> vaccineInfoMap = hospitalRequestDto.getVaccineInfoMap();
         for (String key : vaccineInfoMap.keySet()) {
@@ -40,7 +44,9 @@ public class AdminServiceImpl implements AdminService {
                     .build();
             vaccine.addHospital(hospital);
         }
-
+        /**
+         * 예약 가능 날짜를 생성 (휴일제외)
+         */
         // 예약가능시간
         List<Integer> availableTimes = getAvailableTimes(hospitalRequestDto.getStartTime(), hospitalRequestDto.getEndTime());
 
@@ -82,5 +88,9 @@ public class AdminServiceImpl implements AdminService {
 
         // 리턴 고쳐야 함
         return null;
+    }
+
+    public void getAllHospitalInfo() {
+        hospitalRepository.findAll();
     }
 }

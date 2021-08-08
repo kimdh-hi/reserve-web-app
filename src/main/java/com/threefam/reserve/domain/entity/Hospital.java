@@ -34,6 +34,11 @@ public class Hospital extends BaseEntity{
     @JoinColumn(name = "admin_id")
     private Admin admin;
 
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+        admin.getHospitals().add(this);
+    }
+
     @Column(nullable = false)
     private String address;
 

@@ -18,6 +18,8 @@ public class Admin extends BaseEntity {
     @Id @GeneratedValue
     private Long id;
 
+    private Long user_id;
+
     @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
     private List<Hospital> hospitals = new ArrayList<>();
 

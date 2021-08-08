@@ -34,5 +34,6 @@ public class AdminInit {
                 .build();
 
         userService.createUser(admin);
+
     }
 }

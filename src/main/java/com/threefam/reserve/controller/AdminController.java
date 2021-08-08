@@ -1,21 +1,28 @@
 package com.threefam.reserve.controller;
 
+import com.threefam.reserve.domain.entity.User;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
+import com.threefam.reserve.dto.security.PrincipalDetails;
 import com.threefam.reserve.service.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -23,28 +30,6 @@ import java.util.Map;
 public class AdminController {
 
     private final AdminService adminService;
-
-    @PostMapping("/api/admin/add")
-    @ResponseBody
-    public ResponseEntity<String> addHospital(@RequestBody HospitalRequestDto hospitalRequestDto) {
-        // List 로 전달받은 백신이름과 잔여수량을 Map 으로 변환하여 dto에 넣어준다.
-        if (hospitalRequestDto.getVaccineNames() != null && hospitalRequestDto.getVaccineQuantities() != null) {
-            List<String> vaccineNames = hospitalRequestDto.getVaccineNames();
-            List<Integer> vaccineQuantities = hospitalRequestDto.getVaccineQuantities();
-            Map<String, Integer> vaccineInfoMap = hospitalRequestDto.getVaccineInfoMap();
-            for (int i=0;i<vaccineNames.size();i++) {
-                vaccineInfoMap.put(vaccineNames.get(i), vaccineQuantities.get(i));
-            }
-            // test log
-            for (String key : vaccineInfoMap.keySet()) {
-                log.info("vaccineName = {}, vaccineQuantity = {}", key, vaccineInfoMap.get(key));
-            }
-        }
-
-        adminService.addHospital(hospitalRequestDto);
-
-        return ResponseEntity.ok(hospitalRequestDto.getHospitalName() + "등록 완료");
-    }
 
     @GetMapping("/api/admin/hospital/{hospitalName}")
     @ResponseBody
@@ -60,10 +45,19 @@ public class AdminController {
         return "admin/hospitalRegister";
     }
 
+    @GetMapping("/admin/session-test")
+    public String sessionTest(Authentication authentication) {
+
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        log.info("principal.name = {}", principal.getName());
+        return "redirect:/";
+    }
+
     //list를 화면으로 넘겨주려면 modelAttribute를 사용하여 따로 보내 줘야하는데 너무 번거로운 작업이기에 RequestParam으로 받아옴.(null이나 0이면 백신 추가x)
     @PostMapping("/admin/add-hospital")
     public String addHospital(
-            @Validated @ModelAttribute HospitalRequestDto form, BindingResult result){
+            Authentication authentication,
+            @Validated @ModelAttribute HospitalRequestDto form, BindingResult result, HttpServletRequest request){
 
         if(result.hasErrors()){
             return "admin/hospitalRegister";
@@ -71,9 +65,11 @@ public class AdminController {
 
         makeVaccineInfoMap(form.getAstrazeneka(), form.getJanssen(), form.getFizar(), form.getModena(), form);
         timeParse(form);
+
         adminService.addHospital(form);
 
         //일단은 홈으로 리턴 추후에 바꾸면 될듯
+        //예약 리스트로 redirect (어드민 Hospital List, Hospital Detail List 필요)
         return "redirect:/";
     }
 
@@ -99,6 +95,5 @@ public class AdminController {
             vaccineInfoMap.put("모더나", modena);
         }
     }
-
 
 }

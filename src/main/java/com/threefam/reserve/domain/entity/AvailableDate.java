@@ -43,5 +43,4 @@ public class AvailableDate {
         this.hospital = hospital;
         hospital.getAvailableDates().add(this);
     }
-
 }
