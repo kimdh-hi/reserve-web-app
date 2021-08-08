@@ -1,2 +1,51 @@
 ## Reserve-Web-App
 
+## 🚀 프로젝트 개요
+2021/8/2 프로젝트 시작
+코로나19 예방접종 예약 시스템 백엔드 Clone 프로젝트
+(+ Github를 이용한 협업 연습)
+***
+
+## 🚀 사용 기술
+프레임워크: `Spring boot` 2.5.x
+IDE: `Intellij`
+ORM: `JPA` (Hibernate, Spring Data JPA)
+DBMS: `MySQL`, 테스트(`h2`)
+템플릿엔진: `Thymeleaf`
+
+- Spring Dependencies
+  - `Spring web`
+  - `Spring Data JPA`
+  - `Spring Security`
+  - `Spring Oauth2 client`
+  - `Spring Validation`
+  - `Lombok`
+  - `ModelMapper`
+***
+## 🔎 구현 예정 기능
+### Admin
+- `병원등록`
+  - 병원에 대한 기본 정보 입력 (이름, 주소 ...)
+  - 예약가능날짜, 예약가능시간, 일일 최대예약가능 인원, 시간당 최대예약가능 인원, 접종가능백신(종류별 수량) 입력
+- `등록된 병원 목록` (조회)
+  - 병원 삭제
+- `등록된 병원 상세 페이지` (조회, 수정)
+  - 등록된 병원 정보 수정
+- `현황 조회`
+  - 날짜별, 시간별 예약현황 확인
+  - 잔여백신 현황 확인
+
+...
+
+### User
+- `본인인증` ( `Oauth2` - `Naver`, `Kakao`, `Google`)
+- `예약`
+  - 병원선택 -> 예약날짜선택 -> 예약시간선택 -> 백신선택
+- `예약확인`
+- `예악한 병원 길찾기`
+
+...
+
+***
+
+ing ...
