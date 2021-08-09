@@ -35,7 +35,7 @@ DBMS: `MySQL`, 테스트(`h2`)
   - 날짜별, 시간별 예약현황 확인
   - 잔여백신 현황 확인
 
-...
+수정중
 
 ### User
 - `본인인증` ( `Oauth2` - `Naver`, `Kakao`, `Google`)
@@ -44,8 +44,15 @@ DBMS: `MySQL`, 테스트(`h2`)
 - `예약확인`
 - `예악한 병원 길찾기`
 
-...
+수정중
 
 ***
 
-ing ...
+## ERD
+![img.png](img.png)
+- 한 명의 `USER`는 한 개의 `예약서(RESERVE_ITEM)`를 가진다.
+- 한 개의 `예약서(RESERVE_ITEM)`는 한 개의 `병원(HOSPITAL)`을 가진다.
+- 한 명의 `관리자(ADMIN)`은 여러 `병원(HOSPITAL)`을 가진다.
+- 한 개 병원은 여러 `예약가능날짜(AVAILABLE_DATE)`를 가진다.
+- 한 개 `예약가능날짜(AVAILABLE_DATE)`는 여러 `예약가능시간(AVAILABLE_TIME)`을 가진다.
+- 한 개 병원은 여러 `백신(VACCINE)`을 가진다. (여러 종류의 백신)
