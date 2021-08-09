@@ -1,5 +1,6 @@
 package com.threefam.reserve.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class AvailableDate {
 
     // 양방향
     @OneToMany(mappedBy = "availableDate", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({"availableDate"})
     private List<AvailableTime> availableTimes = new ArrayList<>();
 
     // 일일 수용 가능 인원

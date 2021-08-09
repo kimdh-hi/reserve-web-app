@@ -1,5 +1,6 @@
 package com.threefam.reserve.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,13 +19,20 @@ public class Admin extends BaseEntity {
     @Id @GeneratedValue
     private Long id;
 
-    private Long user_id;
+    private String name;
 
     @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"admin"})
     private List<Hospital> hospitals = new ArrayList<>();
 
+//    @Builder(builderMethodName = "createAdmin")
+//    public Admin(List<Hospital> hospitals) {
+//        this.hospitals = hospitals;
+//    }
+
+
     @Builder(builderMethodName = "createAdmin")
-    public Admin(List<Hospital> hospitals) {
-        this.hospitals = hospitals;
+    public Admin(String name) {
+        this.name = name;
     }
 }

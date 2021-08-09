@@ -1,10 +1,12 @@
 package com.threefam.reserve.service.admin;
 
+import com.threefam.reserve.domain.entity.Admin;
 import com.threefam.reserve.domain.entity.AvailableTime;
 import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.domain.entity.Vaccine;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
+import com.threefam.reserve.repository.AdminRepository;
 import com.threefam.reserve.repository.HospitalRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,17 +26,21 @@ import java.util.Map;
 public class AdminServiceImpl implements AdminService {
 
     private final HospitalRepository hospitalRepository;
+    private final AdminRepository adminRepository;
 
     /**
      * 병원 정보 등록
      */
     @Transactional
     @Override
-    public Long addHospital(HospitalRequestDto hospitalRequestDto) {
+    public Long addHospital(HospitalRequestDto hospitalRequestDto, String adminName) {
         // 병원 엔티티 생성
         Hospital hospital = hospitalRequestDto.toHospitalEntity();
-        // 어드민 추가 (현재 세션 기반으로 처리)
-
+        /**
+         * 현재 Authentication 객체로부터 받은 adminName을 등록하는 병원의 admin으로 설정하는 방식
+         */
+        Admin admin = adminRepository.findByName(adminName).get();
+        hospital.setAdmin(admin);
         // 백신 엔티티 생성 및 병원 엔티티에 add
         Map<String, Integer> vaccineInfoMap = hospitalRequestDto.getVaccineInfoMap();
         for (String key : vaccineInfoMap.keySet()) {
@@ -90,7 +96,12 @@ public class AdminServiceImpl implements AdminService {
         return null;
     }
 
-    public void getAllHospitalInfo() {
-        hospitalRepository.findAll();
+    /**
+     * 어드민으로 병원 조회 테스트
+     */
+    @Override
+    public List<Hospital> getAllHospitalInfo(String name) {
+        Admin admin = adminRepository.findByName(name).get();
+        return hospitalRepository.findAllByAdmin(admin);
     }
 }

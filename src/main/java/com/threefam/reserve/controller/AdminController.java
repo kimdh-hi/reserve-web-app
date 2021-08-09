@@ -1,6 +1,6 @@
 package com.threefam.reserve.controller;
 
-import com.threefam.reserve.domain.entity.User;
+import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
 import com.threefam.reserve.dto.security.PrincipalDetails;
@@ -9,10 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.context.SecurityContextImpl;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,9 +16,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -45,15 +40,17 @@ public class AdminController {
         return "admin/hospitalRegister";
     }
 
-    @GetMapping("/admin/session-test")
-    public String sessionTest(Authentication authentication) {
-
+    /**
+     * 어드민으로 병원 조회 테스트 (병원 등록하고 접근해보면 Json으로 보일꺼임 근데 문제 많음 .. DTO로 찍어서 해줘여할 듯)
+     */
+    @ResponseBody
+    @GetMapping("/admin/hospitals")
+    public List<Hospital> asd(Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
-        log.info("principal.name = {}", principal.getName());
-        return "redirect:/";
+        List<Hospital> hospitals = adminService.getAllHospitalInfo(principal.getName());
+        return hospitals;
     }
 
-    //list를 화면으로 넘겨주려면 modelAttribute를 사용하여 따로 보내 줘야하는데 너무 번거로운 작업이기에 RequestParam으로 받아옴.(null이나 0이면 백신 추가x)
     @PostMapping("/admin/add-hospital")
     public String addHospital(
             Authentication authentication,
@@ -65,8 +62,14 @@ public class AdminController {
 
         makeVaccineInfoMap(form.getAstrazeneka(), form.getJanssen(), form.getFizar(), form.getModena(), form);
         timeParse(form);
+        /**
+         * /admin/** 으로 접근되었다는 것은 security filter를 지나 인가된 사용자라는 것. (Role = ADMIN)
+         * 따라서 병원 등록시 Authentication에서 얻어온 유저 정보를 그대로 사용 (병원에 Admin을 넣어주기 위함)
+         */
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        log.info("principal.name = {}", principal.getName());
 
-        adminService.addHospital(form);
+        adminService.addHospital(form, principal.getName());
 
         //일단은 홈으로 리턴 추후에 바꾸면 될듯
         //예약 리스트로 redirect (어드민 Hospital List, Hospital Detail List 필요)
