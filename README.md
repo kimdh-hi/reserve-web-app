@@ -10,9 +10,13 @@
 
 ## 🚀 사용 기술
 프레임워크: `Spring boot` 2.5.x
+
 IDE: `Intellij`
+
 ORM: `JPA` (Hibernate, Spring Data JPA)
+
 DBMS: `MySQL`, 테스트(`h2`)
+
 템플릿엔진: `Thymeleaf`
 
 - Spring Dependencies
