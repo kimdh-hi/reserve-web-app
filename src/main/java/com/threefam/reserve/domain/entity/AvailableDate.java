@@ -53,5 +53,4 @@ public class AvailableDate {
         this.date=date;
         this.acceptCount=acceptCount;
     }
-
 }

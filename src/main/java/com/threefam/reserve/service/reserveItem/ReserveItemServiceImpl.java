@@ -4,6 +4,7 @@ import com.threefam.reserve.domain.entity.ReserveItem;
 import com.threefam.reserve.domain.entity.User;
 import com.threefam.reserve.domain.entity.Vaccine;
 import com.threefam.reserve.domain.value.ReserveStatus;
+import com.threefam.reserve.repository.HospitalRepository;
 import com.threefam.reserve.repository.ReserveItemRepository;
 import com.threefam.reserve.repository.UserRepository;
 import com.threefam.reserve.repository.VaccineRepository;
@@ -19,39 +20,15 @@ import java.util.Optional;
 public class ReserveItemServiceImpl implements ReserveItemService{
 
     private final UserRepository userRepository;
-    private final VaccineRepository vaccineRepository;
-    private final ReserveItemRepository reserveItemRepository;
-
+    private final HospitalRepository hospitalRepository;
     @Override
-    public Long Reserve(Long userId, Long vaccineId,String reserveDate,String reserveTime) {
-
-        Optional<User> findUser = userRepository.findById(userId);
-        Optional<Vaccine> findVaccine = vaccineRepository.findById(vaccineId);
-
-        User user = findUser.stream().findFirst().orElseThrow(
+    public void getReserveHospitalInfo(String hospitalName) {
+        // 예역하고자 하는 병원 조회
+        hospitalRepository.findByHospitalName(hospitalName).orElseThrow(
                 () -> {
-                    throw new IllegalArgumentException("존재하지 않는 사용자 입니다.");
+                    throw new IllegalArgumentException("존재하지 않는 병원입니다.");
                 }
         );
 
-        Vaccine vaccine = findVaccine.stream().findFirst().orElseThrow(
-                () -> {
-                    throw new IllegalArgumentException("존재하지 않는 백신 입니다.");
-                }
-        );
-
-        vaccine.removeStock();
-
-        ReserveItem reserveItem = ReserveItem.createReserveItem()
-                .Hospital(vaccine.getHospital())
-                .user(user)
-                .status(ReserveStatus.COMP)
-                .build();
-
-        reserveItem.updateDateAndTime(reserveDate,reserveTime);
-
-        ReserveItem saveReserveItem = reserveItemRepository.save(reserveItem);
-
-        return saveReserveItem.getId();
     }
 }

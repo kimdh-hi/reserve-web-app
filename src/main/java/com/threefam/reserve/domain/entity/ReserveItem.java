@@ -37,7 +37,6 @@ public class ReserveItem extends BaseEntity {
 
     private String reserveTime;
 
-
     @Builder(builderMethodName = "createReserveItem")
     public ReserveItem(User user, Hospital Hospital, ReserveStatus status) {
         this.user = user;
