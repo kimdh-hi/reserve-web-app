@@ -32,7 +32,7 @@
     </div>
     <!-- 예약하기 -->
     <div sec:authorize="isAuthenticated()" class="init reserve">
-        <a href="#none">예방접종 <span>예약하기</span></a>
+        <a th:href="@{/reserve/hospitals}">예방접종 <span>예약하기</span></a>
         <a href="#none">접종예약 <span>조회/취소</span></a>
         <a th:href="@{/admin/add-hospital}" sec:authorize="hasRole('ROLE_ADMIN')">병원<span>등록</span></a>
     </div>
