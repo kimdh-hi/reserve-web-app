@@ -6,6 +6,7 @@ import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.domain.entity.Vaccine;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
+import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
 import com.threefam.reserve.repository.AdminRepository;
 import com.threefam.reserve.repository.HospitalRepository;
 import lombok.RequiredArgsConstructor;
@@ -97,10 +98,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * 어드민으로 병원 조회 테스트
+     * 어드민이 관리하는 병원 리스트를 보여주기 위한 메서드
      */
     @Override
-    public List<Hospital> getAllHospitalInfo(String name) {
+    public List<HospitalSimpleInfoDto> getAllSimpleHospitalInfo(String name) {
         Admin admin = adminRepository.findByName(name).get();
         return hospitalRepository.findAllByAdmin(admin);
     }

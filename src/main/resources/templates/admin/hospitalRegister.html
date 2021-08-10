@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>병원 등록하기 (관리자)</title>
-  
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
   <link rel="stylesheet" th:href="@{//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}">
   <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
   <script th:src="@{https://code.jquery.com/jquery-1.12.4.js}"></script>
@@ -87,16 +88,14 @@
       <div class="info time">
         <b>예약 가능 시간</b>
         <div>
-          <input type="time" min="00:00" max="24:00" required th:field="*{startTime}">
+          <input class="timepicker" type="text" placeholder="시간 체크" th:field="*{startTime}">
           <b>~</b>
-          <input type="time" min="00:00" max="24:00" required th:field="*{endTime}">
-          <div class="field-error" th:errors="*{endTime}">
-          </div>
+          <input class="timepicker "type="text" placeholder="시간 체크" th:field="*{endTime}">
         </div>
       </div>
-      <div class="field-error" th:errors="*{startTime}">
-      </div>
-      <div class="field-error" th:errors="*{endTime}">
+      <div>
+          <div class="field-error" th:errors="*{startTime}"></div>
+          <div class="field-error" th:errors="*{endTime}"></div>
       </div>
 
       <div class="info max">
@@ -107,12 +106,14 @@
         </div>
         <div class="field-error" th:errors="*{dateAccept}">
         </div>
+
         <div>
           <label>시간 당</label>
           <input type="number" placeholder="수량을 입력하세요." th:field="*{timeAccept}">
         </div>
         <div class="field-error" th:errors="*{timeAccept}">
         </div>
+
       </div>
 
       <div class="info kind">
@@ -146,6 +147,19 @@
       <input type="submit" value="등록하기">
     </form>
   </div>
+  <script>
+  $(document).ready(function(){
+      $('input.timepicker').timepicker({
+        timeFormat: 'HH:mm',
+        interval: 60,
+        startTime: '00:00',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true
+      });
+    });
+  </script>
 
+  <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 </body>
 </html>

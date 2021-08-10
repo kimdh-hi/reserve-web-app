@@ -23,9 +23,12 @@ public interface HospitalRepository extends JpaRepository<Hospital, Long> {
     List<HospitalSimpleInfoDto> findAllHospitalNameAndAddress();
 
     /**
-     * 테스트용 조회 쿼리 (순환참조 막기 위해 일단 양방향 연관관계의 주인이 아닌 필드에  @JsonIgnoreProperties 설정해주었음
+     * 어드민이 관리하는 모든 병원 정보 조회 (병원이름, 장소)
+     * 어드민이 등록한 모든 병원의 간단한 정보만을 조회하기 위한 쿼리
      */
-    @Query("select h from Hospital h where h.admin = :admin")
-    List<Hospital> findAllByAdmin(Admin admin);
+    @Query("select new com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto(h.hospitalName, h.address) " +
+            "from Hospital h " +
+            "where h.admin = :admin")
+    List<HospitalSimpleInfoDto> findAllByAdmin(Admin admin);
 
 }

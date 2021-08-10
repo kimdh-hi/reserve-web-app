@@ -3,6 +3,7 @@ package com.threefam.reserve.controller;
 import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
+import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
 import com.threefam.reserve.dto.security.PrincipalDetails;
 import com.threefam.reserve.service.admin.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -22,40 +23,39 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
     private final AdminService adminService;
 
-    @GetMapping("/api/admin/hospital/{hospitalName}")
-    @ResponseBody
-    public ResponseEntity<HospitalResponseDto> getHospital(@PathVariable String hospitalName) {
-        HospitalResponseDto hospitalResponseDto = adminService.getHospitalInfo(hospitalName);
-
-        return ResponseEntity.ok(hospitalResponseDto);
-    }
-
-    @GetMapping("/admin/add-hospital")
+    /**
+     * 병원 등록 폼
+     */
+    @GetMapping("/add-hospital")
     public String hospitalForm(Model model){
         model.addAttribute("hospitalRequestDto",new HospitalRequestDto());
         return "admin/hospitalRegister";
     }
 
     /**
-     * 어드민으로 병원 조회 테스트 (병원 등록하고 접근해보면 Json으로 보일꺼임 근데 문제 많음 .. DTO로 찍어서 해줘여할 듯)
+     * 어드민이 관리하는 모든 병원 목록 반환 (간단한 정보만 - 병원이름, 주소)
      */
     @ResponseBody
-    @GetMapping("/admin/hospitals")
-    public List<Hospital> asd(Authentication authentication) {
+    @GetMapping("/hospitals")
+    public List<HospitalSimpleInfoDto> asd(Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
-        List<Hospital> hospitals = adminService.getAllHospitalInfo(principal.getName());
+        List<HospitalSimpleInfoDto> hospitals = adminService.getAllSimpleHospitalInfo(principal.getName());
         return hospitals;
     }
 
-    // 테스트
-    @PostMapping("/admin/add-hospital")
+    /**
+     * 병원 등록
+     * @param authentication 현재 인증받은 사용자는 어드민이므로 등록하는 병원의 어드민이 되도록 설정하기 위함
+     */
+    @PostMapping("/add-hospital")
     public String addHospital(
             Authentication authentication,
-            @Validated @ModelAttribute HospitalRequestDto form, BindingResult result, HttpServletRequest request){
+            @Validated @ModelAttribute HospitalRequestDto form, BindingResult result){
 
         if(result.hasErrors()){
             return "admin/hospitalRegister";
@@ -72,9 +72,17 @@ public class AdminController {
 
         adminService.addHospital(form, principal.getName());
 
-        //일단은 홈으로 리턴 추후에 바꾸면 될듯
-        //예약 리스트로 redirect (어드민 Hospital List, Hospital Detail List 필요)
         return "redirect:/admin/hospitals";
+    }
+
+    /**
+     * 병원 상세 페이지
+     */
+    @ResponseBody // 테스트용
+    @GetMapping("/hospital")
+    public ResponseEntity<HospitalResponseDto> hospitalDetailPage(@RequestParam("name") String hospitalName) {
+        HospitalResponseDto hospitalInfo = adminService.getHospitalInfo(hospitalName);
+        return ResponseEntity.ok(hospitalInfo);
     }
 
     // 시간을 parseInt 되도록 만드는 메서드

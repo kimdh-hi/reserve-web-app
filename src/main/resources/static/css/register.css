@@ -29,7 +29,7 @@ input, select {
   margin-bottom: 40px;
 }
 .register .hR{
-  color: #2db400;
+  color: dodgerblue;
   text-align: center;
 }
 .info {
@@ -42,38 +42,46 @@ input, select {
 }
 
 /* 날짜 */
-.info.date div {
+.info.date div ,
+.info.time div {
   display: flex;
   gap:15px;
 }
 .info.date input {
   flex: 1;
-  background: url(/images/date_1.PNG) no-repeat center right 10px;
+  background: url(/Front/images/date_1.PNG) no-repeat center right 10px;
 }
-.info.date div b {
+.info.date div b,
+.info.time div b {
   display: inline-block;
   line-height: 21px;
   margin-top: 15px;
 }
 
 /* 백신 종류 */
-.info.kind b {
+.info.kind b,
+.info.max b {
   margin-bottom:10px;
 }
 
-.info.kind div {
+.info.kind div,
+.info.max div {
   display: flex;
   margin-bottom: 10px;
 }
-.info.kind div label
-.info.kind div input {
+.info.kind div label,
+.info.kind div input,
+.info.max div label,
+.info.max div input {
   display: inline-block;
 }
-.info.kind div label {
+.info.kind div label,
+.info.max div label {
   flex: 1;
   text-align: center;
 }
-.info.kind div input {
+.info.kind div input,
+.info.max div input {
   flex: 2;
 }
 
@@ -86,18 +94,18 @@ input, select {
 }
 .register input[type=submit] {
   color: #fff;
-  background-color: skyblue;
+  background-color: dodgerblue;
   margin-top: 20px;
 }
 
 .register input:not(input[type=number]):focus {
   border: 1px solid skyblue;
-} 
+}
 
 /* select 화살표 없애기 */
 select {
-  -webkit-appearance:none; 
-  -moz-appearance:none; 
+  -webkit-appearance:none;
+  -moz-appearance:none;
   appearance:none;
   background: #eee url(/images/select.png) no-repeat center right 20px;
 }
@@ -106,7 +114,7 @@ select::-ms-expand{
 }
 
 /* number 타입 숫자 올리는 화살표 x */
-input[type=number]::-webkit-outer-spin-button,
+/* input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -114,4 +122,4 @@ input[type=number]::-webkit-inner-spin-button {
 }
 input[type=number]{
   -moz-appearance: textfield;
-}
+} */
