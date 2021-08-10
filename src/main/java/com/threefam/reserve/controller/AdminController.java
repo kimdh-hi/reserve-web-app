@@ -1,11 +1,14 @@
 package com.threefam.reserve.controller;
 
+import com.threefam.reserve.domain.entity.AvailableDate;
 import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.HospitalListDto;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
 import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
 import com.threefam.reserve.dto.security.PrincipalDetails;
+import com.threefam.reserve.repository.HospitalRepository;
+import com.threefam.reserve.repository.custom.HospitalCustomRepository;
 import com.threefam.reserve.service.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -29,6 +33,7 @@ import java.util.Map;
 public class AdminController {
 
     private final AdminService adminService;
+    private final HospitalCustomRepository hospitalCustomRepository;
 
     /**
      * 병원 이름으로 병원 단건 조회
@@ -100,6 +105,13 @@ public class AdminController {
         List<HospitalListDto> hospitalList = adminService.getHospitalList(adminName);
         model.addAttribute("hospitalList", hospitalList);
         return "admin/hospitalList";
+    }
+
+    @GetMapping("/hospital/{hospitalName}")
+    public String hospitalInfo(Model model,@PathVariable("hospitalName")String name){
+
+        return "사벌";
+
     }
 
     // 시간을 parseInt 되도록 만드는 메서드

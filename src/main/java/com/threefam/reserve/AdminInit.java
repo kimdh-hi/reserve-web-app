@@ -69,30 +69,38 @@ public class AdminInit {
                 .vaccineName("화이자")
                 .quantity(10)
                 .build();
-        hospital.getVaccines().add(astrazeneka);
-        hospital.getVaccines().add(janssen);
-        hospital.getVaccines().add(modena);
-        hospital.getVaccines().add(fizar);
 
-        List<AvailableDate> availableDateList = new ArrayList<>();
-        availableDateList.add(AvailableDate.createAvailableDate().date("2021/1/1").acceptCount(100).build());
-        availableDateList.add(AvailableDate.createAvailableDate().date("2021/1/2").acceptCount(100).build());
-        availableDateList.add(AvailableDate.createAvailableDate().date("2021/1/3").acceptCount(100).build());
-        availableDateList.add(AvailableDate.createAvailableDate().date("2021/1/4").acceptCount(100).build());
+        astrazeneka.addHospital(hospital);
+        janssen.addHospital(hospital);
+        modena.addHospital(hospital);
+        fizar.addHospital(hospital);
 
-        AvailableTime time1 = AvailableTime.createAvailableTime().time(9).acceptCount(10).build();
-        AvailableTime time2 = AvailableTime.createAvailableTime().time(10).acceptCount(10).build();
-        AvailableTime time3 = AvailableTime.createAvailableTime().time(11).acceptCount(10).build();
-        AvailableTime time4 = AvailableTime.createAvailableTime().time(13).acceptCount(10).build();
+        List<String> dateList=new ArrayList<>();
+        dateList.add("2021/1/1");
+        dateList.add("2021/1/2");
+        dateList.add("2021/1/3");
+        dateList.add("2021/1/4");
 
-        for (AvailableDate availableDate : availableDateList) {
-            availableDate.getAvailableTimes().add(time1);
-            availableDate.getAvailableTimes().add(time2);
-            availableDate.getAvailableTimes().add(time3);
-            availableDate.getAvailableTimes().add(time4);
-            hospital.getAvailableDates().add(availableDate);
+        List<Integer> timeList=new ArrayList<>();
+        timeList.add(9);
+        timeList.add(10);
+        timeList.add(11);
+        timeList.add(13);
+
+        for (String date : dateList) {
+            AvailableDate availableDate= AvailableDate.createAvailableDate()
+                    .date(date)
+                    .acceptCount(100)
+                    .build();
+            for (Integer time : timeList) {
+                AvailableTime availableTime = AvailableTime.createAvailableTime()
+                        .time(time)
+                        .acceptCount(10)
+                        .build();
+                availableTime.addAvailableDate(availableDate);
+            }
+            availableDate.addHospital(hospital);
         }
-
         hospital.setTotalVaccineQuantity(120);
 
         hospitalRepository.save(hospital);

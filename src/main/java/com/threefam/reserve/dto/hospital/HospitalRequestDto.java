@@ -66,6 +66,28 @@ public class HospitalRequestDto {
                 .detailAddress(this.detailAddress)
                 .build();
     }
+
+    @Builder(builderMethodName = "createHospitalRequestDto")
+    public HospitalRequestDto(String hospitalName, String startDate, String endDate, Integer dateAccept,
+                              String startTime, String endTime, Integer timeAccept, String address,
+                              String detailAddress, Integer astrazeneka,
+                              Integer janssen, Integer fizar, Integer modena) {
+        this.hospitalName = hospitalName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.dateAccept = dateAccept;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.timeAccept = timeAccept;
+        this.address = address;
+        this.detailAddress = detailAddress;
+        this.astrazeneka = astrazeneka;
+        this.janssen = janssen;
+        this.fizar = fizar;
+        this.modena = modena;
+
+    }
+
 }
 
 

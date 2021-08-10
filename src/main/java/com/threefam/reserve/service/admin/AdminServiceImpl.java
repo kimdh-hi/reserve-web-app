@@ -17,10 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import com.threefam.reserve.service.Holiday;
 @RequiredArgsConstructor
 @Slf4j
@@ -144,4 +142,18 @@ public class AdminServiceImpl implements AdminService {
         Admin admin = adminRepository.findByName(name).get();
         return hospitalCustomRepository.findAllHospitalInfo(admin.getId());
     }
+
+//    @Override
+//    public HospitalRequestDto getHospital(String name) {
+//        Optional<Hospital> hospitalDetail = hospitalCustomRepository.findHospitalDetail(name);
+//        Hospital hospital = hospitalDetail.stream().findFirst().orElse(null);
+//
+//        HospitalRequestDto.createHospitalRequestDto()
+//                .hospitalName(hospital.getHospitalName())
+//                .address(hospital.getAddress())
+//                .detailAddress(hospital.getDetailAddress())
+//                .dateAccept(hospital.getAvailableDates().get(0).getAcceptCount())
+//                .timeAccept(hospital.getAvailableDates().get(0).getAvailableTimes().get(0).getAcceptCount())
+//
+//    }
 }
