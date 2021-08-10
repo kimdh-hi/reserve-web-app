@@ -91,12 +91,13 @@
         <input class="timepicker" type="text" placeholder="시간 체크" th:field="*{startTime}">
         <b>~</b>
         <input class="timepicker "type="text" placeholder="시간 체크" th:field="*{endTime}">
-        
       </div>
     </div>
     <div>
-      <div class="field-error" th:errors="*{startTime}"></div>
-      <div class="field-error" th:errors="*{endTime}"></div>
+      <div class="field-error" th:errors="*{startTime}">
+      </div>
+      <div class="field-error" th:errors="*{endTime}">
+      </div>
     </div>
 
     <div class="info max">
