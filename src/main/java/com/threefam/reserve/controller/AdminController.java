@@ -33,6 +33,7 @@ import java.util.Optional;
 public class AdminController {
 
     private final AdminService adminService;
+    private final HospitalCustomRepository hospitalCustomRepository;
 
     /**
      * 병원 이름으로 병원 단건 조회
@@ -112,7 +113,6 @@ public class AdminController {
         return "사벌";
 
     }
-
 
     // 시간을 parseInt 되도록 만드는 메서드
     private void timeParse(HospitalRequestDto form) {

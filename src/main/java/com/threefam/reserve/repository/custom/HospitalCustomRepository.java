@@ -29,10 +29,10 @@ public class HospitalCustomRepository {
 
     public Optional<Hospital> findHospitalDetail(String hospitalName){
         return Optional.of(em.createQuery(
-                "select distinct h from Hospital h join fetch h.vaccines v " +
-                        "join fetch h.availableDates ha " +
-                        "join fetch ha.availableTimes " +
-                        "where h.hospitalName= :hospitalName",Hospital.class
-        ).setParameter("hospitalName",hospitalName).getSingleResult());
+                "select distinct h from Hospital h " +
+                        "join fetch h.admin a" +
+                        "join fetch h.vaccines v " +
+                        "where h.hospitalName= :hospitalName",Hospital.class)
+                .setParameter("hospitalName",hospitalName).getSingleResult());
     }
 }

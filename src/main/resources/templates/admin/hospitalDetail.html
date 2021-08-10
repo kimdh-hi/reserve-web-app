@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>병원 상세정보</title>
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+  <link rel="stylesheet" th:href="@{//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}">
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+  <script th:src="@{https://code.jquery.com/jquery-1.12.4.js}"></script>
+  <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.js}"></script>
+
+  <script>
+    $.datepicker.setDefaults({
+      dateFormat: 'yy-mm-dd',
+      prevText: '이전 달',
+      nextText: '다음 달',
+      monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+      dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+      dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+      showMonthAfterYear: true,
+      yearSuffix: '년'
+    });
+  </script>
+
+  <script>
+    $(function () {
+      $("#datepicker1, #datepicker2").datepicker({
+        dateFormat: 'yy.mm.dd'
+      });
+    });
+  </script>
+  <style>
+    .field-error{
+      color:red;
+      font-weight:bold;
+    }
+  </style>
+
+
+  <link rel="icon" th:href="@{/images/home.png}">
+  <link rel="stylesheet" th:href="@{/css/register.css}">
+
+</head>
+
+<body>
+<div class="register">
+  <h1 class="hR">병원 등록하기</h1>
+
+  <form th:action th:object="${hospitalRequestDto}" method="post">
+    <div class="info">
+      <label for="hospitalName"><b>병원 이름</b></label>
+      <input type="text" id="hospitalName" th:field="*{hospitalName}">
+      <div class="field-error" th:errors="*{hospitalName}">
+      </div>
+    </div>
+
+    <div class="info">
+      <label fdr="address"><b>주소</b></label>
+      <input type="text" id="address" th:field="*{address}">
+      <div class="field-error" th:errors="*{address}">
+      </div>
+    </div>
+
+    <div class="info">
+      <label for="detailAddress"><b>상세주소</b></label>
+      <input type="text" id="detailAddress" th:field="*{detailAddress}">
+      <div class="field-error" th:errors="*{detailAddress}">
+      </div>
+    </div>
+
+    <div class="info date">
+      <b>예약 가능 날짜</b>
+      <div>
+        <input type="text" id="datepicker1" name="datepicker1" th:field="*{startDate}">
+        <b>~</b>
+        <input type="text" id="datepicker2" name="datepicker2" th:field="*{endDate}">
+      </div>
+    </div>
+    <div class="field-error" th:errors="*{startDate}">
+    </div>
+    <div class="field-error" th:errors="*{endDate}">
+    </div>
+
+    <div class="info time">
+      <b>예약 가능 시간</b>
+      <div>
+        <input class="timepicker" type="text" placeholder="시간 체크" th:field="*{startTime}">
+        <b>~</b>
+        <input class="timepicker "type="text" placeholder="시간 체크" th:field="*{endTime}">
+      </div>
+    </div>
+    <div>
+      <div class="field-error" th:errors="*{startTime}">
+      </div>
+      <div class="field-error" th:errors="*{endTime}">
+      </div>
+    </div>
+
+    <div class="info max">
+      <b>최대 예약 가능 수</b>
+      <div>
+        <label>일일</label>
+        <input type="number" placeholder="수량을 입력하세요." th:field="*{dateAccept}">
+      </div>
+      <div class="field-error" th:errors="*{dateAccept}">
+      </div>
+      <div>
+        <label>시간 당</label>
+        <input type="number" placeholder="수량을 입력하세요." th:field="*{timeAccept}">
+      </div>
+      <div class="field-error" th:errors="*{timeAccept}">
+      </div>
+    </div>
+
+    <div class="info kind">
+      <b>백신종류/ 수량</b>
+      <div>
+        <label for="astrazeneka">아스트라제네카</label>
+        <input type="number" placeholder="수량을 입력하세요." th:field="*{astrazeneka}" id="astrazeneka">
+      </div>
+      <div class="field-error" th:errors="*{astrazeneka}">
+      </div>
+      <div>
+        <label for="janssen">얀센</label>
+        <input type="number" placeholder="수량을 입력하세요." th:field="*{janssen}" id="janssen">
+      </div>
+      <div class="field-error" th:errors="*{janssen}">
+      </div>
+      <div>
+        <label for="fizar">화이자</label>
+        <input type="number" placeholder="수량을 입력하세요." th:field="*{fizar}" id="fizar">
+      </div>
+      <div class="field-error" th:errors="*{fizar}">
+      </div>
+      <div>
+        <label for="modena">모더나</label>
+        <input type="number" placeholder="수량을 입력하세요." th:field="*{modena}" id="modena">
+      </div>
+      <div class="field-error" th:errors="*{modena}">
+      </div>
+    </div>
+
+    <input type="submit" value="등록하기">
+  </form>
+</div>
+<script>
+  $(document).ready(function(){
+    $('input.timepicker').timepicker({
+      timeFormat: 'HH:mm',
+      interval: 60,
+      startTime: '00:00',
+      dynamic: false,
+      dropdown: true,
+      scrollbar: true
+    });
+  });
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+</body>
+</html>
