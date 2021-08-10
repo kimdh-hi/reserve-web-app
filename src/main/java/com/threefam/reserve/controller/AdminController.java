@@ -33,7 +33,6 @@ import java.util.Optional;
 public class AdminController {
 
     private final AdminService adminService;
-    private final HospitalCustomRepository hospitalCustomRepository;
 
     /**
      * 병원 이름으로 병원 단건 조회
@@ -93,7 +92,7 @@ public class AdminController {
 
         //일단은 홈으로 리턴 추후에 바꾸면 될듯
         //예약 리스트로 redirect (어드민 Hospital List, Hospital Detail List 필요)
-        return "redirect:/admin/hospitals";
+        return "redirect:/admin/list";
     }
 
     /**
@@ -109,9 +108,11 @@ public class AdminController {
 
     @GetMapping("/hospital/{hospitalName}")
     public String hospitalInfo(Model model,@PathVariable("hospitalName")String name){
+        log.info("hospital-name={}",name);
+        HospitalRequestDto hospitalRequestDto = adminService.getHospital(name);
+        model.addAttribute("hospitalRequestDto",hospitalRequestDto);
 
-        return "사벌";
-
+        return "admin/hospitalDetail";
     }
 
     // 시간을 parseInt 되도록 만드는 메서드

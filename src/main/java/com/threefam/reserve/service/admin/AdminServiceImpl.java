@@ -143,17 +143,43 @@ public class AdminServiceImpl implements AdminService {
         return hospitalCustomRepository.findAllHospitalInfo(admin.getId());
     }
 
-//    @Override
-//    public HospitalRequestDto getHospital(String name) {
-//        Optional<Hospital> hospitalDetail = hospitalCustomRepository.findHospitalDetail(name);
-//        Hospital hospital = hospitalDetail.stream().findFirst().orElse(null);
-//
-//        HospitalRequestDto.createHospitalRequestDto()
-//                .hospitalName(hospital.getHospitalName())
-//                .address(hospital.getAddress())
-//                .detailAddress(hospital.getDetailAddress())
-//                .dateAccept(hospital.getAvailableDates().get(0).getAcceptCount())
-//                .timeAccept(hospital.getAvailableDates().get(0).getAvailableTimes().get(0).getAcceptCount())
-//
-//    }
+    @Override
+    public HospitalRequestDto getHospital(String name) {
+        Optional<Hospital> hospitalDetail = hospitalCustomRepository.findHospitalDetail(name);
+        Hospital hospital = hospitalDetail.stream().findFirst().orElse(null);
+
+        List<AvailableDate> availableDates = hospital.getAvailableDates();
+        List<AvailableTime> availableTimes = availableDates.get(0).getAvailableTimes();
+        List<Vaccine> vaccines = hospital.getVaccines();
+
+        Map<String,Integer> vaccineMap=new HashMap<>();
+
+        for (Vaccine vaccine : vaccines) {
+            vaccineMap.put(vaccine.getVaccineName(),vaccine.getQuantity());
+        }
+
+        return HospitalRequestDto.createHospitalRequestDto()
+                .hospitalName(hospital.getHospitalName())
+                .address(hospital.getAddress())
+                .detailAddress(hospital.getDetailAddress())
+                .dateAccept(availableDates.get(0).getAcceptCount())
+                .timeAccept(availableTimes.get(0).getAcceptCount())
+                .startDate(availableDates.get(0).getDate())
+                .endDate(availableDates.get(availableDates.size()-1).getDate())
+                .startTime(String.valueOf(availableTimes.get(0).getTime()))
+                .endTime(String.valueOf(availableTimes.get(availableTimes.size()-1).getTime()))
+                .astrazeneka(vaccineIsPresent(vaccineMap,"아스트라제네카"))
+                .fizar(vaccineIsPresent(vaccineMap,"화이자"))
+                .janssen(vaccineIsPresent(vaccineMap,"얀센"))
+                .modena(vaccineIsPresent(vaccineMap,"모더나"))
+                .build();
+    }
+
+    private Integer vaccineIsPresent(Map<String, Integer> vaccineMap,String key){
+        Integer vaccineQty = vaccineMap.get(key);
+
+        if(vaccineQty ==null)
+            return 0;
+        return vaccineQty;
+    }
 }
