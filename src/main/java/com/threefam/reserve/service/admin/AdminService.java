@@ -6,6 +6,7 @@ import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
 import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,5 +30,13 @@ public interface AdminService {
 
     List<HospitalListDto> getHospitalList(String name);
 
+    /**
+     * 병원 상세 정보 조회 후 dto로 변환
+     */
     HospitalRequestDto getHospital(String name);
+
+    /**
+     * 병원 update
+     */
+    Long hospitalUpdate(HospitalRequestDto dto) throws ParseException;
 }

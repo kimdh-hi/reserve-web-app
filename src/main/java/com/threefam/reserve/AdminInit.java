@@ -76,10 +76,10 @@ public class AdminInit {
         fizar.addHospital(hospital);
 
         List<String> dateList=new ArrayList<>();
-        dateList.add("2021/1/1");
-        dateList.add("2021/1/2");
-        dateList.add("2021/1/3");
-        dateList.add("2021/1/4");
+        dateList.add("2021.1.1");
+        dateList.add("2021.1.2");
+        dateList.add("2021.1.3");
+        dateList.add("2021.1.4");
 
         List<Integer> timeList=new ArrayList<>();
         timeList.add(9);

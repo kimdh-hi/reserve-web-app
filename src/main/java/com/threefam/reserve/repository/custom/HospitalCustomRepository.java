@@ -29,6 +29,9 @@ public class HospitalCustomRepository {
         , HospitalListDto.class).setParameter("id",id).getResultList();
     };
 
+    /**
+     * 병원 정보 조회
+     */
     public Optional<Hospital> findHospitalDetail(String hospitalName){
         return Optional.of(em.createQuery(
                 "select distinct h from Hospital h " +

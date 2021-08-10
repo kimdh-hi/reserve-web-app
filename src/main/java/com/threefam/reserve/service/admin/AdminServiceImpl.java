@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
 import java.util.*;
 
 import com.threefam.reserve.service.Holiday;
@@ -143,6 +144,9 @@ public class AdminServiceImpl implements AdminService {
         return hospitalCustomRepository.findAllHospitalInfo(admin.getId());
     }
 
+    /**
+     * 병원 상세 정보 조회 후 dto로 변환
+     */
     @Override
     public HospitalRequestDto getHospital(String name) {
         Optional<Hospital> hospitalDetail = hospitalCustomRepository.findHospitalDetail(name);
@@ -175,6 +179,80 @@ public class AdminServiceImpl implements AdminService {
                 .build();
     }
 
+    @Override
+    @Transactional
+    public Long hospitalUpdate(HospitalRequestDto dto) throws ParseException {
+        Optional<Hospital> hospitalDetail = hospitalCustomRepository.findHospitalDetail(dto.getHospitalName());
+        Hospital hospital = hospitalDetail.stream().findFirst().orElse(null);
+
+        //예약가능시간
+        List<Integer> availableTimeList = getAvailableTimes(dto.getStartTime(), dto.getEndTime());
+
+        // 예약가능날짜
+        List<String> holidays = holiday.holidayList(dto.getStartDate(), dto.getEndDate());
+        List<String> availableDateList = holiday.availableDateList(dto.getStartDate(),dto.getEndDate(), holidays);
+
+        //수정 목록
+        List<Vaccine> vaccines = hospital.getVaccines();
+        List<AvailableDate> availableDates = hospital.getAvailableDates();
+
+        //==백신 수정==//
+        Map<String, Integer> vaccineInfoMap = dto.getVaccineInfoMap();
+
+        Integer total = 0;
+
+        //백신 이름 리스트. 추가된 백신, 수량이 0이된 백신 확인 위해
+        List<String> vaccineNames=new ArrayList<>();
+        for (Vaccine vaccine : vaccines) {
+            vaccineNames.add(vaccine.getVaccineName());
+        }
+
+        for(String key:vaccineInfoMap.keySet()){
+            total+=vaccineInfoMap.get(key);
+            //추가된 백신이 있는 지 확인
+            if(!vaccineNames.contains(key)){
+                Vaccine aditionalVaccine = Vaccine.createVaccine()
+                        .vaccineName(key)
+                        .quantity(vaccineInfoMap.get(key))
+                        .build();
+                aditionalVaccine.addHospital(hospital);
+            }
+            // 기존의 백신에서 수량이 바뀌었는지 확인
+            else {
+                for (Vaccine vaccine : vaccines) {
+                    if (vaccine.getVaccineName().equals(key)) {
+                        //수량 수정 시, 0을 입력하면 dto로 전달이 안되기 때문에 확인을 위한 과정
+                        vaccineNames.remove(key);
+                        //이미 있는 백신이라면 수량이 같으면 update 필요 x 수량이 다르면 update
+                        if (vaccine.getQuantity() != vaccineInfoMap.get(key)) {
+                            vaccine.updateVaccineQty(vaccineInfoMap.get(key));
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        // 비어있지 않다면, 수정 폼에서 0으로 설정되었다는 뜻. 수량을 0으로 설정하자
+        if(!vaccineNames.isEmpty()){
+            for (String vaccineName : vaccineNames) {
+                Vaccine vaccine = vaccines.stream().filter(v -> v.getVaccineName().equals(vaccineName)).findFirst().orElse(null);
+                if(vaccine!=null){
+                    vaccine.updateVaccineQty(0);
+                }
+            }
+        }
+        //총 수량의 합이 같다면 update x
+        if(total!=hospital.getTotalQuantity()) {
+            hospital.setTotalVaccineQuantity(total);
+        }
+
+        log.info("total={}",total);
+        return hospital.getId();
+    }
+
+    /**
+     * 병원 정보 조회 시 , 해당 백신이 존재하는 지에 대한 여부
+     */
     private Integer vaccineIsPresent(Map<String, Integer> vaccineMap,String key){
         Integer vaccineQty = vaccineMap.get(key);
 

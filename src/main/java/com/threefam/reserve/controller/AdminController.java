@@ -22,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -106,13 +107,31 @@ public class AdminController {
         return "admin/hospitalList";
     }
 
+    /**
+     * 병원 상세정보 조회
+     */
     @GetMapping("/hospital/{hospitalName}")
     public String hospitalInfo(Model model,@PathVariable("hospitalName")String name){
-        log.info("hospital-name={}",name);
+
         HospitalRequestDto hospitalRequestDto = adminService.getHospital(name);
         model.addAttribute("hospitalRequestDto",hospitalRequestDto);
 
         return "admin/hospitalDetail";
+    }
+
+    /**
+     * 병원 수정
+     */
+    @PostMapping("/hospital/edit")
+    public String hospitalEdit(@Validated @ModelAttribute HospitalRequestDto hospitalRequestDto,BindingResult result) throws ParseException {
+        if(result.hasErrors()){
+            return "admin/hospitalDetail";
+        }
+        makeVaccineInfoMap(hospitalRequestDto.getAstrazeneka(), hospitalRequestDto.getJanssen(),
+                hospitalRequestDto.getFizar(), hospitalRequestDto.getModena(), hospitalRequestDto);
+        adminService.hospitalUpdate(hospitalRequestDto);
+
+        return "redirect:/admin/list";
     }
 
     // 시간을 parseInt 되도록 만드는 메서드

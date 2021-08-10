@@ -61,4 +61,8 @@ public class Vaccine extends BaseEntity{
         this.quantity=restStock;
     }
 
+    //병원 수정 시, 사용
+    public void updateVaccineQty(Integer quantity){
+        this.quantity=quantity;
+    }
 }
