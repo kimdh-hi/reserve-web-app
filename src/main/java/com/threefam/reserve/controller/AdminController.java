@@ -23,36 +23,46 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
     private final AdminService adminService;
 
-    @GetMapping("/api/admin/hospital/{hospitalName}")
+    /**
+     * 병원 이름으로 병원 단건 조회
+     */
+    @GetMapping("/hospital")
     @ResponseBody
-    public ResponseEntity<HospitalResponseDto> getHospital(@PathVariable String hospitalName) {
+    public ResponseEntity<HospitalResponseDto> getHospital(@RequestParam("name") String hospitalName) {
         HospitalResponseDto hospitalResponseDto = adminService.getHospitalInfo(hospitalName);
 
         return ResponseEntity.ok(hospitalResponseDto);
     }
 
-    @GetMapping("/admin/add-hospital")
+    /**
+     * 병원 등록 폼 랜더링
+     */
+    @GetMapping("/add-hospital")
     public String hospitalForm(Model model){
         model.addAttribute("hospitalRequestDto",new HospitalRequestDto());
         return "admin/hospitalRegister";
     }
 
     /**
-     * 어드민으로 병원 조회 테스트 (병원 등록하고 접근해보면 Json으로 보일꺼임 근데 문제 많음 .. DTO로 찍어서 해줘여할 듯)
+     * 현재 어드민이 관리하는 병원 목록 조회 (병원이름, 주소만 조회)
      */
     @ResponseBody
-    @GetMapping("/admin/hospitals")
+    @GetMapping("/hospitals")
     public List<HospitalSimpleInfoDto> asd(Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         List<HospitalSimpleInfoDto> hospitals = adminService.getAllSimpleHospitalInfo(principal.getName());
         return hospitals;
     }
 
-    // 테스트
+    /**
+     * 병원 등록
+     * @param authentication 등록되는 병원애 admin을 추가해주기 위해 현재 인증 객체를 사용
+     */
     @PostMapping("/admin/add-hospital")
     public String addHospital(
             Authentication authentication,
