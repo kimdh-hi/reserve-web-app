@@ -51,6 +51,7 @@ public class AdminController {
         return hospitals;
     }
 
+    // 테스트
     @PostMapping("/admin/add-hospital")
     public String addHospital(
             Authentication authentication,
@@ -73,7 +74,7 @@ public class AdminController {
 
         //일단은 홈으로 리턴 추후에 바꾸면 될듯
         //예약 리스트로 redirect (어드민 Hospital List, Hospital Detail List 필요)
-        return "redirect:/";
+        return "redirect:/admin/hospitals";
     }
 
     // 시간을 parseInt 되도록 만드는 메서드
