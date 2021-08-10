@@ -48,7 +48,7 @@
 
 <body>
 <div class="register">
-  <h1 class="hR">병원 등록하기</h1>
+  <h1 class="hR">병원 상세 정보 및 수정</h1>
 
   <form th:action th:object="${hospitalRequestDto}" method="post">
     <div class="info">
@@ -144,7 +144,8 @@
       </div>
     </div>
 
-    <input type="submit" value="등록하기">
+    <input type="submit" value="수정하기">
+    <input type="button" th:onclick="|location.href='@{/}'|" value="취소">
   </form>
 </div>
 <script>
