@@ -1,5 +1,6 @@
 package com.threefam.reserve.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,11 +29,17 @@ public class Hospital extends BaseEntity{
 
     // 양방향
     @OneToMany(mappedBy = "hospital",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"hospital"})
     private List<AvailableDate> availableDates = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")
     private Admin admin;
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+        admin.getHospitals().add(this);
+    }
 
     @Column(nullable = false)
     private String address;
@@ -45,6 +52,7 @@ public class Hospital extends BaseEntity{
     private Boolean enabled = true; // 예약 가능 여부
 
     @OneToMany(mappedBy = "hospital", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @JsonIgnoreProperties({"hospital"})
     private List<Vaccine> vaccines = new ArrayList<>();
 
     public void setEnabled(boolean flag) {

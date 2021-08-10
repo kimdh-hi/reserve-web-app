@@ -18,7 +18,7 @@ public class User extends BaseEntity{
 
     @Column(name = "user_id")
     @Id @GeneratedValue
-    private Long id; // X
+    private Long id;
 
     @Column(nullable = false)
     private String email;
@@ -31,7 +31,7 @@ public class User extends BaseEntity{
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Gender gender; // radio
+    private Gender gender;
 
     @Column(nullable = false)
     private Integer age;

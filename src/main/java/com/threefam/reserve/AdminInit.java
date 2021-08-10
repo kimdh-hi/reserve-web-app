@@ -1,8 +1,10 @@
 package com.threefam.reserve;
 
+import com.threefam.reserve.domain.entity.Admin;
 import com.threefam.reserve.domain.entity.User;
 import com.threefam.reserve.domain.value.Gender;
 import com.threefam.reserve.domain.value.Role;
+import com.threefam.reserve.repository.AdminRepository;
 import com.threefam.reserve.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,11 +20,12 @@ import javax.annotation.PostConstruct;
 public class AdminInit {
 
     private final UserService userService;
+    private final AdminRepository adminRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostConstruct
     public void init(){
-        User admin = User.createUser()
+        User user = User.createUser()
                 .email("admin")
                 .password(bCryptPasswordEncoder.encode("admin"))
                 .name("admin")
@@ -33,6 +36,10 @@ public class AdminInit {
                 .gender(Gender.MALE)
                 .build();
 
-        userService.createUser(admin);
+        User savedUser = userService.createUser(user);
+        Admin admin = Admin.createAdmin()
+                .name(savedUser.getName())
+                .build();
+        adminRepository.save(admin);
     }
 }

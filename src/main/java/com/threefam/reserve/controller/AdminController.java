@@ -1,20 +1,21 @@
 package com.threefam.reserve.controller;
 
+import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
-import com.threefam.reserve.service.Holiday;
+import com.threefam.reserve.dto.security.PrincipalDetails;
 import com.threefam.reserve.service.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -24,28 +25,6 @@ import java.util.Map;
 public class AdminController {
 
     private final AdminService adminService;
-
-    @PostMapping("/api/admin/add")
-    @ResponseBody
-    public ResponseEntity<String> addHospital(@RequestBody HospitalRequestDto hospitalRequestDto) throws Exception{
-        // List 로 전달받은 백신이름과 잔여수량을 Map 으로 변환하여 dto에 넣어준다.
-        if (hospitalRequestDto.getVaccineNames() != null && hospitalRequestDto.getVaccineQuantities() != null) {
-            List<String> vaccineNames = hospitalRequestDto.getVaccineNames();
-            List<Integer> vaccineQuantities = hospitalRequestDto.getVaccineQuantities();
-            Map<String, Integer> vaccineInfoMap = hospitalRequestDto.getVaccineInfoMap();
-            for (int i=0;i<vaccineNames.size();i++) {
-                vaccineInfoMap.put(vaccineNames.get(i), vaccineQuantities.get(i));
-            }
-            // test log
-            for (String key : vaccineInfoMap.keySet()) {
-                log.info("vaccineName = {}, vaccineQuantity = {}", key, vaccineInfoMap.get(key));
-            }
-        }
-
-        adminService.addHospital(hospitalRequestDto);
-
-        return ResponseEntity.ok(hospitalRequestDto.getHospitalName() + "등록 완료");
-    }
 
     @GetMapping("/api/admin/hospital/{hospitalName}")
     @ResponseBody
@@ -61,10 +40,22 @@ public class AdminController {
         return "admin/hospitalRegister";
     }
 
-    //list를 화면으로 넘겨주려면 modelAttribute를 사용하여 따로 보내 줘야하는데 너무 번거로운 작업이기에 RequestParam으로 받아옴.(null이나 0이면 백신 추가x)
+    /**
+     * 어드민으로 병원 조회 테스트 (병원 등록하고 접근해보면 Json으로 보일꺼임 근데 문제 많음 .. DTO로 찍어서 해줘여할 듯)
+     */
+    @ResponseBody
+    @GetMapping("/admin/hospitals")
+    public List<Hospital> asd(Authentication authentication) {
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        List<Hospital> hospitals = adminService.getAllHospitalInfo(principal.getName());
+        return hospitals;
+    }
+
+    // 테스트
     @PostMapping("/admin/add-hospital")
     public String addHospital(
-            @Validated @ModelAttribute HospitalRequestDto form, BindingResult result) throws Exception {
+            Authentication authentication,
+            @Validated @ModelAttribute HospitalRequestDto form, BindingResult result, HttpServletRequest request) throws Exception{
 
         if(result.hasErrors()){
             return "admin/hospitalRegister";
@@ -73,10 +64,18 @@ public class AdminController {
         makeVaccineInfoMap(form.getAstrazeneka(), form.getJanssen(), form.getFizar(), form.getModena(), form);
 
         timeParse(form);
-        adminService.addHospital(form);
+        /**
+         * /admin/** 으로 접근되었다는 것은 security filter를 지나 인가된 사용자라는 것. (Role = ADMIN)
+         * 따라서 병원 등록시 Authentication에서 얻어온 유저 정보를 그대로 사용 (병원에 Admin을 넣어주기 위함)
+         */
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        log.info("principal.name = {}", principal.getName());
+
+        adminService.addHospital(form, principal.getName());
 
         //일단은 홈으로 리턴 추후에 바꾸면 될듯
-        return "redirect:/";
+        //예약 리스트로 redirect (어드민 Hospital List, Hospital Detail List 필요)
+        return "redirect:/admin/hospitals";
     }
 
     // 시간을 parseInt 되도록 만드는 메서드
@@ -101,6 +100,5 @@ public class AdminController {
             vaccineInfoMap.put("모더나", modena);
         }
     }
-
 
 }
