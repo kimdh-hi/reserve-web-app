@@ -29,5 +29,5 @@ public interface AdminService {
 
     List<HospitalListDto> getHospitalList(String name);
 
-//    HospitalRequestDto getHospital(String name);
+    HospitalRequestDto getHospital(String name);
 }

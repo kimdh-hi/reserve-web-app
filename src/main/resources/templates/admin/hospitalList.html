@@ -20,7 +20,8 @@
     <th>잔여 백신 수량</th>
   </tr>
 
-  <tr th:each="hospital : ${hospitalList}" style="cursor:pointer;" >
+  <tr th:each="hospital : ${hospitalList}" style="cursor:pointer;"
+      th:onclick="|location.href='@{/admin/hospital/{hospitalName} (hospitalName=${hospital.hospitalName})}'|">
     <td th:text="${hospital.hospitalName}">바른 병원</td>
     <td th:text="${hospital.address}">서울 강서구</td>
     <td th:text="${hospital.qty}">100</td>
