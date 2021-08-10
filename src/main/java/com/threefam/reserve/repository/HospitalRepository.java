@@ -25,7 +25,9 @@ public interface HospitalRepository extends JpaRepository<Hospital, Long> {
     /**
      * 테스트용 조회 쿼리 (순환참조 막기 위해 일단 양방향 연관관계의 주인이 아닌 필드에  @JsonIgnoreProperties 설정해주었음
      */
-    @Query("select h from Hospital h where h.admin = :admin")
-    List<Hospital> findAllByAdmin(Admin admin);
+    @Query("select new com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto(h.hospitalName, h.address) " +
+            "from Hospital h " +
+            "where h.admin = :admin")
+    List<HospitalSimpleInfoDto> findAllByAdmin(Admin admin);
 
 }

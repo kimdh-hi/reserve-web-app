@@ -6,6 +6,7 @@ import com.threefam.reserve.domain.entity.*;
 
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
+import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
 import com.threefam.reserve.repository.AdminRepository;
 import com.threefam.reserve.repository.HospitalRepository;
 import lombok.RequiredArgsConstructor;
@@ -126,7 +127,7 @@ public class AdminServiceImpl implements AdminService {
      * 어드민으로 병원 조회 테스트
      */
     @Override
-    public List<Hospital> getAllHospitalInfo(String name) {
+    public List<HospitalSimpleInfoDto> getAllSimpleHospitalInfo(String name) {
         Admin admin = adminRepository.findByName(name).get();
         return hospitalRepository.findAllByAdmin(admin);
     }

@@ -3,6 +3,7 @@ package com.threefam.reserve.controller;
 import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
+import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
 import com.threefam.reserve.dto.security.PrincipalDetails;
 import com.threefam.reserve.service.admin.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -45,9 +46,9 @@ public class AdminController {
      */
     @ResponseBody
     @GetMapping("/admin/hospitals")
-    public List<Hospital> asd(Authentication authentication) {
+    public List<HospitalSimpleInfoDto> asd(Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
-        List<Hospital> hospitals = adminService.getAllHospitalInfo(principal.getName());
+        List<HospitalSimpleInfoDto> hospitals = adminService.getAllSimpleHospitalInfo(principal.getName());
         return hospitals;
     }
 

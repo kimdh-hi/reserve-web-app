@@ -3,6 +3,7 @@ package com.threefam.reserve.service.admin;
 import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
+import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
 
 import java.util.List;
 
@@ -22,5 +23,5 @@ public interface AdminService {
     /**
      * 테스트용 어드민으로 병원정보 조회 서비스 메서드
      */
-    List<Hospital> getAllHospitalInfo(String name);
+    List<HospitalSimpleInfoDto> getAllSimpleHospitalInfo(String name);
 }
