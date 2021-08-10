@@ -12,7 +12,8 @@ public interface AdminService {
     /**
      * 병원등록
      */
-    Long addHospital(HospitalRequestDto hospitalAddDto, String adminName);
+    Long addHospital(HospitalRequestDto hospitalAddDto,String adminName) throws Exception;
+
 
     /**
      * 병원이름으로 병원 단건 조회

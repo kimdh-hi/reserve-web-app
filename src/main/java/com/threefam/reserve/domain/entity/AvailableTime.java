@@ -33,7 +33,7 @@ public class AvailableTime {
     private Boolean enabled = true;
 
     // 양방향 연관관계 편의 메서드
-    private void addAvailableDate(AvailableDate availableDate) {
+    public void addAvailableDate(AvailableDate availableDate) {
         this.availableDate = availableDate;
         availableDate.getAvailableTimes().add(this);
     }

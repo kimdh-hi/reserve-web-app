@@ -23,45 +23,47 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 @Controller
-@RequestMapping("/admin")
 public class AdminController {
 
     private final AdminService adminService;
 
-    /**
-     * 병원 등록 폼
-     */
-    @GetMapping("/add-hospital")
+    @GetMapping("/api/admin/hospital/{hospitalName}")
+    @ResponseBody
+    public ResponseEntity<HospitalResponseDto> getHospital(@PathVariable String hospitalName) {
+        HospitalResponseDto hospitalResponseDto = adminService.getHospitalInfo(hospitalName);
+
+        return ResponseEntity.ok(hospitalResponseDto);
+    }
+
+    @GetMapping("/admin/add-hospital")
     public String hospitalForm(Model model){
         model.addAttribute("hospitalRequestDto",new HospitalRequestDto());
         return "admin/hospitalRegister";
     }
 
     /**
-     * 어드민이 관리하는 모든 병원 목록 반환 (간단한 정보만 - 병원이름, 주소)
+     * 어드민으로 병원 조회 테스트 (병원 등록하고 접근해보면 Json으로 보일꺼임 근데 문제 많음 .. DTO로 찍어서 해줘여할 듯)
      */
     @ResponseBody
-    @GetMapping("/hospitals")
+    @GetMapping("/admin/hospitals")
     public List<HospitalSimpleInfoDto> asd(Authentication authentication) {
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         List<HospitalSimpleInfoDto> hospitals = adminService.getAllSimpleHospitalInfo(principal.getName());
         return hospitals;
     }
 
-    /**
-     * 병원 등록
-     * @param authentication 현재 인증받은 사용자는 어드민이므로 등록하는 병원의 어드민이 되도록 설정하기 위함
-     */
-    @PostMapping("/add-hospital")
+    // 테스트
+    @PostMapping("/admin/add-hospital")
     public String addHospital(
             Authentication authentication,
-            @Validated @ModelAttribute HospitalRequestDto form, BindingResult result){
+            @Validated @ModelAttribute HospitalRequestDto form, BindingResult result, HttpServletRequest request) throws Exception{
 
         if(result.hasErrors()){
             return "admin/hospitalRegister";
         }
 
         makeVaccineInfoMap(form.getAstrazeneka(), form.getJanssen(), form.getFizar(), form.getModena(), form);
+
         timeParse(form);
         /**
          * /admin/** 으로 접근되었다는 것은 security filter를 지나 인가된 사용자라는 것. (Role = ADMIN)
@@ -72,17 +74,9 @@ public class AdminController {
 
         adminService.addHospital(form, principal.getName());
 
+        //일단은 홈으로 리턴 추후에 바꾸면 될듯
+        //예약 리스트로 redirect (어드민 Hospital List, Hospital Detail List 필요)
         return "redirect:/admin/hospitals";
-    }
-
-    /**
-     * 병원 상세 페이지
-     */
-    @ResponseBody // 테스트용
-    @GetMapping("/hospital")
-    public ResponseEntity<HospitalResponseDto> hospitalDetailPage(@RequestParam("name") String hospitalName) {
-        HospitalResponseDto hospitalInfo = adminService.getHospitalInfo(hospitalName);
-        return ResponseEntity.ok(hospitalInfo);
     }
 
     // 시간을 parseInt 되도록 만드는 메서드
