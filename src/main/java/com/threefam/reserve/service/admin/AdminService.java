@@ -7,6 +7,7 @@ import com.threefam.reserve.dto.hospital.HospitalResponseDto;
 import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AdminService {
 
@@ -27,4 +28,6 @@ public interface AdminService {
     List<HospitalSimpleInfoDto> getAllSimpleHospitalInfo(String name);
 
     List<HospitalListDto> getHospitalList(String name);
+
+//    HospitalRequestDto getHospital(String name);
 }

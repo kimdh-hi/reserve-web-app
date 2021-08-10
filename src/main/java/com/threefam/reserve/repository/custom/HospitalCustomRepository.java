@@ -2,12 +2,14 @@ package com.threefam.reserve.repository.custom;
 
 import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.HospitalListDto;
+import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,4 +26,13 @@ public class HospitalCustomRepository {
                         "where h.admin.id = :id"
         , HospitalListDto.class).setParameter("id",id).getResultList();
     };
+
+    public Optional<Hospital> findHospitalDetail(String hospitalName){
+        return Optional.of(em.createQuery(
+                "select distinct h from Hospital h join fetch h.vaccines v " +
+                        "join fetch h.availableDates ha " +
+                        "join fetch ha.availableTimes " +
+                        "where h.hospitalName= :hospitalName",Hospital.class
+        ).setParameter("hospitalName",hospitalName).getSingleResult());
+    }
 }
