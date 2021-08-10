@@ -3,12 +3,13 @@ package com.threefam.reserve.service.admin;
 import com.threefam.reserve.domain.entity.*;
 
 
-
+import com.threefam.reserve.dto.hospital.HospitalListDto;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
 import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
 import com.threefam.reserve.repository.AdminRepository;
 import com.threefam.reserve.repository.HospitalRepository;
+import com.threefam.reserve.repository.custom.HospitalCustomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ import com.threefam.reserve.service.Holiday;
 @Service
 public class AdminServiceImpl implements AdminService {
 
+    private final HospitalCustomRepository hospitalCustomRepository;
     private final HospitalRepository hospitalRepository;
     private final AdminRepository adminRepository;
     private final Holiday holiday;
@@ -45,6 +47,8 @@ public class AdminServiceImpl implements AdminService {
          */
         Admin admin = adminRepository.findByName(adminName).get();
         hospital.setAdmin(admin);
+        // 총 백신 수량 (종류 상관X)
+        Integer total = 0;
         // 백신 엔티티 생성 및 병원 엔티티에 add
         Map<String, Integer> vaccineInfoMap = hospitalRequestDto.getVaccineInfoMap();
         for (String key : vaccineInfoMap.keySet()) {
@@ -53,7 +57,10 @@ public class AdminServiceImpl implements AdminService {
                     .quantity(vaccineInfoMap.get(key))
                     .build();
             vaccine.addHospital(hospital);
+            total += vaccineInfoMap.get(key);
         }
+        hospital.setTotalVaccineQuantity(total);
+
         /**
          * 예약 가능 날짜를 생성 (휴일제외)
          */
@@ -130,5 +137,11 @@ public class AdminServiceImpl implements AdminService {
     public List<HospitalSimpleInfoDto> getAllSimpleHospitalInfo(String name) {
         Admin admin = adminRepository.findByName(name).get();
         return hospitalRepository.findAllByAdmin(admin);
+    }
+
+    @Override
+    public List<HospitalListDto> getHospitalList(String name) {
+        Admin admin = adminRepository.findByName(name).get();
+        return hospitalCustomRepository.findAllHospitalInfo(admin.getId());
     }
 }

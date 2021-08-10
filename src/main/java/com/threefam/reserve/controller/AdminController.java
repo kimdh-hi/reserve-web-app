@@ -1,6 +1,7 @@
 package com.threefam.reserve.controller;
 
 import com.threefam.reserve.domain.entity.Hospital;
+import com.threefam.reserve.dto.hospital.HospitalListDto;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
 import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -63,7 +65,7 @@ public class AdminController {
      * 병원 등록
      * @param authentication 등록되는 병원애 admin을 추가해주기 위해 현재 인증 객체를 사용
      */
-    @PostMapping("/admin/add-hospital")
+    @PostMapping("/add-hospital")
     public String addHospital(
             Authentication authentication,
             @Validated @ModelAttribute HospitalRequestDto form, BindingResult result, HttpServletRequest request) throws Exception{
@@ -87,6 +89,17 @@ public class AdminController {
         //일단은 홈으로 리턴 추후에 바꾸면 될듯
         //예약 리스트로 redirect (어드민 Hospital List, Hospital Detail List 필요)
         return "redirect:/admin/hospitals";
+    }
+
+    /**
+     * 병원 목록
+     */
+    @GetMapping("/list")
+    public String hospitalList(@AuthenticationPrincipal PrincipalDetails principal, Model model) {
+        String adminName = principal.getName();
+        List<HospitalListDto> hospitalList = adminService.getHospitalList(adminName);
+        model.addAttribute("hospitalList", hospitalList);
+        return "admin/hospitalList";
     }
 
     // 시간을 parseInt 되도록 만드는 메서드
