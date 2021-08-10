@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700,900&display=swap');
+
+@font-face {
+    font-family: 'SLEIGothicTTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SLEIGothicTTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    color: #333;
+    line-height: 1.6em;
+    display:flex;
+    height: 100vh;
+    justify-content: center;
+    align-items:center;
+    font-size: 15px;
+}
+
+/* 테이블 CSS */
+.hospital-List {
+    width: 900px;
+    background-color: #fff;
+    border-collapse: collapse;
+    box-shadow: 0 0 15px rgba(0,0,0,0.200);
+    border-radius: 5px;
+    overflow: hidden;
+}
+.hospital-List caption {
+    font-family: 'SLEIGothicTTF';
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+.hospital-List tr {
+    transition: 0.3s;
+}
+.hospital-List tr:hover {
+    background-color: #eee;
+}
+.hospital-List th,
+.hospital-List td {
+    padding: 12px;
+    text-align: center;
+}
+/* 첫 줄 */
+.hospital-List tr th{
+    background-color: dodgerblue;
+    color:#eee;
+}

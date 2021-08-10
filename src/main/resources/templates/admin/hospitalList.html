@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>병원목록</title>
+
+  <link rel="icon" th:href="@{/images/home.png}">
+  <link rel="stylesheet" th:href="@{/css/adminlist.css}">
+</head>
+
+<body>
+
+<table class="hospital-List">
+  <caption>병원 목록</caption>
+  <tr>
+    <th>병원 이름</th>
+    <th>주소</th>
+    <th>잔여 백신 수량</th>
+  </tr>
+
+  <tr th:each="hospital : ${hospitalList}" style="cursor:pointer;" onClick="location.href='https://www.naver.com'">
+    <td th:text="${hospital.hospitalName}">바른 병원</td>
+    <td th:text="${hospital.address}">서울 강서구</td>
+    <td th:text="${hospital.qty}">100</td>
+  </tr>
+
+</table>
+</body>
+</html>

@@ -47,6 +47,13 @@ public class Hospital extends BaseEntity{
     @Column(nullable = false)
     private String detailAddress;
 
+    @Column(name = "total_quantity")
+    private Integer totalQuantity;
+
+    public void setTotalVaccineQuantity(Integer qty) {
+        this.totalQuantity = qty;
+    }
+
     // true: y, false: n
     @Type(type = "yes_no")
     private Boolean enabled = true; // 예약 가능 여부
