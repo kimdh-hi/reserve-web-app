@@ -1,11 +1,13 @@
 package com.threefam.reserve.service.admin;
 
+import com.threefam.reserve.domain.entity.AvailableDate;
 import com.threefam.reserve.domain.entity.AvailableTime;
 import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.domain.entity.Vaccine;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
 import com.threefam.reserve.repository.HospitalRepository;
+import com.threefam.reserve.service.Holiday;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,13 +24,14 @@ import java.util.Map;
 public class AdminServiceImpl implements AdminService {
 
     private final HospitalRepository hospitalRepository;
+    private final Holiday holiday;
 
     /**
      * 병원 정보 등록
      */
     @Transactional
     @Override
-    public Long addHospital(HospitalRequestDto hospitalRequestDto) {
+    public Long addHospital(HospitalRequestDto hospitalRequestDto) throws Exception{
         // 병원 엔티티 생성
         Hospital hospital = hospitalRequestDto.toHospitalEntity();
         // 백신 엔티티 생성 및 병원 엔티티에 add
@@ -42,9 +45,32 @@ public class AdminServiceImpl implements AdminService {
         }
 
         // 예약가능시간
-        List<Integer> availableTimes = getAvailableTimes(hospitalRequestDto.getStartTime(), hospitalRequestDto.getEndTime());
+        List<Integer> availableTimeList = getAvailableTimes(hospitalRequestDto.getStartTime(), hospitalRequestDto.getEndTime());
 
         // 예약가능날짜
+        List<String> holidays = holiday.holidayList(hospitalRequestDto.getStartDate(), hospitalRequestDto.getEndDate());
+        List<String> availableDateList = holiday.availableDateList(hospitalRequestDto.getStartDate(), hospitalRequestDto.getEndDate(), holidays);
+
+        List<AvailableTime> availableTimes=new ArrayList<>();
+        List<AvailableDate> availableDates=new ArrayList<>();
+
+        for (String date : availableDateList) {
+            AvailableDate availableDate= AvailableDate.createAvailableDate()
+                    .date(date)
+                    .acceptCount(hospitalRequestDto.getDateAccept())
+                    .build();
+            for (Integer time : availableTimeList) {
+                AvailableTime availableTime= AvailableTime.createAvailableTime()
+                        .time(time)
+                        .acceptCount(hospitalRequestDto.getTimeAccept())
+                        .build();
+                availableTime.addAvailableDate(availableDate);
+                availableTimes.add(availableTime);
+            }
+            availableDate.addHospital(hospital);
+            availableDates.add(availableDate);
+        }
+
 
         Hospital savedHospital = hospitalRepository.save(hospital);
 

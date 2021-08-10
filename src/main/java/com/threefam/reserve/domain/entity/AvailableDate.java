@@ -1,6 +1,7 @@
 package com.threefam.reserve.domain.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
@@ -39,9 +40,14 @@ public class AvailableDate {
     private Boolean enabled = true;
 
     // 양방향 연관관계 편의 메서드
-    private void addHospital(Hospital hospital) {
+    public void addHospital(Hospital hospital) {
         this.hospital = hospital;
         hospital.getAvailableDates().add(this);
     }
 
+    @Builder(builderMethodName = "createAvailableDate")
+    public AvailableDate(String date,Integer acceptCount){
+        this.date=date;
+        this.acceptCount=acceptCount;
+    }
 }

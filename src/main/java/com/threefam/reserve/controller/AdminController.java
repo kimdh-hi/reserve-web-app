@@ -2,6 +2,7 @@ package com.threefam.reserve.controller;
 
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
+import com.threefam.reserve.service.Holiday;
 import com.threefam.reserve.service.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,7 @@ public class AdminController {
 
     @PostMapping("/api/admin/add")
     @ResponseBody
-    public ResponseEntity<String> addHospital(@RequestBody HospitalRequestDto hospitalRequestDto) {
+    public ResponseEntity<String> addHospital(@RequestBody HospitalRequestDto hospitalRequestDto) throws Exception{
         // List 로 전달받은 백신이름과 잔여수량을 Map 으로 변환하여 dto에 넣어준다.
         if (hospitalRequestDto.getVaccineNames() != null && hospitalRequestDto.getVaccineQuantities() != null) {
             List<String> vaccineNames = hospitalRequestDto.getVaccineNames();
@@ -63,13 +64,14 @@ public class AdminController {
     //list를 화면으로 넘겨주려면 modelAttribute를 사용하여 따로 보내 줘야하는데 너무 번거로운 작업이기에 RequestParam으로 받아옴.(null이나 0이면 백신 추가x)
     @PostMapping("/admin/add-hospital")
     public String addHospital(
-            @Validated @ModelAttribute HospitalRequestDto form, BindingResult result){
+            @Validated @ModelAttribute HospitalRequestDto form, BindingResult result) throws Exception {
 
         if(result.hasErrors()){
             return "admin/hospitalRegister";
         }
 
         makeVaccineInfoMap(form.getAstrazeneka(), form.getJanssen(), form.getFizar(), form.getModena(), form);
+
         timeParse(form);
         adminService.addHospital(form);
 
