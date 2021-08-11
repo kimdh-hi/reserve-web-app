@@ -1,4 +1,4 @@
-package com.threefam.reserve.service.reserveItem;
+package com.threefam.reserve.service.reserve;
 
 import com.threefam.reserve.dto.hospital.HospitalListDto;
 

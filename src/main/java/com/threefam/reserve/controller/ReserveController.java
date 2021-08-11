@@ -3,7 +3,7 @@ package com.threefam.reserve.controller;
 import com.threefam.reserve.dto.hospital.HospitalListDto;
 import com.threefam.reserve.dto.reserve.ReserveItemRequestDto;
 import com.threefam.reserve.dto.security.PrincipalDetails;
-import com.threefam.reserve.service.reserveItem.ReserveItemService;
+import com.threefam.reserve.service.reserve.ReserveItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -38,7 +38,7 @@ public class ReserveController {
      */
     @GetMapping
     public String reserveForm(Model model, @RequestParam("name") String hospitalName) {
-        model.addAttribute("form", new ReserveItemRequestDto());
+        
         return "/user/reserve/reserveForm";
     }
 
