@@ -41,6 +41,18 @@ input, select {
   margin-bottom: 5px;
 }
 
+/* 주소 */
+.info-address div {
+  display: flex;
+  gap:15px;
+}
+.info-address div input[type=text]{
+  flex: 10;
+}
+.info-address div input[type=button]{
+  flex:1;
+}
+
 /* 날짜 */
 .info.date div ,
 .info.time div {
