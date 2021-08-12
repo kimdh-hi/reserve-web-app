@@ -29,6 +29,11 @@ public class AvailableTime {
     // 한 타임동안 수용 가능한 인원
     private Integer acceptCount;
 
+    public void decreaseCount() {
+        this.acceptCount--;
+        this.availableDate.decreaseCount();
+    }
+
     @Type(type = "yes_no")
     private Boolean enabled = true;
 
