@@ -17,6 +17,7 @@ import java.util.Map;
 @RequestMapping("/test")
 public class TestController {
 
+
     // Map<String, Integer> 형태로 데이터 받아보기
     @PostMapping("/listmap")
     public String listmapTest(@RequestBody TestVaccine testVaccine) {

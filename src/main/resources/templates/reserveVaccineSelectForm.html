@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>백신 선택</h1>
+
+<form method="POST" th:action="@{/reserve}">
+
+    <input type="hidden" th:value="${date}" id="reserveDate" name="reserveDate">
+    <input type="hidden" th:value="${time}" id="reserveTime" name="reserveTime">
+    <input type="hidden" th:value="${hospitalName}" id="hospitalName" name="hospitalName">
+
+  <div th:each="v : ${vaccines}">
+    <label th:for="${v.id}" th:text="${v.vaccineName}"></label>
+    <input type="radio"  th:value="${v.vaccineName}" th:id="${v.id}"  name="vaccineName">
+  </div>
+  <button type="submit">확인</button>
+</form>
+
+</body>
+</html>

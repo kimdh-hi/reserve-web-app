@@ -1,5 +1,6 @@
 package com.threefam.reserve.repository.custom;
 
+import com.threefam.reserve.domain.entity.AvailableDate;
 import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.HospitalListDto;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
@@ -30,7 +31,7 @@ public class HospitalCustomRepository {
     };
 
     /**
-     * 병원 정보 조회
+     * 병원이름으로 병원정보 조회
      */
     public Optional<Hospital> findHospitalDetail(String hospitalName){
         return Optional.of(em.createQuery(
