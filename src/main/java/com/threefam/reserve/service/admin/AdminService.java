@@ -1,10 +1,7 @@
 package com.threefam.reserve.service.admin;
 
 import com.threefam.reserve.domain.entity.Hospital;
-import com.threefam.reserve.dto.hospital.HospitalListDto;
-import com.threefam.reserve.dto.hospital.HospitalRequestDto;
-import com.threefam.reserve.dto.hospital.HospitalResponseDto;
-import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
+import com.threefam.reserve.dto.hospital.*;
 
 import java.text.ParseException;
 import java.util.List;
@@ -33,10 +30,10 @@ public interface AdminService {
     /**
      * 병원 상세 정보 조회 후 dto로 변환
      */
-    HospitalRequestDto getHospital(String name);
+    HospitalUpdateDto getHospital(Long id);
 
     /**
      * 병원 update
      */
-    Long hospitalUpdate(HospitalRequestDto dto) throws ParseException;
+    Long hospitalUpdate(HospitalUpdateDto dto) throws ParseException;
 }

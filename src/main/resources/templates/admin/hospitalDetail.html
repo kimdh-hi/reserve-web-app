@@ -50,24 +50,24 @@
 <div class="register">
   <h1 class="hR">병원 상세 정보 및 수정</h1>
 
-  <form th:action="@{/admin/hospital/edit}" th:object="${hospitalRequestDto}" method="post">
+  <form th:action="@{/admin/hospital/edit/{hospitalId} (hospitalId=${hospitalUpdateDto.id})}" th:object="${hospitalUpdateDto}" method="post">
     <div class="info">
       <label for="hospitalName"><b>병원 이름</b></label>
-      <input type="text" id="hospitalName" th:field="*{hospitalName}" readonly>
+      <input type="text" id="hospitalName" th:field="*{hospitalName}" disabled>
       <div class="field-error" th:errors="*{hospitalName}">
       </div>
     </div>
 
     <div class="info">
       <label fdr="address"><b>주소</b></label>
-      <input type="text" id="address" th:field="*{address}" readonly>
+      <input type="text" id="address" th:field="*{address}" disabled>
       <div class="field-error" th:errors="*{address}">
       </div>
     </div>
 
     <div class="info">
       <label for="detailAddress"><b>상세주소</b></label>
-      <input type="text" id="detailAddress" th:field="*{detailAddress}" readonly>
+      <input type="text" id="detailAddress" th:field="*{detailAddress}" disabled>
       <div class="field-error" th:errors="*{detailAddress}">
       </div>
     </div>

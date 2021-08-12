@@ -3,10 +3,7 @@ package com.threefam.reserve.service.admin;
 import com.threefam.reserve.domain.entity.*;
 
 
-import com.threefam.reserve.dto.hospital.HospitalListDto;
-import com.threefam.reserve.dto.hospital.HospitalRequestDto;
-import com.threefam.reserve.dto.hospital.HospitalResponseDto;
-import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
+import com.threefam.reserve.dto.hospital.*;
 import com.threefam.reserve.repository.AdminRepository;
 import com.threefam.reserve.repository.HospitalRepository;
 import com.threefam.reserve.repository.custom.HospitalCustomRepository;
@@ -148,8 +145,8 @@ public class AdminServiceImpl implements AdminService {
      * 병원 상세 정보 조회 후 dto로 변환
      */
     @Override
-    public HospitalRequestDto getHospital(String name) {
-        Optional<Hospital> hospitalDetail = hospitalCustomRepository.findHospitalDetail(name);
+    public HospitalUpdateDto getHospital(Long id) {
+        Optional<Hospital> hospitalDetail = hospitalCustomRepository.findHospitalDetail(id);
         Hospital hospital = hospitalDetail.stream().findFirst().orElse(null);
 
         List<AvailableDate> availableDates = hospital.getAvailableDates();
@@ -162,7 +159,8 @@ public class AdminServiceImpl implements AdminService {
             vaccineMap.put(vaccine.getVaccineName(),vaccine.getQuantity());
         }
 
-        return HospitalRequestDto.createHospitalRequestDto()
+        return HospitalUpdateDto.createHospitalUpdateDto()
+                .id(hospital.getId())
                 .hospitalName(hospital.getHospitalName())
                 .address(hospital.getAddress())
                 .detailAddress(hospital.getDetailAddress())
@@ -181,8 +179,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional
-    public Long hospitalUpdate(HospitalRequestDto dto) throws ParseException {
-        Optional<Hospital> hospitalDetail = hospitalCustomRepository.findHospitalDetail(dto.getHospitalName());
+    public Long hospitalUpdate(HospitalUpdateDto dto) throws ParseException {
+        Optional<Hospital> hospitalDetail = hospitalCustomRepository.findHospitalDetail(dto.getId());
         Hospital hospital = hospitalDetail.stream().findFirst().orElse(null);
 
         //예약가능시간

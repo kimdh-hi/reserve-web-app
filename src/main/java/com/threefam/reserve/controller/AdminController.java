@@ -2,10 +2,7 @@ package com.threefam.reserve.controller;
 
 import com.threefam.reserve.domain.entity.AvailableDate;
 import com.threefam.reserve.domain.entity.Hospital;
-import com.threefam.reserve.dto.hospital.HospitalListDto;
-import com.threefam.reserve.dto.hospital.HospitalRequestDto;
-import com.threefam.reserve.dto.hospital.HospitalResponseDto;
-import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
+import com.threefam.reserve.dto.hospital.*;
 import com.threefam.reserve.dto.security.PrincipalDetails;
 import com.threefam.reserve.repository.HospitalRepository;
 import com.threefam.reserve.repository.custom.HospitalCustomRepository;
@@ -79,7 +76,7 @@ public class AdminController {
             return "admin/hospitalRegister";
         }
 
-        makeVaccineInfoMap(form.getAstrazeneka(), form.getJanssen(), form.getFizar(), form.getModena(), form);
+        makeVaccineInfoMap(form.getAstrazeneka(), form.getJanssen(), form.getFizar(), form.getModena(), form.getVaccineInfoMap());
 
         timeParse(form);
         /**
@@ -110,11 +107,11 @@ public class AdminController {
     /**
      * 병원 상세정보 조회
      */
-    @GetMapping("/hospital/{hospitalName}")
-    public String hospitalInfo(Model model,@PathVariable("hospitalName")String name){
+    @GetMapping("/hospital/{hospitalId}")
+    public String hospitalInfo(Model model,@PathVariable("hospitalId")Long id){
 
-        HospitalRequestDto hospitalRequestDto = adminService.getHospital(name);
-        model.addAttribute("hospitalRequestDto",hospitalRequestDto);
+        HospitalUpdateDto hospitalUpdateDto = adminService.getHospital(id);
+        model.addAttribute("hospitalUpdateDto",hospitalUpdateDto);
 
         return "admin/hospitalDetail";
     }
@@ -122,14 +119,17 @@ public class AdminController {
     /**
      * 병원 수정
      */
-    @PostMapping("/hospital/edit")
-    public String hospitalEdit(@Validated @ModelAttribute HospitalRequestDto hospitalRequestDto,BindingResult result) throws ParseException {
+    @PostMapping("/hospital/edit/{hospitalId}")
+    public String hospitalEdit(@PathVariable Long hospitalId,
+            @Validated @ModelAttribute HospitalUpdateDto hospitalUpdateDto,BindingResult result)
+            throws ParseException {
         if(result.hasErrors()){
             return "admin/hospitalDetail";
         }
-        makeVaccineInfoMap(hospitalRequestDto.getAstrazeneka(), hospitalRequestDto.getJanssen(),
-                hospitalRequestDto.getFizar(), hospitalRequestDto.getModena(), hospitalRequestDto);
-        adminService.hospitalUpdate(hospitalRequestDto);
+        hospitalUpdateDto.setId(hospitalId);
+        makeVaccineInfoMap(hospitalUpdateDto.getAstrazeneka(), hospitalUpdateDto.getJanssen(),
+                hospitalUpdateDto.getFizar(), hospitalUpdateDto.getModena(), hospitalUpdateDto.getVaccineInfoMap());
+        adminService.hospitalUpdate(hospitalUpdateDto);
 
         return "redirect:/admin/list";
     }
@@ -141,8 +141,8 @@ public class AdminController {
     }
 
     // vaccineInfoMap만드는 메서드
-    private void makeVaccineInfoMap(Integer astrazeneka, Integer janssen, Integer fizar, Integer modena, HospitalRequestDto form) {
-        Map<String,Integer> vaccineInfoMap= form.getVaccineInfoMap();
+    private void makeVaccineInfoMap(Integer astrazeneka, Integer janssen, Integer fizar, Integer modena, Map<String,Integer> vaccineInfoMap) {
+
         if(astrazeneka !=null && astrazeneka !=0){
             vaccineInfoMap.put("아스트라제네카", astrazeneka);
         }

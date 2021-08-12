@@ -31,15 +31,15 @@ public class HospitalCustomRepository {
     };
 
     /**
-     * 병원이름으로 병원정보 조회
+     * 병원아이디로 병원정보 조회
      */
-    public Optional<Hospital> findHospitalDetail(String hospitalName){
+    public Optional<Hospital> findHospitalDetail(Long id){
         return Optional.of(em.createQuery(
                 "select distinct h from Hospital h " +
                         "join fetch h.admin a " +
                         "join fetch h.vaccines v " +
-                        "where h.hospitalName= :hospitalName",Hospital.class)
-                .setParameter("hospitalName",hospitalName).getSingleResult());
+                        "where h.id= :id",Hospital.class)
+                .setParameter("id",id).getSingleResult());
     }
 
     /**
