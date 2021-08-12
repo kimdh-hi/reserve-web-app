@@ -47,4 +47,8 @@ public class AvailableTime {
         this.time = time;
         this.acceptCount = acceptCount;
     }
+
+    public void updateAcceptCount(Integer acceptCount){
+        this.acceptCount=acceptCount;
+    }
 }

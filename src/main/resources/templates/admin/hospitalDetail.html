@@ -75,9 +75,9 @@
     <div class="info date">
       <b>예약 가능 날짜</b>
       <div>
-        <input type="text" id="datepicker1" name="datepicker1" th:field="*{startDate}">
+        <input type="text" id="datepicker1" name="datepicker1" th:field="*{startDate}" disabled>
         <b>~</b>
-        <input type="text" id="datepicker2" name="datepicker2" th:field="*{endDate}">
+        <input type="text" id="datepicker2" name="datepicker2" th:field="*{endDate}" disabled>
       </div>
     </div>
     <div class="field-error" th:errors="*{startDate}">
@@ -88,9 +88,9 @@
     <div class="info time">
       <b>예약 가능 시간</b>
       <div>
-        <input class="timepicker" type="text" placeholder="시간 체크" th:field="*{startTime}">
+        <input class="timepicker" type="text" placeholder="시간 체크" th:field="*{startTime}" disabled>
         <b>~</b>
-        <input class="timepicker "type="text" placeholder="시간 체크" th:field="*{endTime}">
+        <input class="timepicker "type="text" placeholder="시간 체크" th:field="*{endTime}" disabled>
       </div>
     </div>
     <div>

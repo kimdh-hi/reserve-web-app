@@ -5,6 +5,8 @@ import com.threefam.reserve.domain.entity.*;
 
 import com.threefam.reserve.dto.hospital.*;
 import com.threefam.reserve.repository.AdminRepository;
+import com.threefam.reserve.repository.AvailableDateRepository;
+import com.threefam.reserve.repository.AvailableTimeRepository;
 import com.threefam.reserve.repository.HospitalRepository;
 import com.threefam.reserve.repository.custom.HospitalCustomRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +29,8 @@ public class AdminServiceImpl implements AdminService {
     private final HospitalRepository hospitalRepository;
     private final AdminRepository adminRepository;
     private final Holiday holiday;
-
+    private final AvailableTimeRepository availableTimeRepository;
+    private final AvailableDateRepository availableDateRepository;
 
     /**
      * 병원 정보 등록
@@ -67,9 +70,6 @@ public class AdminServiceImpl implements AdminService {
         List<String> holidays = holiday.holidayList(hospitalRequestDto.getStartDate(), hospitalRequestDto.getEndDate());
         List<String> availableDateList = holiday.availableDateList(hospitalRequestDto.getStartDate(), hospitalRequestDto.getEndDate(), holidays);
 
-        List<AvailableTime> availableTimes=new ArrayList<>();
-        List<AvailableDate> availableDates=new ArrayList<>();
-
         for (String date : availableDateList) {
             AvailableDate availableDate= AvailableDate.createAvailableDate()
                     .date(date)
@@ -81,10 +81,8 @@ public class AdminServiceImpl implements AdminService {
                         .acceptCount(hospitalRequestDto.getTimeAccept())
                         .build();
                 availableTime.addAvailableDate(availableDate);
-                availableTimes.add(availableTime);
             }
             availableDate.addHospital(hospital);
-            availableDates.add(availableDate);
         }
 
 
@@ -183,16 +181,8 @@ public class AdminServiceImpl implements AdminService {
         Optional<Hospital> hospitalDetail = hospitalCustomRepository.findHospitalDetail(dto.getId());
         Hospital hospital = hospitalDetail.stream().findFirst().orElse(null);
 
-        //예약가능시간
-        List<Integer> availableTimeList = getAvailableTimes(dto.getStartTime(), dto.getEndTime());
-
-        // 예약가능날짜
-        List<String> holidays = holiday.holidayList(dto.getStartDate(), dto.getEndDate());
-        List<String> availableDateList = holiday.availableDateList(dto.getStartDate(),dto.getEndDate(), holidays);
-
         //수정 목록
         List<Vaccine> vaccines = hospital.getVaccines();
-        List<AvailableDate> availableDates = hospital.getAvailableDates();
 
         //==백신 수정==//
         Map<String, Integer> vaccineInfoMap = dto.getVaccineInfoMap();
@@ -244,7 +234,29 @@ public class AdminServiceImpl implements AdminService {
             hospital.setTotalVaccineQuantity(total);
         }
 
-        log.info("total={}",total);
+        //병원의 예약가능 날짜 리스트
+        List<AvailableDate> availableDates = hospital.getAvailableDates();
+
+        //==dateAccept수정부분==//
+        Integer dateAcceptCount = dto.getDateAccept();
+
+        //dateAccept가 수정되었다면
+        if(availableDates.get(0).getAcceptCount()!= dateAcceptCount){
+            availableDateRepository.updateAvailableDateAcceptCount(dto.getDateAccept(),hospital.getId());
+        }
+
+        //==timeAccept수정부분==//
+        Integer timeAcceptCount = dto.getTimeAccept();
+
+        //timeAccept가 수정되었다면
+        if(availableDates.get(0).getAvailableTimes().get(0).getAcceptCount()!=timeAcceptCount){
+            List<Long> availableDateIds=new ArrayList<>();
+            for (AvailableDate availableDate : availableDates) {
+                availableDateIds.add(availableDate.getId());
+            }
+            availableTimeRepository.updateAvailableTimeAcceptCount(timeAcceptCount,availableDateIds);
+        }
+
         return hospital.getId();
     }
 

@@ -20,16 +20,15 @@ public class HospitalUpdateDto {
 
     private String hospitalName;
 
-    @NotEmpty(message = "예약가능 시작날짜를 선택해주세요.")
     private String startDate;
-    @NotEmpty(message = "예약가능 종료날짜를 선택해주세요.")
+
     private String endDate;
+
     @NotNull(message = "일일 최대 예약가능 인원을 입력해주세요.")
     private Integer dateAccept;
 
-    @NotNull(message = "예약가능 시작시간을 선택해주세요.")
     private String startTime;
-    @NotNull(message = "예약가능 종료시간을 선택해주세요.")
+
     private String endTime;
     @NotNull(message = "시간당 최대 예약가능 인원을 입력해주세요.")
     private Integer timeAccept;
