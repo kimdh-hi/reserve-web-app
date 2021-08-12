@@ -55,6 +55,10 @@ public class Hospital extends BaseEntity{
         this.totalQuantity = qty;
     }
 
+    public void removeStock() {
+        this.totalQuantity--;
+    }
+
     // true: y, false: n
     @Type(type = "yes_no")
     private Boolean enabled = true; // 예약 가능 여부
