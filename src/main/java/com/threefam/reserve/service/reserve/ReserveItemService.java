@@ -16,4 +16,6 @@ public interface ReserveItemService {
     List<AvailableTimeDto> getAvailableTimes(Long id);
 
     List<VaccineReserveDto> getAvailableVaccineNameList(Long hospitalId);
+
+    Long reserve(String username, Long hospitalId, String vaccineName, Long dateId, Long timeId);
 }

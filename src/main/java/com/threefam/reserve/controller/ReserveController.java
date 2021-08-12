@@ -1,15 +1,15 @@
 package com.threefam.reserve.controller;
 
-import com.threefam.reserve.domain.entity.AvailableDate;
 import com.threefam.reserve.dto.hospital.HospitalListDto;
 import com.threefam.reserve.dto.reserve.AvailableDateDto;
 import com.threefam.reserve.dto.reserve.AvailableTimeDto;
 import com.threefam.reserve.dto.reserve.ReserveItemRequestDto;
+import com.threefam.reserve.dto.security.PrincipalDetails;
 import com.threefam.reserve.dto.vaccine.VaccineReserveDto;
-import com.threefam.reserve.repository.AvailableDateRepository;
 import com.threefam.reserve.service.reserve.ReserveItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,6 @@ import java.util.List;
 public class ReserveController {
 
     private final ReserveItemService reserveItemService;
-    private final AvailableDateRepository availableDateRepository;
 
     /**
      * 예약가능 병원 조회
@@ -88,11 +87,24 @@ public class ReserveController {
      */
     @ResponseBody
     @PostMapping
-    public String reserve(@ModelAttribute ReserveItemRequestDto reserveItemRequestDto) {
+    public String reserve(
+            @AuthenticationPrincipal PrincipalDetails principal,
+            @ModelAttribute ReserveItemRequestDto reserveItemRequestDto) {
         log.info("hospitalId = {}", reserveItemRequestDto.getHospitalId());
         log.info("vaccineName = {}", reserveItemRequestDto.getVaccineName());
         log.info("reserveDateId = {}", reserveItemRequestDto.getReserveDateId());
         log.info("reserveTimeId = {}", reserveItemRequestDto.getReserveTimeId());
+
+        String username = principal.getUsername();
+        log.info("username = {}", username);
+
+        reserveItemService.reserve(
+                username,
+                reserveItemRequestDto.getHospitalId(),
+                reserveItemRequestDto.getVaccineName(),
+                reserveItemRequestDto.getReserveDateId(),
+                reserveItemRequestDto.getReserveTimeId()
+        );
 
         return "ok";
     }

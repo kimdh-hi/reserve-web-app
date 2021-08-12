@@ -39,6 +39,10 @@ public class AvailableDate {
     @Column(name = "accept_count")
     private Integer acceptCount;
 
+    public void decreaseCount() {
+        this.acceptCount--;
+    }
+
     @Type(type = "yes_no")
     private Boolean enabled = true;
 
