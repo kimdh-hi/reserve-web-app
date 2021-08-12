@@ -1,14 +1,9 @@
 package com.threefam.reserve.service.reserve;
 
-import com.threefam.reserve.domain.entity.AvailableDate;
-import com.threefam.reserve.domain.entity.AvailableTime;
-import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.HospitalListDto;
 import com.threefam.reserve.dto.reserve.AvailableDateDto;
 import com.threefam.reserve.dto.reserve.AvailableTimeDto;
-import com.threefam.reserve.dto.vaccine.VaccineDto;
 import com.threefam.reserve.dto.vaccine.VaccineReserveDto;
-import com.threefam.reserve.repository.HospitalRepository;
 import com.threefam.reserve.repository.custom.HospitalCustomRepository;
 import com.threefam.reserve.repository.custom.ReserveItemCustomRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +18,6 @@ import java.util.stream.Collectors;
 @Transactional
 public class ReserveItemServiceImpl implements ReserveItemService{
 
-    private final HospitalRepository hospitalRepository;
     private final HospitalCustomRepository hospitalCustomRepository;
     private final ReserveItemCustomRepository reserveItemCustomRepository;
 
@@ -61,5 +55,13 @@ public class ReserveItemServiceImpl implements ReserveItemService{
     public List<VaccineReserveDto> getAvailableVaccineNameList(Long hospitalId) {
         return reserveItemCustomRepository.findAvailableVaccines(hospitalId)
                 .stream().map(v -> new VaccineReserveDto(v.getId(), v.getVaccineName())).collect(Collectors.toList());
+    }
+
+    /**
+     * 예약처리
+     */
+    @Override
+    public void reserve(Long hospitalId, String vaccineName, Long dateId, Long timeId) {
+
     }
 }
