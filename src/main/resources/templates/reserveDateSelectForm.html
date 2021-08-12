@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .no-visible{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<h1>예약가능날짜 선택하기</h1>
+
+<form method="GET" th:action="@{/reserve/{param1}/times(param1=${hospitalName})}">
+
+    <select id="date" name="date">
+        <option value="">====== 날짜를 선택하세요 ======</option>
+        <option th:each="d : ${dates}" th:value="${d.id}" th:text="${d.date}"></option>
+    </select>
+
+    <button type="submit">선택</button>
+</form>
+
+</body>
+</html>
