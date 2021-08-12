@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class HospitalListDto {
 
+    private Long id;
+
     private String hospitalName;
 
     private String address;

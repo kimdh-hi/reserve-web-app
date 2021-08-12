@@ -8,7 +8,7 @@
 
 <h1>예약가능시간 선택하기</h1>
 
-<form method="GET" th:action="@{/reserve/{param1}/vaccine(param1=${hospitalName})}">
+<form method="GET" th:action="@{/reserve/{param1}/vaccine(param1=${hospitalId})}">
 
   <input type="hidden" th:value="${date}" name="date" id="date">
 

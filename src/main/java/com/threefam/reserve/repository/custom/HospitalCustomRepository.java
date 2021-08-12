@@ -24,7 +24,7 @@ public class HospitalCustomRepository {
     //  병원명, 병원주소, 백신잔여수량
     public List<HospitalListDto> findAllHospitalInfo(Long id) {
         return em.createQuery(
-                "select new com.threefam.reserve.dto.hospital.HospitalListDto(h.hospitalName, h.address, h.totalQuantity) " +
+                "select new com.threefam.reserve.dto.hospital.HospitalListDto(h.id, h.hospitalName, h.address, h.totalQuantity) " +
                         "from Hospital h " +
                         "where h.admin.id = :id"
         , HospitalListDto.class).setParameter("id",id).getResultList();
@@ -47,7 +47,7 @@ public class HospitalCustomRepository {
      */
     public List<HospitalListDto> findHospitalListPaging(int offset, int limit) {
         return em.createQuery(
-                "select new com.threefam.reserve.dto.hospital.HospitalListDto(h.hospitalName, h.address, h.totalQuantity) " +
+                "select new com.threefam.reserve.dto.hospital.HospitalListDto(h.id, h.hospitalName, h.address, h.totalQuantity) " +
                         "from Hospital h " +
                         "where h.enabled = true", HospitalListDto.class)
                 .setFirstResult(offset)

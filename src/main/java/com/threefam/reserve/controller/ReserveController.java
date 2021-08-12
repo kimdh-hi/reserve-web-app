@@ -40,11 +40,11 @@ public class ReserveController {
     /**
      * 예약가능날짜 조회 및 선택
      */
-    @GetMapping("/{hospitalName}/dates")
-    public String getAvailableDates(@PathVariable String hospitalName, Model model) {
+    @GetMapping("/{hospitalId}/dates")
+    public String getAvailableDates(@PathVariable Long hospitalId, Model model) {
         // 병원이름으로 해당 병원의 예약가능날짜 조회
-        List<AvailableDateDto> availableDates = reserveItemService.getAvailableDates(hospitalName);
-        model.addAttribute("hospitalName", hospitalName);
+        List<AvailableDateDto> availableDates = reserveItemService.getAvailableDates(hospitalId);
+        model.addAttribute("hospitalId", hospitalId);
         model.addAttribute("dates", availableDates);
 
         return "reserveDateSelectForm";
@@ -53,13 +53,12 @@ public class ReserveController {
     /**
      * 예약가능시간 조회 및 선택
      */
-    @GetMapping("/{hospitalName}/times")
+    @GetMapping("/{hospitalId}/times")
     public String getAvailableTimes(
-            @PathVariable String hospitalName,
+            @PathVariable Long hospitalId,
             @RequestParam(name="date") Long selectedDateId, Model model) {
         // 선택한 예약날짜의 pk로 예약가능시간 조회
         List<AvailableTimeDto> times = reserveItemService.getAvailableTimes(selectedDateId);
-        //AvailableDate availableDate = availableDateRepository.findById(dateId).get();
         model.addAttribute("date", selectedDateId);
         model.addAttribute("times", times);
         return "reserveTimeSelectForm";
@@ -68,18 +67,18 @@ public class ReserveController {
     /**
      * 예약가능백신 조회 및 선택
      */
-    @GetMapping("/{hospitalName}/vaccine")
+    @GetMapping("/{hospitalId}/vaccine")
     public String selectVaccine(
-            @PathVariable String hospitalName,
+            @PathVariable Long hospitalId,
             @RequestParam(name = "date") Long selectedDateId,
             @RequestParam(name = "time") Long selectedTimeId, Model model) {
 
-        List<VaccineReserveDto> vaccines = reserveItemService.getAvailableVaccineNameList(hospitalName);
+        List<VaccineReserveDto> vaccines = reserveItemService.getAvailableVaccineNameList(hospitalId);
 
         model.addAttribute("vaccines", vaccines);
         model.addAttribute("date", selectedDateId);
         model.addAttribute("time", selectedTimeId);
-        model.addAttribute("hospital", hospitalName);
+        model.addAttribute("hospitalId", hospitalId);
 
         return "reserveVaccineSelectForm";
     }
@@ -90,10 +89,10 @@ public class ReserveController {
     @ResponseBody
     @PostMapping
     public String reserve(@ModelAttribute ReserveItemRequestDto reserveItemRequestDto) {
-        log.info("hospitalName = {}", reserveItemRequestDto.getHospitalName());
+        log.info("hospitalId = {}", reserveItemRequestDto.getHospitalId());
         log.info("vaccineName = {}", reserveItemRequestDto.getVaccineName());
-        log.info("reserveDate = {}", reserveItemRequestDto.getReserveDate());
-        log.info("reserveTime = {}", reserveItemRequestDto.getReserveTime());
+        log.info("reserveDateId = {}", reserveItemRequestDto.getReserveDateId());
+        log.info("reserveTimeId = {}", reserveItemRequestDto.getReserveTimeId());
 
         return "ok";
     }

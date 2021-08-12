@@ -15,7 +15,6 @@ import java.util.List;
 public class ReserveItemCustomRepository {
 
     private final EntityManager em;
-    private final HospitalRepository hospitalRepository;
 
     /**
      * 예약가능 날짜 조회
@@ -46,13 +45,13 @@ public class ReserveItemCustomRepository {
     /**
      * 예약가능 백신이름 조회
      */
-    public List<Vaccine> findAvailableVaccines(String hospitalName) {
+    public List<Vaccine> findAvailableVaccines(Long hospitalId) {
         return em.createQuery(
                 "select v " +
                         "from Vaccine v " +
-                        "where v.hospital.hospitalName = :hospitalName and v.quantity > 0", Vaccine.class
+                        "where v.hospital.id = :hospitalId and v.quantity > 0", Vaccine.class
         )
-                .setParameter("hospitalName", hospitalName)
+                .setParameter("hospitalId", hospitalId)
                 .getResultList();
     }
 }

@@ -39,14 +39,9 @@ public class ReserveItemServiceImpl implements ReserveItemService{
      * 병원 이름으로 예약가능날짜 조회
      */
     @Override
-    public List<AvailableDateDto> getAvailableDates(String hospitalName) {
+    public List<AvailableDateDto> getAvailableDates(Long HospitalId) {
 
-        Hospital hospital = hospitalRepository.findByHospitalName(hospitalName).orElseThrow(
-                () -> {
-                    throw new IllegalArgumentException("존재하지 않는 병원이름 입니다.");
-                }
-        );
-        return reserveItemCustomRepository.findAvailableDatesByHospitalId(hospital.getId())
+        return reserveItemCustomRepository.findAvailableDatesByHospitalId(HospitalId)
                 .stream().map( m -> new AvailableDateDto(m.getId(), m.getDate())).collect(Collectors.toList());
     }
 
@@ -63,8 +58,8 @@ public class ReserveItemServiceImpl implements ReserveItemService{
      * 예약가능백신 조회
      */
     @Override
-    public List<VaccineReserveDto> getAvailableVaccineNameList(String hospitalName) {
-        return reserveItemCustomRepository.findAvailableVaccines(hospitalName)
+    public List<VaccineReserveDto> getAvailableVaccineNameList(Long hospitalId) {
+        return reserveItemCustomRepository.findAvailableVaccines(hospitalId)
                 .stream().map(v -> new VaccineReserveDto(v.getId(), v.getVaccineName())).collect(Collectors.toList());
     }
 }

@@ -11,9 +11,9 @@ public interface ReserveItemService {
 
     List<HospitalListDto> getAllHospitalInfo(int offset, int limit);
 
-    List<AvailableDateDto> getAvailableDates(String hospitalName);
+    List<AvailableDateDto> getAvailableDates(Long hospitalId);
 
     List<AvailableTimeDto> getAvailableTimes(Long id);
 
-    List<VaccineReserveDto> getAvailableVaccineNameList(String hospitalName);
+    List<VaccineReserveDto> getAvailableVaccineNameList(Long hospitalId);
 }

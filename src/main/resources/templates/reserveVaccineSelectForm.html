@@ -9,9 +9,9 @@
 
 <form method="POST" th:action="@{/reserve}">
 
-    <input type="hidden" th:value="${date}" id="reserveDate" name="reserveDate">
-    <input type="hidden" th:value="${time}" id="reserveTime" name="reserveTime">
-    <input type="hidden" th:value="${hospitalName}" id="hospitalName" name="hospitalName">
+    <input type="hidden" th:value="${date}" id="reserveDateId" name="reserveDateId">
+    <input type="hidden" th:value="${time}" id="reserveTimeId" name="reserveTimeId">
+    <input type="hidden" th:value="${hospitalId}" id="hospitalId" name="hospitalId">
 
   <div th:each="v : ${vaccines}">
     <label th:for="${v.id}" th:text="${v.vaccineName}"></label>
