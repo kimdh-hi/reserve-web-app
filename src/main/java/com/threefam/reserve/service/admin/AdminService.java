@@ -1,6 +1,5 @@
 package com.threefam.reserve.service.admin;
 
-import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.HospitalListDto;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
@@ -8,7 +7,6 @@ import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
 
 public interface AdminService {
 

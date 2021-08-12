@@ -1,8 +1,6 @@
 package com.threefam.reserve.service.admin;
 
 import com.threefam.reserve.domain.entity.*;
-
-
 import com.threefam.reserve.dto.hospital.HospitalListDto;
 import com.threefam.reserve.dto.hospital.HospitalRequestDto;
 import com.threefam.reserve.dto.hospital.HospitalResponseDto;
@@ -10,17 +8,15 @@ import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
 import com.threefam.reserve.repository.AdminRepository;
 import com.threefam.reserve.repository.HospitalRepository;
 import com.threefam.reserve.repository.custom.HospitalCustomRepository;
+import com.threefam.reserve.service.Holiday;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.util.*;
 
-import com.threefam.reserve.service.Holiday;
 @RequiredArgsConstructor
 @Slf4j
 @Service

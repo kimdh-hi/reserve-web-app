@@ -23,7 +23,6 @@ import java.util.List;
 public class ReserveController {
 
     private final ReserveItemService reserveItemService;
-    private final AvailableDateRepository availableDateRepository;
 
     /**
      * 예약가능 병원 조회
