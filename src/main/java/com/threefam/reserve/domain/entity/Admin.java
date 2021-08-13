@@ -25,12 +25,6 @@ public class Admin extends BaseEntity {
     @JsonIgnoreProperties({"admin"})
     private List<Hospital> hospitals = new ArrayList<>();
 
-//    @Builder(builderMethodName = "createAdmin")
-//    public Admin(List<Hospital> hospitals) {
-//        this.hospitals = hospitals;
-//    }
-
-
     @Builder(builderMethodName = "createAdmin")
     public Admin(String name) {
         this.name = name;

@@ -121,6 +121,7 @@ public class ReserveController {
     public String reserveResult(@AuthenticationPrincipal PrincipalDetails principal, Model model) {
         String username = principal.getUsername();
         log.info("username = {}", username);
+
         ReserveItemSimpleDto reserveResult = reserveItemService.getReserveResult(username);
         if (reserveResult.getHospitalName() == null) {
             return "redirect:/";
