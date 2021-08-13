@@ -29,6 +29,12 @@ public class AvailableTime {
     // 한 타임동안 수용 가능한 인원
     private Integer acceptCount;
 
+    public void cancel() {
+        this.acceptCount++;
+        this.enabled=true;
+        this.availableDate.cancel();
+    }
+
     public void decreaseCount() {
         this.acceptCount--;
         this.availableDate.decreaseCount();

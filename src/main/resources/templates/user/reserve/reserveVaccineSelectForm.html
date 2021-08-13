@@ -18,9 +18,8 @@
   <div th:each="v : ${vaccines}" class="form-check form-check-inline">
     <label th:for="${v.id}" th:text="${v.vaccineName}" class="form-check-label"></label>
     <input type="radio"  th:value="${v.vaccineName}" th:id="${v.id}"  name="vaccineName" class="form-check-input">
-      <button type="submit" class="btn btn-primary">선택</button>
   </div>
-
+    <button type="submit" class="btn btn-primary">선택</button>
 
 </form>
 </div>

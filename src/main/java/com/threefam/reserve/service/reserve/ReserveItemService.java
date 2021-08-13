@@ -23,4 +23,6 @@ public interface ReserveItemService {
     ReserveItemSimpleDto getReserveResult(String username);
 
     void validateDuplicateUser(String username);
+
+    void cancelReserveItem(Long reserveItemId);
 }

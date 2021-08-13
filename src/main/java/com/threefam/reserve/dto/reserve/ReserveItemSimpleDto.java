@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReserveItemSimpleDto {
+
+    private Long reserveItemId;
+
     private String hospitalName;
 
     private String vaccineName;

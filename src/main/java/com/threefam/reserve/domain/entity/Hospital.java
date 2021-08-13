@@ -51,6 +51,10 @@ public class Hospital extends BaseEntity{
     @Column(name = "total_quantity")
     private Integer totalQuantity;
 
+    public void cancel() {
+        this.totalQuantity++;
+    }
+
     @Column(name = "date_accept")
     private Integer dateAccept;
     @Column(name = "time_accept")

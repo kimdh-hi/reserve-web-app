@@ -11,10 +11,7 @@ import com.threefam.reserve.repository.AvailableDateRepository;
 import com.threefam.reserve.repository.HospitalRepository;
 import com.threefam.reserve.repository.ReserveItemRepository;
 import com.threefam.reserve.repository.UserRepository;
-import com.threefam.reserve.repository.custom.AvailableTimeCustomRepository;
-import com.threefam.reserve.repository.custom.HospitalCustomRepository;
-import com.threefam.reserve.repository.custom.ReserveItemCustomRepository;
-import com.threefam.reserve.repository.custom.VaccineCustomRepository;
+import com.threefam.reserve.repository.custom.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,6 +35,7 @@ public class ReserveItemServiceImpl implements ReserveItemService{
     private final AvailableDateRepository availableDateRepository;
     private final UserRepository userRepository;
     private final ReserveItemRepository reserveItemRepository;
+    private final AvailableDateCustomRepository availableDateCustomRepository;
 
 
     /**
@@ -143,5 +141,25 @@ public class ReserveItemServiceImpl implements ReserveItemService{
             throw new IllegalStateException("이미 예약한 회원 입니다.");
         }
 
+    }
+
+    /**
+     * 예약취소
+     */
+    @Override
+    public void cancelReserveItem(Long reserveItemId) {
+        ReserveItem reserveItem = reserveItemRepository.findById(reserveItemId).get();
+
+        Hospital hospital = reserveItem.getHospital();
+        hospital.cancel();
+
+        Vaccine vaccine = vaccineCustomRepository.findVaccineDisabled(hospital.getId(), reserveItem.getVaccineName());
+        vaccine.cancel();
+
+        AvailableDate date = availableDateCustomRepository.findAvailableDateByHospitalIdAndDate(hospital.getId(), reserveItem.getReserveDate());
+        AvailableTime time = availableTimeCustomRepository.findAvailableTimeByTimeAndDateId(reserveItem.getReserveTime(), date.getId());
+        time.cancel();
+
+        reserveItemRepository.deleteById(reserveItemId);
     }
 }

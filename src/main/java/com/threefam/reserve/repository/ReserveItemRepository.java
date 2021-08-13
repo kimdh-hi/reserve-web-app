@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface ReserveItemRepository extends JpaRepository<ReserveItem, Long> {
 
-    @Query("select new com.threefam.reserve.dto.reserve.ReserveItemSimpleDto(ri.Hospital.hospitalName, ri.vaccineName, ri.reserveDate, ri.reserveTime, ri.status) " +
+    @Query("select new com.threefam.reserve.dto.reserve.ReserveItemSimpleDto(ri.id, ri.Hospital.hospitalName, ri.vaccineName, ri.reserveDate, ri.reserveTime, ri.status) " +
             "from ReserveItem  ri " +
             "where ri.user.id = :userId")
     Optional<ReserveItemSimpleDto> findByUserId(Long userId);

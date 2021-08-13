@@ -21,4 +21,17 @@ public class AvailableTimeCustomRepository {
                 .setParameter("timeId", timeId)
                 .getSingleResult();
     }
+
+    public AvailableTime findAvailableTimeByTimeAndDateId(Integer time, Long dateId) {
+        return em.createQuery(
+                "select t " +
+                        "from AvailableTime t " +
+                        "where t.time = :time and t.availableDate.id = :dateId", AvailableTime.class
+        )
+                .setParameter("time", time)
+                .setParameter("dateId", dateId)
+                .getSingleResult();
+    }
+
+
 }

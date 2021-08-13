@@ -16,6 +16,7 @@
       <th scope="col">예약일자</th>
       <th scope="col">예약시간</th>
       <th scope="col">예약상태</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -25,6 +26,13 @@
       <td th:text="${reserveResult.reserveDate}"></td>
       <td th:text="${reserveResult.reserveTime}"></td>
       <td th:text="${reserveResult.getReserveStatus().name()}"></td>
+      <td>
+        <button class="btn btn-danger btn-sm">
+          <a th:href="@{/reserve/{reserveItemId}/cancel (reserveItemId=${reserveResult.reserveItemId})}">
+            예약취소
+          </a>
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>

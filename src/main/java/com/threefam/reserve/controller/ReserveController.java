@@ -129,4 +129,14 @@ public class ReserveController {
         model.addAttribute("reserveResult", reserveResult);
         return "user/reserve/ReserveResult";
     }
+
+    /**
+     * 예약취소
+     */
+    @GetMapping("/{reserveItemId}/cancel")
+    public String cancel(@PathVariable Long reserveItemId) {
+        reserveItemService.cancelReserveItem(reserveItemId);
+
+        return "redirect:/";
+    }
 }

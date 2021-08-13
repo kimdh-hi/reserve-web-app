@@ -26,6 +26,11 @@ public class Vaccine extends BaseEntity{
     @Column(nullable = false)
     private Integer quantity;
 
+    public void cancel() {
+        this.quantity++;
+        this.enabled=false;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;

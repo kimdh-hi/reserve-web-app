@@ -24,4 +24,15 @@ public class VaccineCustomRepository {
                 .setParameter("vaccineName", vaccineName)
                 .getSingleResult();
     }
+
+    public Vaccine findVaccineDisabled(Long hospitalId, String vaccineName) {
+        return em.createQuery(
+                "select v " +
+                        "from Vaccine v  join v.hospital h " +
+                        "where h.id = :hospitalId and v.vaccineName = :vaccineName", Vaccine.class
+        )
+                .setParameter("hospitalId", hospitalId)
+                .setParameter("vaccineName", vaccineName)
+                .getSingleResult();
+    }
 }
