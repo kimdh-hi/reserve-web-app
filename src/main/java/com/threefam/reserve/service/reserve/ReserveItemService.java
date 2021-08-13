@@ -21,4 +21,6 @@ public interface ReserveItemService {
     Long reserve(String username, Long hospitalId, String vaccineName, Long dateId, Long timeId);
 
     ReserveItemSimpleDto getReserveResult(String username);
+
+    void validateDuplicateUser(String username);
 }

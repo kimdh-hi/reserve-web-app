@@ -32,7 +32,10 @@ public class ReserveController {
     @GetMapping("/hospitals")
     public String hospitalList(
             @RequestParam(name = "offset", defaultValue = "0") int offset,
-            @RequestParam(name = "limit", defaultValue = "10") int limit, Model model) {
+            @RequestParam(name = "limit", defaultValue = "10") int limit, Model model,
+            @AuthenticationPrincipal PrincipalDetails user) {
+
+        reserveItemService.validateDuplicateUser(user.getUsername());
         List<HospitalListDto> hospitalListDtos = reserveItemService.getAllHospitalInfo(offset, limit);
         model.addAttribute("hospitalList", hospitalListDtos);
         return "user/reserve/hospitalList";

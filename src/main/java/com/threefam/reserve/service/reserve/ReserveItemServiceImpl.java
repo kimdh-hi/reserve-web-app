@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -120,5 +121,22 @@ public class ReserveItemServiceImpl implements ReserveItemService{
                 }
         );
         return reserveItemRepository.findByUserId(user.getId()).get();
+    }
+
+    /**
+     * 이미 예약한 회원인지 확인.
+     */
+    @Override
+    public void validateDuplicateUser(String username){
+        User user = userRepository.findByEmail(username).orElseThrow(
+                () -> {
+                    throw new IllegalArgumentException("존재하지 않는 사용자입니다.");
+                }
+        );
+        Optional<ReserveItemSimpleDto> reserveItemByUserId = reserveItemRepository.findByUserId(user.getId());
+        if(!reserveItemByUserId.isEmpty()){
+            throw new IllegalStateException("이미 예약한 회원 입니다.");
+        }
+
     }
 }

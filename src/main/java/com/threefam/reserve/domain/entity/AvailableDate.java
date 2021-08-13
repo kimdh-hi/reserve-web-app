@@ -41,6 +41,8 @@ public class AvailableDate {
 
     public void decreaseCount() {
         this.acceptCount--;
+        if(this.acceptCount==0)
+            this.enabled=false;
     }
 
     @Type(type = "yes_no")

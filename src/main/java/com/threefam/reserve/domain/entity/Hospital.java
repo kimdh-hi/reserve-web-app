@@ -62,6 +62,8 @@ public class Hospital extends BaseEntity{
 
     public void removeStock() {
         this.totalQuantity--;
+        if(this.totalQuantity==0)
+            this.enabled=false;
     }
 
     public void updateDateAccept(Integer dateAccept){this.dateAccept=dateAccept;}
