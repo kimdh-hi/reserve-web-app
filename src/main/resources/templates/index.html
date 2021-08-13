@@ -5,15 +5,13 @@
     <title>본인인증 및 예약하기</title>
     <link rel="icon" th:href="@{/images/home.png}">
     <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/navBar.css}">
 </head>
 
 <body>
-<!-- 홈 키 -->
-<div class="bar">
-    <a class="home" data-text="home" th:href="@{/}"><img th:src="@{/images/home.png}"></a>
-    <!-- 로그아웃 -->
-    <a  class="log-out" th:href="@{/logout}" sec:authorize="isAuthenticated()">로그아웃</a>
-</div>
+<header th:replace="~{fragment/header :: bar}">
+
+</header>
 <div class="frame">
     <!-- 본인 인증 -->
     <div class="init check" sec:authorize="!isAuthenticated()">

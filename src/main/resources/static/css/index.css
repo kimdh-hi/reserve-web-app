@@ -34,58 +34,14 @@ h1, h2, h3, h3, h4, h5, h6 {
   font-weight: 500;
   margin-top: 0;
 }
-.bar{
-  height: 70px;
-  margin: 15px;
-  display: flex;
-  justify-content: flex-end;
-  align-items:center;
-  gap:15px;
-}
-.bar a,
-.bar img{
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-}
-.bar .log-out{
-  margin-top: 30px;
-}
-/* 홈버튼 알림 문구 */
-.bar .home:before {
-  content: attr(data-text);
-  position: absolute;
-  background-color: rgba(170, 170, 170, 0.4);
-  border-radius: 3px;
-  color: #222;
-  width: 60px;
-  height: 25px;
-  font-size: 13px;
-  bottom:-35px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  line-height: 25px;
 
+header .logout a {
+  font-size: 14px;
 }
-.bar .home:after {
-  content:'';
-  position:absolute;
-  background-color: rgba(170, 170, 170, 0.4);
-  width: 4px;
-  height: 4px;
-  bottom: -12px;
-  left:50%;
-  transform:translateX(-50%) rotate(45deg);
+header .logout a:last-child {
+  margin-right: 50px;
 }
-.bar .home:before,
-.bar .home:after {
-  display: none;
-}
-.bar .home:hover:before,
-.bar .home:hover:after {
-  display: block;
-}
+
 /* 인증 & 예약 공통 */
 .frame {
   position: absolute;
@@ -154,7 +110,6 @@ h1, h2, h3, h3, h4, h5, h6 {
   color:brown;
 }
 /* sns 알려주는 박스 */
-.bar .home,
 .sns a {
   position: relative;
 }

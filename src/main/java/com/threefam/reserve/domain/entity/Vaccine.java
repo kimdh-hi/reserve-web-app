@@ -28,7 +28,7 @@ public class Vaccine extends BaseEntity{
 
     public void cancel() {
         this.quantity++;
-        this.enabled=false;
+        this.enabled=true;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

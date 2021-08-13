@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700,900&display=swap');
 
+@font-face {
+  font-family: 'SLEIGothicTTF';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SLEIGothicTTF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* basic */
 *{
   font-family: 'Noto Sans KR', sans-serif;
@@ -26,6 +33,7 @@ input, select {
 .register {
   width: 460px;
   margin: auto;
+  margin-top: 100px;
   margin-bottom: 40px;
 }
 .register .hR{
@@ -40,20 +48,15 @@ input, select {
   font-weight: 500;
   margin-bottom: 5px;
 }
-
 /* 주소 */
-.info-address div {
-  display: flex;
-  gap:15px;
-}
 .info-address div input[type=text]{
   flex: 10;
 }
 .info-address div input[type=button]{
   flex:1;
 }
-
 /* 날짜 */
+.info-address div,
 .info.date div ,
 .info.time div {
   display: flex;
@@ -113,25 +116,3 @@ input, select {
 .register input:not(input[type=number]):focus {
   border: 1px solid skyblue;
 }
-
-/* select 화살표 없애기 */
-select {
-  -webkit-appearance:none;
-  -moz-appearance:none;
-  appearance:none;
-  background: #eee url(/images/select.png) no-repeat center right 20px;
-}
-select::-ms-expand{
-  display:none;
-}
-
-/* number 타입 숫자 올리는 화살표 x */
-/* input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-input[type=number]{
-  -moz-appearance: textfield;
-} */

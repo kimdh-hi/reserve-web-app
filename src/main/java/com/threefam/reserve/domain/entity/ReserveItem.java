@@ -31,6 +31,7 @@ public class ReserveItem extends BaseEntity {
     @JoinColumn(name = "hospital_id")
     private Hospital Hospital;
 
+    @Enumerated(value = EnumType.STRING)
     private ReserveStatus status = ReserveStatus.COMP;
 
     private String vaccineName;

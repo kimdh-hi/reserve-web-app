@@ -8,9 +8,13 @@
 
   <link rel="icon" th:href="@{/images/home.png}">
   <link rel="stylesheet" th:href="@{/css/adminlist.css}">
+  <link rel="stylesheet" th:href="@{/css/navBar.css}">
 </head>
 
 <body>
+<header th:replace="~{fragment/header :: bar}">
+
+</header>
 
 <table class="hospital-List">
   <caption>병원 목록</caption>

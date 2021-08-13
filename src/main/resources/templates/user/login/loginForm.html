@@ -7,7 +7,7 @@
 
     <link rel="icon" th:href="@{/images/home.png}">
     <link rel="stylesheet" th:href="@{/css/register.css}">
-
+    <link rel="stylesheet" th:href="@{/css/navBar.css}">
     <style>
          .field-error {
          color: #dc3545;
@@ -16,6 +16,9 @@
 </head>
 
 <body>
+<header th:replace="~{fragment/header :: bar}">
+
+</header>
 <div class="register">
     <h1 class="hR">Admin Login</h1>
 

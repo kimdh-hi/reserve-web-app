@@ -8,6 +8,7 @@
   <title>회원가입</title>
   <link rel="icon" href="/images/home.png">
   <link rel="stylesheet" th:href="@{/css/signup.css}">
+  <link rel="stylesheet" th:href="@{/css/navBar.css}">
   <style>
         .field-error{
             color:red;
@@ -17,6 +18,9 @@
 </head>
 
 <body>
+<header th:replace="~{fragment/header :: bar}">
+
+</header>
 
 <div class="sign">
   <h1 class="hS">회원가입</h1>
@@ -53,9 +57,12 @@
       </div>
     </div>
 
-    <div class="info">
+    <div class="info-address">
       <label for="address"><b>주소</b></label>
-      <input type="text" th:field="*{address}" id="address" >
+      <div>
+        <input type="text" th:field="*{address}" id="address" readonly >
+        <input type="button"  onclick="findAddr()" value="주소 검색">
+      </div>
       <div class="field-error" th:errors="*{address}">
       </div>
     </div>
@@ -71,5 +78,30 @@
   </form>
 </div>
 
+<script th:inline="javascript">
+function findAddr(){
+new daum.Postcode({
+oncomplete: function(data) {
+
+console.log(data);
+
+// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+// 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+var roadAddr = data.roadAddress; // 도로명 주소 변수
+var jibunAddr = data.jibunAddress; // 지번 주소 변수
+// 우편번호와 주소 정보를 해당 필드에 넣는다.
+
+if(roadAddr !== ''){
+document.getElementById("address").value = roadAddr;
+}
+else if(jibunAddr !== ''){
+document.getElementById("address").value = jibunAddr;
+}
+}
+}).open();
+}
+</script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </body>
 </html>

@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700,900&display=swap');
 
+@font-face {
+  font-family: 'SLEIGothicTTF';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SLEIGothicTTF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* basic */
 *{
   font-family: 'Noto Sans KR', sans-serif;
@@ -26,7 +33,7 @@ input, select {
 .sign {
   width: 460px;
   margin: auto;
-  margin-top: 60px;
+  margin-top: 100px;
   margin-bottom: 40px;
 }
 .sign .hS{
@@ -55,11 +62,11 @@ input, select {
     background-color: dodgerblue;
     margin-top: 20px;
   }
-  
+
   .sign input:focus,
   .sign select:focus {
     border: 1px solid dodgerblue;
-  } 
+  }
 
   /* Checked radio button(성별) */
 .info.gender div{
@@ -73,13 +80,14 @@ input, select {
   display:inline-block;
 }
 
-/* number 화살표 없애기 */
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+/* 주소 */
+.info-address div{
+  display: flex;
+  gap:15px;
 }
-input[type=number]{
-  -moz-appearance: textfield;
+.info-address div input[type=text]{
+  flex: 10;
+}
+.info-address div input[type=button]{
+  flex:1;
 }

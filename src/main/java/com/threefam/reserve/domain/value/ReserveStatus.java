@@ -1,5 +1,8 @@
 package com.threefam.reserve.domain.value;
 
+import lombok.Getter;
+
+@Getter
 public enum ReserveStatus {
 
     COMP("예약완료"), CANCEL("예약취소");

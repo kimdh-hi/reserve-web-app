@@ -43,10 +43,14 @@
 
   <link rel="icon" th:href="@{/images/home.png}">
   <link rel="stylesheet" th:href="@{/css/register.css}">
+  <link rel="stylesheet" th:href="@{/css/navBar.css}">
 
 </head>
 
 <body>
+<header th:replace="~{fragment/header :: bar}">
+
+</header>
 <div class="register">
   <h1 class="hR">병원 등록하기</h1>
 
