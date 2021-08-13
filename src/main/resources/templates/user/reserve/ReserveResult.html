@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<h1>예약결과</h1>
-<table>
+<div class="container">
+<h1 class="my-4">예약조회</h1>
+<table class="table">
   <thead>
     <tr>
-      <td>병원명</td>
-      <td>백신명</td>
-      <td>예약일자</td>
-      <td>예약시간</td>
-      <td>예약상태</td>
+      <th scope="col">병원명</th>
+      <th scope="col">백신명</th>
+      <th scope="col">예약일자</th>
+      <th scope="col">예약시간</th>
+      <th scope="col">예약상태</th>
     </tr>
   </thead>
   <tbody>
@@ -26,5 +28,6 @@
     </tr>
   </tbody>
 </table>
+</div>
 </body>
 </html>

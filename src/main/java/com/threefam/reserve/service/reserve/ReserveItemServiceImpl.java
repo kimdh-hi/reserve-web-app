@@ -90,10 +90,20 @@ public class ReserveItemServiceImpl implements ReserveItemService{
         AvailableTime time = availableTimeCustomRepository.findAvailableTimeById(timeId);
 
         time.decreaseCount();
+        if (time.getAcceptCount() <= 0) time.setEnabled(false);
+
         hospital.removeStock();
+        if (hospital.getTotalQuantity() <= 0) {
+            log.info("hospital 재고 감소!!");
+            hospital.setEnabled(false);
+        }
+
         vaccine.removeStock();
+        if (vaccine.getQuantity() <= 0) vaccine.setEnabled(false);
 
         AvailableDate availableDate = availableDateRepository.findById(dateId).get();
+        if (availableDate.getAcceptCount()<=0) availableDate.setEnabled(false);
+
         User user = userRepository.findByEmail(username).get();
 
         ReserveItem reserveItem = ReserveItem.createReserveItem()
@@ -120,7 +130,8 @@ public class ReserveItemServiceImpl implements ReserveItemService{
                     throw new IllegalArgumentException("존재하지 않는 사용자입니다.");
                 }
         );
-        return reserveItemRepository.findByUserId(user.getId()).get();
+        return reserveItemRepository.findByUserId(user.getId()).orElseGet(
+                () -> { return new ReserveItemSimpleDto(); });
     }
 
     /**

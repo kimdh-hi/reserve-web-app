@@ -48,6 +48,10 @@ public class AvailableDate {
     @Type(type = "yes_no")
     private Boolean enabled = true;
 
+    public void setEnabled(boolean flag) {
+        this.enabled = flag;
+    }
+
     // 양방향 연관관계 편의 메서드
     public void addHospital(Hospital hospital) {
         this.hospital = hospital;

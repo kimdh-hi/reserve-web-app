@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -28,6 +29,13 @@ public class Vaccine extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
+
+    @Type(type="yes_no")
+    private boolean enabled = true;
+
+    public void setEnabled(boolean flag) {
+        this.enabled = flag;
+    }
 
     @Builder(builderMethodName = "createVaccine")
     public Vaccine(String vaccineName, Integer quantity) {

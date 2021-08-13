@@ -16,7 +16,7 @@ public class AvailableTimeCustomRepository {
         return em.createQuery(
                 "select t " +
                         "from AvailableTime t " +
-                        "where t.id = :timeId", AvailableTime.class
+                        "where t.id = :timeId and t.enabled=true", AvailableTime.class
         )
                 .setParameter("timeId", timeId)
                 .getSingleResult();
