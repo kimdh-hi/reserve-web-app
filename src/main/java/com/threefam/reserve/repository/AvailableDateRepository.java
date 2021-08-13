@@ -16,7 +16,7 @@ public interface AvailableDateRepository extends JpaRepository<AvailableDate, Lo
      */
     @Modifying(flushAutomatically = true)
     @Query( "update AvailableDate a " +
-            "set a.acceptCount= :acceptCount " +
+            "set a.acceptCount= a.acceptCount+ :acceptCount " +
             "where a.hospital.id =:id")
     void updateAvailableDateAcceptCount(@Param("acceptCount")Integer acceptCount,
                                         @Param("id") Long id);

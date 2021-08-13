@@ -162,8 +162,8 @@ public class AdminServiceImpl implements AdminService {
                 .hospitalName(hospital.getHospitalName())
                 .address(hospital.getAddress())
                 .detailAddress(hospital.getDetailAddress())
-                .dateAccept(availableDates.get(0).getAcceptCount())
-                .timeAccept(availableTimes.get(0).getAcceptCount())
+                .dateAccept(hospital.getDateAccept())
+                .timeAccept(hospital.getTimeAccept())
                 .startDate(availableDates.get(0).getDate())
                 .endDate(availableDates.get(availableDates.size()-1).getDate())
                 .startTime(String.valueOf(availableTimes.get(0).getTime()))
@@ -239,22 +239,27 @@ public class AdminServiceImpl implements AdminService {
 
         //==dateAccept수정부분==//
         Integer dateAcceptCount = dto.getDateAccept();
-
+        Integer originDateAccept = hospital.getDateAccept();
         //dateAccept가 수정되었다면
-        if(availableDates.get(0).getAcceptCount()!= dateAcceptCount){
-            availableDateRepository.updateAvailableDateAcceptCount(dto.getDateAccept(),hospital.getId());
+        if(originDateAccept != dateAcceptCount){
+            hospital.updateDateAccept(dateAcceptCount);
+            availableDateRepository.updateAvailableDateAcceptCount(dateAcceptCount-originDateAccept
+                    ,hospital.getId());
         }
 
         //==timeAccept수정부분==//
         Integer timeAcceptCount = dto.getTimeAccept();
+        Integer originTimeAccept = hospital.getTimeAccept();
 
         //timeAccept가 수정되었다면
-        if(availableDates.get(0).getAvailableTimes().get(0).getAcceptCount()!=timeAcceptCount){
+        if(originTimeAccept !=timeAcceptCount){
+            hospital.updateTimeAccept(timeAcceptCount);
             List<Long> availableDateIds=new ArrayList<>();
             for (AvailableDate availableDate : availableDates) {
                 availableDateIds.add(availableDate.getId());
             }
-            availableTimeRepository.updateAvailableTimeAcceptCount(timeAcceptCount,availableDateIds);
+            availableTimeRepository.updateAvailableTimeAcceptCount(timeAcceptCount-originTimeAccept
+                    ,availableDateIds);
         }
 
         return hospital.getId();

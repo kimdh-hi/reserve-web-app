@@ -52,9 +52,7 @@ public class Vaccine extends BaseEntity{
     //예약 시, 사용
     public void removeStock(){
         int restStock=this.quantity-1;
-        if(restStock==0){
-            this.hospital.setEnabled(false);
-        }else if(restStock<0){
+        if(restStock<0){
             throw new NotEnoughStockException("예약 가능한 수량이 부족합니다.");
         }
 
