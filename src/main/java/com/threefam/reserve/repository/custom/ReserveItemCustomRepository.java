@@ -49,7 +49,7 @@ public class ReserveItemCustomRepository {
         return em.createQuery(
                 "select v " +
                         "from Vaccine v " +
-                        "where v.hospital.id = :hospitalId and v.quantity > 0", Vaccine.class
+                        "where v.hospital.id = :hospitalId and v.quantity > 0 and v.enabled = true", Vaccine.class
         )
                 .setParameter("hospitalId", hospitalId)
                 .getResultList();

@@ -18,7 +18,7 @@ public class VaccineCustomRepository {
         return em.createQuery(
                 "select v " +
                         "from Vaccine v  join v.hospital h " +
-                        "where h.id = :hospitalId and v.vaccineName = :vaccineName", Vaccine.class
+                        "where h.id = :hospitalId and v.vaccineName = :vaccineName and v.enabled = true", Vaccine.class
         )
                 .setParameter("hospitalId", hospitalId)
                 .setParameter("vaccineName", vaccineName)
