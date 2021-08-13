@@ -16,7 +16,7 @@ public interface AvailableTimeRepository extends JpaRepository<AvailableTime,Lon
      */
     @Modifying(flushAutomatically = true)
     @Query( "update AvailableTime a " +
-            "set a.acceptCount= :acceptCount " +
+            "set a.acceptCount= a.acceptCount+ :acceptCount " +
             "where a.availableDate.id in (:ids)")
     void updateAvailableTimeAcceptCount(@Param("acceptCount")Integer acceptCount,
                                         @Param("ids")List<Long> availableDateIds);

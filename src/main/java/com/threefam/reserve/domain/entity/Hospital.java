@@ -51,6 +51,11 @@ public class Hospital extends BaseEntity{
     @Column(name = "total_quantity")
     private Integer totalQuantity;
 
+    @Column(name = "date_accept")
+    private Integer dateAccept;
+    @Column(name = "time_accept")
+    private Integer timeAccept;
+
     public void setTotalVaccineQuantity(Integer qty) {
         this.totalQuantity = qty;
     }
@@ -58,6 +63,10 @@ public class Hospital extends BaseEntity{
     public void removeStock() {
         this.totalQuantity--;
     }
+
+    public void updateDateAccept(Integer dateAccept){this.dateAccept=dateAccept;}
+
+    public void updateTimeAccept(Integer timeAccept){this.timeAccept=timeAccept;}
 
     // true: y, false: n
     @Type(type = "yes_no")
@@ -79,10 +88,12 @@ public class Hospital extends BaseEntity{
 
 
     @Builder(builderMethodName = "createHospital")
-    public Hospital(String hospitalName, String address, String detailAddress) {
+    public Hospital(String hospitalName, String address, String detailAddress,Integer dateAccept,Integer timeAccept) {
         this.hospitalName = hospitalName;
         this.address = address;
         this.detailAddress = detailAddress;
         this.createAt = LocalDateTime.now();
+        this.dateAccept=dateAccept;
+        this.timeAccept=timeAccept;
     }
 }

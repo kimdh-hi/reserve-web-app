@@ -64,6 +64,8 @@ public class HospitalRequestDto {
                 .hospitalName(this.hospitalName)
                 .address(this.address)
                 .detailAddress(this.detailAddress)
+                .dateAccept(dateAccept)
+                .timeAccept(timeAccept)
                 .build();
     }
 
