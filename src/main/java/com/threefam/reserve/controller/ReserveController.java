@@ -108,19 +108,20 @@ public class ReserveController {
                 reserveItemRequestDto.getReserveTimeId()
         );
 
-        redirectAttributes.addAttribute("userId", savedUserId);
-        return "redirect:/reserve/{userId}";
+        return "redirect:/reserve";
     }
 
     /**
      * 예약조회
      */
-    @GetMapping("/{userId}")
+    @GetMapping
     public String reserveResult(@AuthenticationPrincipal PrincipalDetails principal, Model model) {
         String username = principal.getUsername();
         log.info("username = {}", username);
         ReserveItemSimpleDto reserveResult = reserveItemService.getReserveResult(username);
-
+        if (reserveResult.getHospitalName() == null) {
+            return "redirect:/";
+        }
         model.addAttribute("reserveResult", reserveResult);
         return "user/reserve/ReserveResult";
     }
