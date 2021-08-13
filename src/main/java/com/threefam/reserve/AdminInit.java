@@ -50,6 +50,8 @@ public class AdminInit {
                 .hospitalName("HospitalA")
                 .address("서울특별시 강서구")
                 .detailAddress("A빌딩")
+                .dateAccept(100)
+                .timeAccept(10)
                 .build();
         hospital.setAdmin(admin);
 
