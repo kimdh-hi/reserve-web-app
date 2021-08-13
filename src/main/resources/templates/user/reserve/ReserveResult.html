@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>예약결과</h1>
+<table>
+  <thead>
+    <tr>
+      <td>병원명</td>
+      <td>백신명</td>
+      <td>예약일자</td>
+      <td>예약시간</td>
+      <td>예약상태</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td th:text="${reserveResult.hospitalName}"></td>
+      <td th:text="${reserveResult.vaccineName}"></td>
+      <td th:text="${reserveResult.reserveDate}"></td>
+      <td th:text="${reserveResult.reserveTime}"></td>
+      <td th:text="${reserveResult.getReserveStatus().name()}"></td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

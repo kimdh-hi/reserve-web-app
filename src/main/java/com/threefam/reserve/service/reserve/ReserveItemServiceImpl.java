@@ -5,6 +5,7 @@ import com.threefam.reserve.domain.value.ReserveStatus;
 import com.threefam.reserve.dto.hospital.HospitalListDto;
 import com.threefam.reserve.dto.reserve.AvailableDateDto;
 import com.threefam.reserve.dto.reserve.AvailableTimeDto;
+import com.threefam.reserve.dto.reserve.ReserveItemSimpleDto;
 import com.threefam.reserve.dto.vaccine.VaccineReserveDto;
 import com.threefam.reserve.repository.AvailableDateRepository;
 import com.threefam.reserve.repository.HospitalRepository;
@@ -100,9 +101,24 @@ public class ReserveItemServiceImpl implements ReserveItemService{
                 .reserveTime(time.getTime())
                 .status(ReserveStatus.COMP)
                 .user(user)
+                .vaccineName(vaccineName)
                 .build();
         ReserveItem savedReserveItem = reserveItemRepository.save(reserveItem);
 
-        return savedReserveItem.getId();
+        return user.getId();
+    }
+
+    /**
+     * 예약서 조회
+     */
+    @Override
+    public ReserveItemSimpleDto getReserveResult(String username) {
+        log.info("getReserveResult username = {}", username);
+        User user = userRepository.findByEmail(username).orElseThrow(
+                () -> {
+                    throw new IllegalArgumentException("존재하지 않는 사용자입니다.");
+                }
+        );
+        return reserveItemRepository.findByUserId(user.getId()).get();
     }
 }

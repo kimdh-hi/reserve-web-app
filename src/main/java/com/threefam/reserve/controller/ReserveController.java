@@ -4,6 +4,7 @@ import com.threefam.reserve.dto.hospital.HospitalListDto;
 import com.threefam.reserve.dto.reserve.AvailableDateDto;
 import com.threefam.reserve.dto.reserve.AvailableTimeDto;
 import com.threefam.reserve.dto.reserve.ReserveItemRequestDto;
+import com.threefam.reserve.dto.reserve.ReserveItemSimpleDto;
 import com.threefam.reserve.dto.security.PrincipalDetails;
 import com.threefam.reserve.dto.vaccine.VaccineReserveDto;
 import com.threefam.reserve.service.reserve.ReserveItemService;
@@ -13,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class ReserveController {
         model.addAttribute("hospitalId", hospitalId);
         model.addAttribute("dates", availableDates);
 
-        return "reserveDateSelectForm";
+        return "user/reserve/reserveDateSelectForm";
     }
 
     /**
@@ -60,7 +62,7 @@ public class ReserveController {
         List<AvailableTimeDto> times = reserveItemService.getAvailableTimes(selectedDateId);
         model.addAttribute("date", selectedDateId);
         model.addAttribute("times", times);
-        return "reserveTimeSelectForm";
+        return "user/reserve/reserveTimeSelectForm";
     }
 
     /**
@@ -79,17 +81,17 @@ public class ReserveController {
         model.addAttribute("time", selectedTimeId);
         model.addAttribute("hospitalId", hospitalId);
 
-        return "reserveVaccineSelectForm";
+        return "user/reserve/reserveVaccineSelectForm";
     }
 
     /**
      * 예약처리
      */
-    @ResponseBody
     @PostMapping
     public String reserve(
             @AuthenticationPrincipal PrincipalDetails principal,
-            @ModelAttribute ReserveItemRequestDto reserveItemRequestDto) {
+            @ModelAttribute ReserveItemRequestDto reserveItemRequestDto,
+            RedirectAttributes redirectAttributes) {
         log.info("hospitalId = {}", reserveItemRequestDto.getHospitalId());
         log.info("vaccineName = {}", reserveItemRequestDto.getVaccineName());
         log.info("reserveDateId = {}", reserveItemRequestDto.getReserveDateId());
@@ -98,7 +100,7 @@ public class ReserveController {
         String username = principal.getUsername();
         log.info("username = {}", username);
 
-        reserveItemService.reserve(
+        Long savedUserId = reserveItemService.reserve(
                 username,
                 reserveItemRequestDto.getHospitalId(),
                 reserveItemRequestDto.getVaccineName(),
@@ -106,6 +108,17 @@ public class ReserveController {
                 reserveItemRequestDto.getReserveTimeId()
         );
 
-        return "ok";
+        redirectAttributes.addAttribute("userId", savedUserId);
+        return "redirect:/reserve/{userId}";
+    }
+
+    @GetMapping("/{userId}")
+    public String reserveResult(@AuthenticationPrincipal PrincipalDetails principal, Model model) {
+        String username = principal.getUsername();
+        log.info("username = {}", username);
+        ReserveItemSimpleDto reserveResult = reserveItemService.getReserveResult(username);
+
+        model.addAttribute("reserveResult", reserveResult);
+        return "user/reserve/ReserveResult";
     }
 }

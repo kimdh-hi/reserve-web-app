@@ -33,18 +33,21 @@ public class ReserveItem extends BaseEntity {
 
     private ReserveStatus status = ReserveStatus.COMP;
 
+    private String vaccineName;
+
     private String reserveDate;
 
     private int reserveTime;
 
     @Builder(builderMethodName = "createReserveItem")
-    public ReserveItem(User user, Hospital Hospital, ReserveStatus status, String reserveDate, int reserveTime) {
+    public ReserveItem(
+            User user, Hospital Hospital, ReserveStatus status, String reserveDate, int reserveTime, String vaccineName) {
         this.user = user;
         this.Hospital = Hospital;
         this.status = status;
         this.reserveDate = reserveDate;
         this.reserveTime = reserveTime;
-
+        this.vaccineName = vaccineName;
         this.createAt = LocalDateTime.now();
     }
 
