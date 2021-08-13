@@ -112,6 +112,9 @@ public class ReserveController {
         return "redirect:/reserve/{userId}";
     }
 
+    /**
+     * 예약조회
+     */
     @GetMapping("/{userId}")
     public String reserveResult(@AuthenticationPrincipal PrincipalDetails principal, Model model) {
         String username = principal.getUsername();

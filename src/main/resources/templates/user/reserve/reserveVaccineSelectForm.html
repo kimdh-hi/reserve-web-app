@@ -3,22 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-<h1>백신 선택</h1>
 
-<form method="POST" th:action="@{/reserve}">
+<div class="container text-center my-4">
+<h1 class="my-4">백신 선택</h1>
+<form method="POST" th:action="@{/reserve}" class="form-control">
 
     <input type="hidden" th:value="${date}" id="reserveDateId" name="reserveDateId">
     <input type="hidden" th:value="${time}" id="reserveTimeId" name="reserveTimeId">
     <input type="hidden" th:value="${hospitalId}" id="hospitalId" name="hospitalId">
 
-  <div th:each="v : ${vaccines}">
-    <label th:for="${v.id}" th:text="${v.vaccineName}"></label>
-    <input type="radio"  th:value="${v.vaccineName}" th:id="${v.id}"  name="vaccineName">
+  <div th:each="v : ${vaccines}" class="form-check form-check-inline">
+    <label th:for="${v.id}" th:text="${v.vaccineName}" class="form-check-label"></label>
+    <input type="radio"  th:value="${v.vaccineName}" th:id="${v.id}"  name="vaccineName" class="form-check-input">
+      <button type="submit" class="btn btn-primary">선택</button>
   </div>
-  <button type="submit">확인</button>
+
+
 </form>
+</div>
 
 </body>
 </html>
