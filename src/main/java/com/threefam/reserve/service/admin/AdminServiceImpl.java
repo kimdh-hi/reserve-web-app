@@ -214,6 +214,7 @@ public class AdminServiceImpl implements AdminService {
                         //이미 있는 백신이라면 수량이 같으면 update 필요 x 수량이 다르면 update
                         if (vaccine.getQuantity() != vaccineInfoMap.get(key)) {
                             vaccine.updateVaccineQty(vaccineInfoMap.get(key));
+                            vaccine.setEnabled(true);
                         }
                         break;
                     }
@@ -226,12 +227,21 @@ public class AdminServiceImpl implements AdminService {
                 Vaccine vaccine = vaccines.stream().filter(v -> v.getVaccineName().equals(vaccineName)).findFirst().orElse(null);
                 if(vaccine!=null){
                     vaccine.updateVaccineQty(0);
+                    vaccine.setEnabled(false);
                 }
             }
         }
+
         //총 수량의 합이 같다면 update x
         if(total!=hospital.getTotalQuantity()) {
+            //원래 0이었다면 false 였으니
+            if(hospital.getTotalQuantity()==0)
+                hospital.setEnabled(true);
+
             hospital.setTotalVaccineQuantity(total);
+
+            if(hospital.getTotalQuantity()==0)
+                hospital.setEnabled(false);
         }
 
         //병원의 예약가능 날짜 리스트
@@ -243,8 +253,24 @@ public class AdminServiceImpl implements AdminService {
         //dateAccept가 수정되었다면
         if(originDateAccept != dateAcceptCount){
             hospital.updateDateAccept(dateAcceptCount);
-            availableDateRepository.updateAvailableDateAcceptCount(dateAcceptCount-originDateAccept
+            int updateDateAcceptCount = dateAcceptCount - originDateAccept;
+
+            List<Long> availableDateIds=new ArrayList<>();
+
+            //수정된 dateAccept 적용 시, 0보다 작거나 같아질 경우
+            boolean flag=false;
+            for (AvailableDate availableDate : availableDates) {
+                if(availableDate.getAcceptCount()+updateDateAcceptCount<=0){
+                    availableDateIds.add(availableDate.getId());
+                    flag=true;
+                }
+            }
+            availableDateRepository.updateAvailableDateAcceptCount(updateDateAcceptCount
                     ,hospital.getId());
+            if(flag)
+            {
+                availableDateRepository.updateAvailableDateAcceptCountToZero(availableDateIds);
+            }
         }
 
         //==timeAccept수정부분==//
@@ -253,13 +279,31 @@ public class AdminServiceImpl implements AdminService {
 
         //timeAccept가 수정되었다면
         if(originTimeAccept !=timeAcceptCount){
+            int updateAcceptCount = timeAcceptCount - originTimeAccept;
+
             hospital.updateTimeAccept(timeAcceptCount);
+
             List<Long> availableDateIds=new ArrayList<>();
+            List<Long> availableTimeIds=new ArrayList<>();
+
+            boolean flag=false;
             for (AvailableDate availableDate : availableDates) {
                 availableDateIds.add(availableDate.getId());
+                List<AvailableTime> availableTimes = availableDate.getAvailableTimes();
+
+                //수량이 0보다 작거나 같아지는 것이 있으면
+                for (AvailableTime availableTime : availableTimes) {
+                    if(availableTime.getAcceptCount()+updateAcceptCount<=0){
+                        availableTimeIds.add(availableTime.getId());
+                        flag=true;
+                    }
+                }
             }
-            availableTimeRepository.updateAvailableTimeAcceptCount(timeAcceptCount-originTimeAccept
+            availableTimeRepository.updateAvailableTimeAcceptCount(updateAcceptCount
                     ,availableDateIds);
+            if(flag){
+                availableTimeRepository.updateAvailableTimeAcceptCountToZero(availableTimeIds);
+            }
         }
 
         return hospital.getId();
