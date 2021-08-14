@@ -2,6 +2,7 @@ package com.threefam.reserve.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.threefam.reserve.exception.vaccine.NotEnoughStockException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,9 +46,15 @@ public class AvailableDate {
     }
 
     public void decreaseCount() {
-        this.acceptCount--;
-        if(this.acceptCount==0)
-            this.enabled=false;
+        int restStock=this.acceptCount-1;
+        if(restStock==0){
+            setEnabled(false);
+        }
+        if(restStock<0){
+            throw new NotEnoughStockException("예약 가능한 수량이 부족합니다.");
+        }
+
+        this.acceptCount=restStock;
     }
 
     @Type(type = "yes_no")
