@@ -2,6 +2,7 @@ package com.threefam.reserve.repository.custom;
 
 import com.threefam.reserve.domain.entity.AvailableDate;
 import com.threefam.reserve.domain.entity.AvailableTime;
+import com.threefam.reserve.domain.entity.ReserveItem;
 import com.threefam.reserve.domain.entity.Vaccine;
 import com.threefam.reserve.repository.HospitalRepository;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +53,19 @@ public class ReserveItemCustomRepository {
                         "where v.hospital.id = :hospitalId and v.quantity > 0 and v.enabled = true", Vaccine.class
         )
                 .setParameter("hospitalId", hospitalId)
+                .getResultList();
+    }
+
+    /**
+     * 예약 현황 조회
+     */
+    public List<ReserveItem> findAllReserveItem(){
+        return em.createQuery(
+                "select distinct ri " +
+                        "from ReserveItem ri " +
+                        "join fetch ri.user u " +
+                        "join fetch ri.Hospital h"
+        ,ReserveItem.class)
                 .getResultList();
     }
 }

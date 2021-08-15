@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>병원목록</title>
+
+  <link rel="icon" th:href="@{/images/home.png}">
+  <link rel="stylesheet" th:href="@{/css/adminlist.css}">
+  <link rel="stylesheet" th:href="@{/css/navBar.css}">
+</head>
+
+<body>
+<header th:replace="~{fragment/header :: bar}">
+
+</header>
+
+<span>
+  <h2 th:if="${reserveItemConditions==null}" th:text="'조회 가능한 예약이 없습니다.'"> </h2>
+</span>
+<table class="hospital-List" th:if="${reserveItemConditions!=null}">
+  <caption>예약 현황</caption>
+  <tr>
+    <th>병원명</th>
+    <th>예약자명</th>
+    <th>백신명</th>
+    <th>예약일자</th>
+    <th>예약시간</th>
+    <th>예약상태</th>
+  </tr>
+
+  <tr th:each="reserveItemCondition : ${reserveItemConditions}" style="cursor:pointer;">
+    <td th:text="${reserveItemCondition.hospitalName}"></td>
+    <td th:text="${reserveItemCondition.username}"></td>
+    <td th:text="${reserveItemCondition.vaccineName}"></td>
+    <td th:text="${reserveItemCondition.reserveDate}"></td>
+    <td th:text="${reserveItemCondition.reserveTime}"></td>
+    <td th:text="${reserveItemCondition.getReserveStatus().name()}"></td>
+  </tr>
+
+
+</table>
+</body>
+</html>

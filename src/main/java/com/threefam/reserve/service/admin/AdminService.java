@@ -2,6 +2,7 @@ package com.threefam.reserve.service.admin;
 
 import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.*;
+import com.threefam.reserve.dto.reserve.ReserveItemWithUsernameDto;
 
 import java.text.ParseException;
 import java.util.List;
@@ -36,4 +37,9 @@ public interface AdminService {
      * 병원 update
      */
     Long hospitalUpdate(HospitalUpdateDto dto) throws ParseException;
+
+    /**
+     * 예약 현황 정보
+     */
+    List<ReserveItemWithUsernameDto> getReserveItemCondition();
 }

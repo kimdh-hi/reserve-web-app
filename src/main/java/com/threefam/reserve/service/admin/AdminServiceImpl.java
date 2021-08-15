@@ -4,11 +4,13 @@ import com.threefam.reserve.domain.entity.*;
 
 
 import com.threefam.reserve.dto.hospital.*;
+import com.threefam.reserve.dto.reserve.ReserveItemWithUsernameDto;
 import com.threefam.reserve.repository.AdminRepository;
 import com.threefam.reserve.repository.AvailableDateRepository;
 import com.threefam.reserve.repository.AvailableTimeRepository;
 import com.threefam.reserve.repository.HospitalRepository;
 import com.threefam.reserve.repository.custom.HospitalCustomRepository;
+import com.threefam.reserve.repository.custom.ReserveItemCustomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.threefam.reserve.service.Holiday;
 @RequiredArgsConstructor
@@ -31,6 +34,7 @@ public class AdminServiceImpl implements AdminService {
     private final Holiday holiday;
     private final AvailableTimeRepository availableTimeRepository;
     private final AvailableDateRepository availableDateRepository;
+    private final ReserveItemCustomRepository reserveItemCustomRepository;
 
     /**
      * 병원 정보 등록
@@ -308,6 +312,24 @@ public class AdminServiceImpl implements AdminService {
 
         return hospital.getId();
     }
+
+    /**
+     * 예약 현황 정보 얻어오기
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public List<ReserveItemWithUsernameDto> getReserveItemCondition() {
+        List<ReserveItem> reserveItems = reserveItemCustomRepository.findAllReserveItem();
+        if(reserveItems.isEmpty()) {
+            return null;
+        }
+
+        return reserveItems.stream()
+                .map(ri->new ReserveItemWithUsernameDto(ri))
+                .collect(Collectors.toList());
+    }
+
+
 
     /**
      * 병원 정보 조회 시 , 해당 백신이 존재하는 지에 대한 여부

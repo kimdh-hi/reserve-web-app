@@ -34,6 +34,7 @@
         <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/reserve}">접종예약 <span>조회/취소</span></a>
         <a th:href="@{/admin/add-hospital}" sec:authorize="hasRole('ROLE_ADMIN')">병원<span>등록</span></a>
         <a th:href="@{/admin/list}" sec:authorize="hasRole('ROLE_ADMIN')">병원<span>목록</span></a>
+        <a th:href="@{/admin/reserves}" sec:authorize="hasRole('ROLE_ADMIN')">예약<span>현황</span></a>
     </div>
 </div>
 </body>

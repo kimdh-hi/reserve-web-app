@@ -3,6 +3,7 @@ package com.threefam.reserve.controller;
 import com.threefam.reserve.domain.entity.AvailableDate;
 import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.*;
+import com.threefam.reserve.dto.reserve.ReserveItemWithUsernameDto;
 import com.threefam.reserve.dto.security.PrincipalDetails;
 import com.threefam.reserve.repository.HospitalRepository;
 import com.threefam.reserve.repository.custom.HospitalCustomRepository;
@@ -132,6 +133,17 @@ public class AdminController {
         adminService.hospitalUpdate(hospitalUpdateDto);
 
         return "redirect:/admin/list";
+    }
+
+    /**
+     * 예약 현황 조회
+     */
+    @GetMapping("reserves")
+    public String reserveCondition(Model model){
+        List<ReserveItemWithUsernameDto> reserveItemConditions = adminService.getReserveItemCondition();
+
+        model.addAttribute("reserveItemConditions",reserveItemConditions);
+        return "admin/reserveCondition";
     }
 
     // 시간을 parseInt 되도록 만드는 메서드
