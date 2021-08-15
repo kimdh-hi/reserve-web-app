@@ -35,7 +35,7 @@
     <td th:text="${reserveItemCondition.username}"></td>
     <td th:text="${reserveItemCondition.vaccineName}"></td>
     <td th:text="${reserveItemCondition.reserveDate}"></td>
-    <td th:text="${reserveItemCondition.reserveTime}"></td>
+    <td th:text="|${reserveItemCondition.reserveTime}시|"></td>
     <td th:text="${reserveItemCondition.getReserveStatus().name()}"></td>
   </tr>
 

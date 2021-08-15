@@ -27,7 +27,7 @@ public class AdminInit {
     private final HospitalRepository hospitalRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @PostConstruct
+    //@PostConstruct
     public void init(){
         User user = User.createUser()
                 .email("admin")

@@ -32,7 +32,7 @@
       <td th:text="${reserveResult.hospitalName}"></td>
       <td th:text="${reserveResult.vaccineName}"></td>
       <td th:text="${reserveResult.reserveDate}"></td>
-      <td th:text="${reserveResult.reserveTime}"></td>
+      <td th:text="|${reserveResult.reserveTime}시|"></td>
       <td th:text="${reserveResult.getReserveStatus().name()}"></td>
       <td class="btn">
         <button th:onclick="|location.href='@{/reserve/{reserveItemId}/cancel (reserveItemId=${reserveResult.reserveItemId})}'|">
