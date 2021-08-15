@@ -42,6 +42,19 @@ public class ReserveController {
     }
 
     /**
+     * 예약가능 병원 주소로 검색
+     */
+    @GetMapping("/search")
+    public String searchByAddress(
+            @RequestParam(name = "offset", defaultValue = "0") int offset,
+            @RequestParam(name = "limit", defaultValue = "10") int limit, Model model,
+            @RequestParam String addressSearch) {
+        List<HospitalListDto> hospitalListDtos = reserveItemService.getAllHospitalInfoSearchByAddress(addressSearch, offset, limit);
+        model.addAttribute("hospitalList", hospitalListDtos);
+        return "user/reserve/hospitalList";
+    }
+
+    /**
      * 예약가능날짜 조회 및 선택
      */
     @GetMapping("/{hospitalId}/dates")

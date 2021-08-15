@@ -46,6 +46,12 @@ public class ReserveItemServiceImpl implements ReserveItemService{
         return hospitalCustomRepository.findHospitalListPaging(offset, limit);
     }
 
+    @Override
+    public List<HospitalListDto> getAllHospitalInfoSearchByAddress(String address, int offset, int limit) {
+
+        return hospitalCustomRepository.findHospitalListByAddressPaging(offset, limit, address);
+    }
+
     /**
      * 병원 이름으로 예약가능날짜 조회
      */

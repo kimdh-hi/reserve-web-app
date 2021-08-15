@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -21,7 +22,7 @@ public class HospitalCustomRepository {
 
     private final EntityManager em;
 
-    //  병원명, 병원주소, 백신잔여수량
+
     public List<HospitalListDto> findAllHospitalInfo(Long id) {
         return em.createQuery(
                 "select new com.threefam.reserve.dto.hospital.HospitalListDto(h.id, h.hospitalName, h.address, h.totalQuantity) " +
@@ -50,6 +51,20 @@ public class HospitalCustomRepository {
                 "select new com.threefam.reserve.dto.hospital.HospitalListDto(h.id, h.hospitalName, h.address, h.totalQuantity) " +
                         "from Hospital h " +
                         "where h.enabled = true", HospitalListDto.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    /**
+     * 주소로 예약가능 병원 조회 + 페이징
+     */
+    public List<HospitalListDto> findHospitalListByAddressPaging(int offset, int limit, @Param("address") String address) {
+        return em.createQuery(
+                "select new com.threefam.reserve.dto.hospital.HospitalListDto(h.id, h.hospitalName, h.address, h.totalQuantity) " +
+                        "from Hospital h " +
+                        "where h.enabled = true and h.address like '%'||:address||'%'", HospitalListDto.class)
+                .setParameter("address", address)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();

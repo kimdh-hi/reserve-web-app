@@ -12,6 +12,8 @@ public interface ReserveItemService {
 
     List<HospitalListDto> getAllHospitalInfo(int offset, int limit);
 
+    List<HospitalListDto> getAllHospitalInfoSearchByAddress(String address, int offset, int limit);
+
     List<AvailableDateDto> getAvailableDates(Long hospitalId);
 
     List<AvailableTimeDto> getAvailableTimes(Long id);
