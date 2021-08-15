@@ -28,6 +28,7 @@
             <a th:href="@{/adminLogin}">Admin이시라면 이쪽으로...</a>
         </div>
     </div>
+
     <!-- 예약하기 -->
     <div sec:authorize="isAuthenticated()" class="init reserve">
         <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/reserve/hospitals}">예방접종 <span>예약하기</span></a>

@@ -89,8 +89,6 @@ public class AdminController {
 
         adminService.addHospital(form, principal.getName());
 
-        //일단은 홈으로 리턴 추후에 바꾸면 될듯
-        //예약 리스트로 redirect (어드민 Hospital List, Hospital Detail List 필요)
         return "redirect:/admin/list";
     }
 

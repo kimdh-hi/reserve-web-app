@@ -40,11 +40,32 @@ header .logout a:last-child {
   overflow: hidden;
   margin-top:10px;
 }
-.hospital-List caption {
+.hospital-List caption:not(.search) {
   font-family: 'SLEIGothicTTF';
   font-size: 30px;
   margin-bottom: 30px;
 }
+/* Search */
+caption.search{
+  font-family: 'SLEIGothicTTF';
+  margin-bottom: 15px;
+}
+caption.search input{
+  font-family: 'Noto Sans KR', sans-serif;
+}
+caption.search input,
+caption.search button{
+  outline: none;
+  margin-left: 3px;
+}
+caption.search button{
+  color: #fff;
+  background-color: dodgerblue;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+
 .hospital-List tr {
   transition: 0.3s;
 }
@@ -60,4 +81,9 @@ header .logout a:last-child {
 .hospital-List tr th{
   background-color: dodgerblue;
   color:#eee;
+}
+
+.search div {
+  display: flex;
+  justify-content: flex-end;
 }
