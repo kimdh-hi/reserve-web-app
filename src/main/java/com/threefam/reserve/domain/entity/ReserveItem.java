@@ -34,10 +34,11 @@ public class ReserveItem extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private ReserveStatus status = ReserveStatus.COMP;
 
+    @Column(nullable = false)
     private String vaccineName;
-
+    @Column(nullable = false)
     private String reserveDate;
-
+    @Column(nullable = false)
     private int reserveTime;
 
     @Builder(builderMethodName = "createReserveItem")
@@ -58,5 +59,4 @@ public class ReserveItem extends BaseEntity {
         this.reserveDate=reserveDate;
         this.reserveTime=reserveTime;
     }
-
 }
