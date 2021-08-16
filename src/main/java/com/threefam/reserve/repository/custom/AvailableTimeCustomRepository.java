@@ -1,37 +1,10 @@
 package com.threefam.reserve.repository.custom;
 
 import com.threefam.reserve.domain.entity.AvailableTime;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
+public interface AvailableTimeCustomRepository {
 
-@Repository
-@RequiredArgsConstructor
-public class AvailableTimeCustomRepository {
+    AvailableTime findAvailableTimeById(Long timeId);
 
-    private final EntityManager em;
-
-    public AvailableTime findAvailableTimeById(Long timeId) {
-        return em.createQuery(
-                "select t " +
-                        "from AvailableTime t " +
-                        "where t.id = :timeId and t.enabled=true", AvailableTime.class
-        )
-                .setParameter("timeId", timeId)
-                .getSingleResult();
-    }
-
-    public AvailableTime findAvailableTimeByTimeAndDateId(Integer time, Long dateId) {
-        return em.createQuery(
-                "select t " +
-                        "from AvailableTime t " +
-                        "where t.time = :time and t.availableDate.id = :dateId", AvailableTime.class
-        )
-                .setParameter("time", time)
-                .setParameter("dateId", dateId)
-                .getSingleResult();
-    }
-
-
+    AvailableTime findAvailableTimeByTimeAndDateId(Integer time, Long dateId);
 }

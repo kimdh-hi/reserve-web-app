@@ -1,12 +1,8 @@
 package com.threefam.reserve.controller;
 
-import com.threefam.reserve.domain.entity.AvailableDate;
-import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.*;
 import com.threefam.reserve.dto.reserve.ReserveItemWithUsernameDto;
 import com.threefam.reserve.dto.security.PrincipalDetails;
-import com.threefam.reserve.repository.HospitalRepository;
-import com.threefam.reserve.repository.custom.HospitalCustomRepository;
 import com.threefam.reserve.service.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -118,7 +113,8 @@ public class AdminController {
     /**
      * 병원 수정
      */
-    @PostMapping("/hospital/edit/{hospitalId}")
+    @PostMapping("/hospital/" +
+            "edit/{hospitalId}")
     public String hospitalEdit(@PathVariable Long hospitalId,
             @Validated @ModelAttribute HospitalUpdateDto hospitalUpdateDto,BindingResult result)
             throws ParseException {

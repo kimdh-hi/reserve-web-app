@@ -5,19 +5,14 @@ import com.threefam.reserve.domain.entity.*;
 
 import com.threefam.reserve.dto.hospital.*;
 import com.threefam.reserve.dto.reserve.ReserveItemWithUsernameDto;
-import com.threefam.reserve.repository.AdminRepository;
-import com.threefam.reserve.repository.AvailableDateRepository;
-import com.threefam.reserve.repository.AvailableTimeRepository;
-import com.threefam.reserve.repository.HospitalRepository;
-import com.threefam.reserve.repository.custom.HospitalCustomRepository;
-import com.threefam.reserve.repository.custom.ReserveItemCustomRepository;
+import com.threefam.reserve.repository.*;
+import com.threefam.reserve.repository.custom.HospitalCustomRepositoryImpl;
+import com.threefam.reserve.repository.custom.ReserveItemCustomRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,13 +23,12 @@ import com.threefam.reserve.service.Holiday;
 @Service
 public class AdminServiceImpl implements AdminService {
 
-    private final HospitalCustomRepository hospitalCustomRepository;
     private final HospitalRepository hospitalRepository;
     private final AdminRepository adminRepository;
     private final Holiday holiday;
     private final AvailableTimeRepository availableTimeRepository;
     private final AvailableDateRepository availableDateRepository;
-    private final ReserveItemCustomRepository reserveItemCustomRepository;
+    private final ReserveItemRepository reserveItemRepository;
 
     /**
      * 병원 정보 등록
@@ -140,7 +134,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<HospitalListDto> getHospitalList(String name) {
         Admin admin = adminRepository.findByName(name).get();
-        return hospitalCustomRepository.findAllHospitalInfo(admin.getId());
+        return hospitalRepository.findAllHospitalInfo(admin.getId());
     }
 
     /**
@@ -148,7 +142,7 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public HospitalUpdateDto getHospital(Long id) {
-        Optional<Hospital> hospitalDetail = hospitalCustomRepository.findHospitalDetail(id);
+        Optional<Hospital> hospitalDetail = hospitalRepository.findHospitalDetail(id);
         Hospital hospital = hospitalDetail.stream().findFirst().orElse(null);
 
         List<AvailableDate> availableDates = hospital.getAvailableDates();
@@ -182,7 +176,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional
     public Long hospitalUpdate(HospitalUpdateDto dto) throws ParseException {
-        Optional<Hospital> hospitalDetail = hospitalCustomRepository.findHospitalDetail(dto.getId());
+        Optional<Hospital> hospitalDetail = hospitalRepository.findHospitalDetail(dto.getId());
         Hospital hospital = hospitalDetail.stream().findFirst().orElse(null);
 
         //수정 목록
@@ -319,7 +313,7 @@ public class AdminServiceImpl implements AdminService {
     @Transactional(readOnly = true)
     @Override
     public List<ReserveItemWithUsernameDto> getReserveItemCondition() {
-        List<ReserveItem> reserveItems = reserveItemCustomRepository.findAllReserveItem();
+        List<ReserveItem> reserveItems = reserveItemRepository.findAllReserveItem();
         if(reserveItems.isEmpty()) {
             return null;
         }

@@ -3,6 +3,7 @@ package com.threefam.reserve.repository;
 import com.threefam.reserve.domain.entity.Admin;
 import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.HospitalSimpleInfoDto;
+import com.threefam.reserve.repository.custom.HospitalCustomRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface HospitalRepository extends JpaRepository<Hospital, Long> {
+public interface HospitalRepository extends JpaRepository<Hospital, Long>, HospitalCustomRepository {
 
     Optional<Hospital> findByHospitalName(String hospitalName);
 

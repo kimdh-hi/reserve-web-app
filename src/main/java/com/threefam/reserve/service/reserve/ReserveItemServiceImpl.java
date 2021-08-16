@@ -7,10 +7,7 @@ import com.threefam.reserve.dto.reserve.AvailableDateDto;
 import com.threefam.reserve.dto.reserve.AvailableTimeDto;
 import com.threefam.reserve.dto.reserve.ReserveItemSimpleDto;
 import com.threefam.reserve.dto.vaccine.VaccineReserveDto;
-import com.threefam.reserve.repository.AvailableDateRepository;
-import com.threefam.reserve.repository.HospitalRepository;
-import com.threefam.reserve.repository.ReserveItemRepository;
-import com.threefam.reserve.repository.UserRepository;
+import com.threefam.reserve.repository.*;
 import com.threefam.reserve.repository.custom.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,15 +24,12 @@ import java.util.stream.Collectors;
 @Transactional
 public class ReserveItemServiceImpl implements ReserveItemService{
 
-    private final VaccineCustomRepository vaccineCustomRepository;
+    private final VaccineCustomRepositoryImpl vaccineCustomRepository;
     private final HospitalRepository hospitalRepository;
-    private final HospitalCustomRepository hospitalCustomRepository;
-    private final ReserveItemCustomRepository reserveItemCustomRepository;
-    private final AvailableTimeCustomRepository availableTimeCustomRepository;
     private final AvailableDateRepository availableDateRepository;
+    private final AvailableTimeRepository availableTimeRepository;
     private final UserRepository userRepository;
     private final ReserveItemRepository reserveItemRepository;
-    private final AvailableDateCustomRepository availableDateCustomRepository;
 
 
     /**
@@ -43,13 +37,13 @@ public class ReserveItemServiceImpl implements ReserveItemService{
      */
     @Override
     public List<HospitalListDto> getAllHospitalInfo(int offset, int limit) {
-        return hospitalCustomRepository.findHospitalListPaging(offset, limit);
+        return hospitalRepository.findHospitalListPaging(offset, limit);
     }
 
     @Override
     public List<HospitalListDto> getAllHospitalInfoSearchByAddress(String address, int offset, int limit) {
 
-        return hospitalCustomRepository.findHospitalListByAddressPaging(offset, limit, address);
+        return hospitalRepository.findHospitalListByAddressPaging(offset, limit, address);
     }
 
     /**
@@ -58,7 +52,7 @@ public class ReserveItemServiceImpl implements ReserveItemService{
     @Override
     public List<AvailableDateDto> getAvailableDates(Long HospitalId) {
 
-        return reserveItemCustomRepository.findAvailableDatesByHospitalId(HospitalId)
+        return reserveItemRepository.findAvailableDatesByHospitalId(HospitalId)
                 .stream().map( m -> new AvailableDateDto(m.getId(), m.getDate())).collect(Collectors.toList());
     }
 
@@ -67,7 +61,7 @@ public class ReserveItemServiceImpl implements ReserveItemService{
      */
     public List<AvailableTimeDto> getAvailableTimes(Long id) {
 
-        return reserveItemCustomRepository.findAvailableTimesByAvailableDateId(id)
+        return reserveItemRepository.findAvailableTimesByAvailableDateId(id)
                 .stream().map(t -> new AvailableTimeDto(t.getId(), t.getTime())).collect(Collectors.toList());
     }
 
@@ -76,7 +70,7 @@ public class ReserveItemServiceImpl implements ReserveItemService{
      */
     @Override
     public List<VaccineReserveDto> getAvailableVaccineNameList(Long hospitalId) {
-        return reserveItemCustomRepository.findAvailableVaccines(hospitalId)
+        return reserveItemRepository.findAvailableVaccines(hospitalId)
                 .stream().map(v -> new VaccineReserveDto(v.getId(), v.getVaccineName())).collect(Collectors.toList());
     }
 
@@ -91,7 +85,7 @@ public class ReserveItemServiceImpl implements ReserveItemService{
                 }
         );
         Vaccine vaccine = vaccineCustomRepository.findVaccine(hospitalId, vaccineName);
-        AvailableTime time = availableTimeCustomRepository.findAvailableTimeById(timeId);
+        AvailableTime time = availableTimeRepository.findAvailableTimeById(timeId);
 
         time.decreaseCount();
         if (time.getAcceptCount() <= 0) time.setEnabled(false);
@@ -162,8 +156,8 @@ public class ReserveItemServiceImpl implements ReserveItemService{
         Vaccine vaccine = vaccineCustomRepository.findVaccineDisabled(hospital.getId(), reserveItem.getVaccineName());
         vaccine.cancel();
 
-        AvailableDate date = availableDateCustomRepository.findAvailableDateByHospitalIdAndDate(hospital.getId(), reserveItem.getReserveDate());
-        AvailableTime time = availableTimeCustomRepository.findAvailableTimeByTimeAndDateId(reserveItem.getReserveTime(), date.getId());
+        AvailableDate date = availableDateRepository.findAvailableDateByHospitalIdAndDate(hospital.getId(), reserveItem.getReserveDate());
+        AvailableTime time = availableTimeRepository.findAvailableTimeByTimeAndDateId(reserveItem.getReserveTime(), date.getId());
         time.cancel();
 
         reserveItemRepository.deleteById(reserveItemId);

@@ -1,6 +1,7 @@
 package com.threefam.reserve.repository;
 
 import com.threefam.reserve.domain.entity.AvailableDate;
+import com.threefam.reserve.repository.custom.AvailableDateCustomRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface AvailableDateRepository extends JpaRepository<AvailableDate, Long> {
+public interface AvailableDateRepository extends JpaRepository<AvailableDate, Long>, AvailableDateCustomRepository {
 
     /**
      * dirtyChecking으로 수정핦 시, 너무 많은 쿼리를 쓰기 지연으로 남아 놓았기 때문에 벌크로 보내 주기위한 쿼리
