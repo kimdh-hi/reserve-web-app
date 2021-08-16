@@ -87,3 +87,12 @@ caption.search button{
   display: flex;
   justify-content: flex-end;
 }
+
+.btn button{
+  cursor: pointer;
+  border: none;
+  padding: 7px;
+  border-radius: 3px;
+  color: #fff;
+  background-color: #00AAFF;
+}

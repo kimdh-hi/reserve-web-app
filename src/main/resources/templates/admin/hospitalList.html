@@ -9,6 +9,7 @@
   <link rel="icon" th:href="@{/images/home.png}">
   <link rel="stylesheet" th:href="@{/css/adminlist.css}">
   <link rel="stylesheet" th:href="@{/css/navBar.css}">
+
 </head>
 
 <body>
@@ -18,17 +19,44 @@
 
 <table class="hospital-List">
   <caption>병원 목록</caption>
-  <tr>
+  <caption class="search">
+    <div>
+      <form method="get" th:action="@{/admin/hospital/list}">
+        <label for="addressSearch">주소검색 </label>
+        <input type="text" id="addressSearch" name="addressSearch">
+        <button type="submit">검색</button>
+      </form>
+
+      <button th:onclick="|location.href='@{/admin/hospital/list}'|">
+        전체보기
+      </button>
+    </div>
+  </caption>
+  <tr >
     <th>병원 이름</th>
     <th>주소</th>
     <th>잔여 백신 수량</th>
+    <th>상세 정보/수정</th>
+    <th>예약 현황</th>
   </tr>
 
-  <tr th:each="hospital : ${hospitalList}" style="cursor:pointer;"
-      th:onclick="|location.href='@{/admin/hospital/{hospitalId} (hospitalId=${hospital.id})}'|">
+  <tr th:each="hospital : ${hospitalList}" style="cursor:pointer;" th:if="${hospitalList.size() > 0}">
     <td th:text="${hospital.hospitalName}">바른 병원</td>
     <td th:text="${hospital.address}">서울 강서구</td>
     <td th:text="${hospital.qty}">100</td>
+    <td class="btn">
+      <button th:onclick="|location.href='@{/admin/hospital/{hospitalId} (hospitalId=${hospital.id})}'|">
+        상세 정보 및 수정
+      </button>
+    </td>
+    <td class="btn">
+      <button th:onclick="|location.href='@{/admin/hospital/reserves}'|">
+        예약 현황
+      </button>
+    </td>
+  </tr>
+  <tr th:unless="${hospitalList.size() > 0}">
+    <td colspan="5"> 결과 없음</td>
   </tr>
 </table>
 </body>

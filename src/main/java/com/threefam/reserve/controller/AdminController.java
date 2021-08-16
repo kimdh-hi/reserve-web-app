@@ -42,7 +42,7 @@ public class AdminController {
     /**
      * 병원 등록 폼 랜더링
      */
-    @GetMapping("/add-hospital")
+    @GetMapping("/hospital/add")
     public String hospitalForm(Model model){
         model.addAttribute("hospitalRequestDto",new HospitalRequestDto());
         return "admin/hospitalRegister";
@@ -63,7 +63,7 @@ public class AdminController {
      * 병원 등록
      * @param authentication 등록되는 병원애 admin을 추가해주기 위해 현재 인증 객체를 사용
      */
-    @PostMapping("/add-hospital")
+    @PostMapping("/hospital/add")
     public String addHospital(
             Authentication authentication,
             @Validated @ModelAttribute HospitalRequestDto form, BindingResult result, HttpServletRequest request) throws Exception{
@@ -84,16 +84,17 @@ public class AdminController {
 
         adminService.addHospital(form, principal.getName());
 
-        return "redirect:/admin/list";
+        return "redirect:/admin/hospital/list";
     }
 
     /**
      * 병원 목록
      */
-    @GetMapping("/list")
-    public String hospitalList(@AuthenticationPrincipal PrincipalDetails principal, Model model) {
+    @GetMapping("/hospital/list")
+    public String hospitalList(@AuthenticationPrincipal PrincipalDetails principal, Model model,
+                               @RequestParam(defaultValue = "noSearch")String addressSearch) {
         String adminName = principal.getName();
-        List<HospitalListDto> hospitalList = adminService.getHospitalList(adminName);
+        List<HospitalListDto> hospitalList = adminService.getHospitalList(adminName,addressSearch);
         model.addAttribute("hospitalList", hospitalList);
         return "admin/hospitalList";
     }
@@ -126,13 +127,13 @@ public class AdminController {
                 hospitalUpdateDto.getFizar(), hospitalUpdateDto.getModena(), hospitalUpdateDto.getVaccineInfoMap());
         adminService.hospitalUpdate(hospitalUpdateDto);
 
-        return "redirect:/admin/list";
+        return "redirect:/admin/hospital/list";
     }
 
     /**
      * 예약 현황 조회
      */
-    @GetMapping("reserves")
+    @GetMapping("/hospital/reserves")
     public String reserveCondition(Model model){
         List<ReserveItemWithUsernameDto> reserveItemConditions = adminService.getReserveItemCondition();
 

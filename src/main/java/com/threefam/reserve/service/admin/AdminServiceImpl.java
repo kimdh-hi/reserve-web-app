@@ -132,9 +132,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<HospitalListDto> getHospitalList(String name) {
+    public List<HospitalListDto> getHospitalList(String name,String address) {
         Admin admin = adminRepository.findByName(name).get();
-        return hospitalRepository.findAllHospitalInfo(admin.getId());
+        if(address.equals("noSearch"))
+            return hospitalRepository.findAllHospitalInfo(admin.getId());
+
+        return hospitalRepository.findHospitalListByAddressAndAdmin(address, admin.getId());
     }
 
     /**
@@ -322,8 +325,6 @@ public class AdminServiceImpl implements AdminService {
                 .map(ri->new ReserveItemWithUsernameDto(ri))
                 .collect(Collectors.toList());
     }
-
-
 
     /**
      * 병원 정보 조회 시 , 해당 백신이 존재하는 지에 대한 여부

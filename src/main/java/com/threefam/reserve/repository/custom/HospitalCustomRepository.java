@@ -17,5 +17,6 @@ public interface HospitalCustomRepository {
 
     List<HospitalListDto> findHospitalListByAddressPaging(int offset, int limit, @Param("address") String address);
 
+    List<HospitalListDto> findHospitalListByAddressAndAdmin(@Param("address") String address, Long adminId);
 
 }

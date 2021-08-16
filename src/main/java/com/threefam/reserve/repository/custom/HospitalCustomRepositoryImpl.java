@@ -1,5 +1,6 @@
 package com.threefam.reserve.repository.custom;
 
+import com.threefam.reserve.domain.entity.Admin;
 import com.threefam.reserve.domain.entity.AvailableDate;
 import com.threefam.reserve.domain.entity.Hospital;
 import com.threefam.reserve.dto.hospital.HospitalListDto;
@@ -70,6 +71,20 @@ public class HospitalCustomRepositoryImpl implements HospitalCustomRepository{
                 .setParameter("address", address)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
+                .getResultList();
+    }
+
+    /**
+     * 주소, admin으로 병원 조회
+     */
+    @Override
+    public List<HospitalListDto> findHospitalListByAddressAndAdmin(@Param("address") String address, Long adminId) {
+        return em.createQuery(
+                        "select new com.threefam.reserve.dto.hospital.HospitalListDto(h.id, h.hospitalName, h.address, h.totalQuantity) " +
+                                "from Hospital h " +
+                                "where h.admin.id= :adminId and h.address like '%'||:address||'%'", HospitalListDto.class)
+                .setParameter("address", address)
+                .setParameter("adminId",adminId)
                 .getResultList();
     }
 }

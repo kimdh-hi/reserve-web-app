@@ -16,10 +16,8 @@
 
 </header>
 
-<span>
-  <h2 th:if="${reserveItemConditions==null}" th:text="'조회 가능한 예약이 없습니다.'"> </h2>
-</span>
-<table class="hospital-List" th:if="${reserveItemConditions!=null}">
+
+<table class="hospital-List" >
   <caption>예약 현황</caption>
   <tr>
     <th>병원명</th>
@@ -30,13 +28,16 @@
     <th>예약상태</th>
   </tr>
 
-  <tr th:each="reserveItemCondition : ${reserveItemConditions}" style="cursor:pointer;">
+  <tr th:each="reserveItemCondition : ${reserveItemConditions}" style="cursor:pointer;" th:if="${reserveItemConditions!=null}">
     <td th:text="${reserveItemCondition.hospitalName}"></td>
     <td th:text="${reserveItemCondition.username}"></td>
     <td th:text="${reserveItemCondition.vaccineName}"></td>
     <td th:text="${reserveItemCondition.reserveDate}"></td>
     <td th:text="|${reserveItemCondition.reserveTime}시|"></td>
     <td th:text="${reserveItemCondition.getReserveStatus().name()}"></td>
+  </tr>
+  <tr th:unless="${reserveItemConditions!=null}">
+    <td colspan="6"> 조회된 예약 없음</td>
   </tr>
 
 

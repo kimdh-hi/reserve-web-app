@@ -26,7 +26,7 @@ public interface AdminService {
      */
     List<HospitalSimpleInfoDto> getAllSimpleHospitalInfo(String name);
 
-    List<HospitalListDto> getHospitalList(String name);
+    List<HospitalListDto> getHospitalList(String name,String address);
 
     /**
      * 병원 상세 정보 조회 후 dto로 변환

@@ -38,6 +38,7 @@ public class ReserveItemCustomRepositoryImpl implements ReserveItemCustomReposit
                 .getResultList();
     }
 
+    @Override
     public List<Vaccine> findAvailableVaccines(Long hospitalId) {
         return em.createQuery(
                 "select v " +
@@ -48,6 +49,7 @@ public class ReserveItemCustomRepositoryImpl implements ReserveItemCustomReposit
                 .getResultList();
     }
 
+    @Override
     public List<ReserveItem> findAllReserveItem(){
         return em.createQuery(
                 "select distinct ri " +
