@@ -41,5 +41,5 @@ public interface AdminService {
     /**
      * 예약 현황 정보
      */
-    List<ReserveItemWithUsernameDto> getReserveItemCondition();
+    List<ReserveItemWithUsernameDto> getReserveItemCondition(Long hospitalId);
 }

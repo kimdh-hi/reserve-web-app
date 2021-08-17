@@ -133,9 +133,9 @@ public class AdminController {
     /**
      * 예약 현황 조회
      */
-    @GetMapping("/hospital/reserves")
-    public String reserveCondition(Model model){
-        List<ReserveItemWithUsernameDto> reserveItemConditions = adminService.getReserveItemCondition();
+    @GetMapping("/hospital/reserves/{hospitalId}")
+    public String reserveCondition(@PathVariable Long hospitalId, Model model){
+        List<ReserveItemWithUsernameDto> reserveItemConditions = adminService.getReserveItemCondition(hospitalId);
 
         model.addAttribute("reserveItemConditions",reserveItemConditions);
         return "admin/reserveCondition";

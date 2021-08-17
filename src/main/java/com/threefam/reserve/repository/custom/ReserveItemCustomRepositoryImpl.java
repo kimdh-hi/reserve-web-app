@@ -50,13 +50,14 @@ public class ReserveItemCustomRepositoryImpl implements ReserveItemCustomReposit
     }
 
     @Override
-    public List<ReserveItem> findAllReserveItem(){
+    public List<ReserveItem> findAllReserveItem(Long hospitalId){
         return em.createQuery(
                 "select distinct ri " +
                         "from ReserveItem ri " +
                         "join fetch ri.user u " +
-                        "join fetch ri.Hospital h"
+                        "where ri.Hospital.id = :hospitalId"
         ,ReserveItem.class)
+                .setParameter("hospitalId",hospitalId)
                 .getResultList();
     }
 }

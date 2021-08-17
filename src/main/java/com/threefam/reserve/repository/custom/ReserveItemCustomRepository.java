@@ -28,7 +28,7 @@ public interface ReserveItemCustomRepository {
     /**
      * 예약 현황 조회
      */
-    List<ReserveItem> findAllReserveItem();
+    List<ReserveItem> findAllReserveItem(Long hospitalId);
 
 
 }

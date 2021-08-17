@@ -315,8 +315,8 @@ public class AdminServiceImpl implements AdminService {
      */
     @Transactional(readOnly = true)
     @Override
-    public List<ReserveItemWithUsernameDto> getReserveItemCondition() {
-        List<ReserveItem> reserveItems = reserveItemRepository.findAllReserveItem();
+    public List<ReserveItemWithUsernameDto> getReserveItemCondition(Long hospitalId) {
+        List<ReserveItem> reserveItems = reserveItemRepository.findAllReserveItem(hospitalId);
         if(reserveItems.isEmpty()) {
             return null;
         }

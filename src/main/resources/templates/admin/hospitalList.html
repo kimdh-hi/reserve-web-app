@@ -50,7 +50,7 @@
       </button>
     </td>
     <td class="btn">
-      <button th:onclick="|location.href='@{/admin/hospital/reserves}'|">
+      <button th:onclick="|location.href='@{/admin/hospital/reserves/{hospitalId} (hospitalId=${hospital.id})}'|">
         예약 현황
       </button>
     </td>
