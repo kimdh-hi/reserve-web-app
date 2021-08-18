@@ -52,7 +52,7 @@ DBMS: `MySQL`, 테스트(`h2`)
 
 ***
 
-## 🚀 ERD (수정중)
+# 🚀 ERD
 ![img.png](img.png)
 - 한 명의 `USER`는 한 개의 `예약서(RESERVE_ITEM)`를 가진다.
 - 한 개의 `예약서(RESERVE_ITEM)`는 한 개의 `병원(HOSPITAL)`을 가진다.
@@ -63,7 +63,7 @@ DBMS: `MySQL`, 테스트(`h2`)
 
 ***
 
-## 🌡 기능시연
+# 🌡 기능시연
 
 #### Admin 병원등록
 ![병원등록](https://user-images.githubusercontent.com/77182648/129870381-3a4e2745-8251-469f-b295-3c96601b6204.gif)
