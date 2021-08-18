@@ -7,10 +7,8 @@
 </head>
 <body>
 <div class="container text-center my-4">
-    <div class="my-4 flex-row">
-        <button class="btn btn-sm btn-secondary align-content-start">이전</button>
-        <h1>예약가능날짜 선택</h1>
-    </div>
+
+    <h1>예약가능날짜 선택</h1>
     <form method="GET" th:action="@{/reserve/{param1}/times(param1=${hospitalId})}" class="form-control">
         <div class="form-check form-check-inline">
         <select id="date" name="date" class="form-select">
