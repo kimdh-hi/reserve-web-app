@@ -30,10 +30,11 @@ DBMS: `MySQL`, 테스트(`h2`)
   - `Lombok`
   - `ModelMapper`
 ***
+  
 ## 🔎 구현 예정 기능
-
-### Admin 측 기능 (수정중)
 ***
+### Admin 측 기능 (수정중)
+
 - `병원등록`
   - 병원에 대한 기본 정보 입력 (이름, 주소 ...)
   - 예약가능날짜, 예약가능시간, 일일 최대예약가능 인원, 시간당 최대예약가능 인원, 접종가능백신(종류별 수량) 입력
@@ -47,7 +48,7 @@ DBMS: `MySQL`, 테스트(`h2`)
 ***
 
 ### Client 측 기능 (수정중)
-***
+
 - `본인인증` ( `Oauth2` - `Naver`, `Kakao`, `Google`)
 - `예약`
   - 병원선택 -> 예약날짜선택 -> 예약시간선택 -> 백신선택
@@ -87,9 +88,23 @@ DBMS: `MySQL`, 테스트(`h2`)
 
 ***
 
+<br/>
+
 ## 👨‍👨‍👦 팀원
 ***
-## BACKEND
+### BACKEND
 ### 🧑‍💻 김대현
-<a href="https://velog.io/@dhk22" target="_blank"><img src="https://img.shields.io/badge/Velog-20c997?style=flat-square&logo=Vimeo&logoColor=white"/></a>
-<a href="mailto:zbeld123@gmail.com" ><img src="https://img.shields.io/badge/Gmail-d14836?style=flat-square&logo=Gmail&logoColor=white"/></a>
+<a href="https://velog.io/@dhk22" target="_blank"><img src="https://img.shields.io/badge/Velog-20c997?style=flat-square&logo=Vimeo&logoColor=white" width="42"/></a>
+<a href="mailto:zbeld123@gmail.com" ><img src="https://img.shields.io/badge/Gmail-d14836?style=flat-square&logo=Gmail&logoColor=white" width="42"/></a>
+<a href="https://github.com/kimdh-hi" targe="_blank" ><img src="https://img.shields.io/badge/Github-181717?style=flat-square&logo=Github&logoColor=white" width="42"/></a>
+
+### 🧑‍💻 홍성진
+<a href="https://velog.io/@sungjin0757" target="_blank"><img src="https://img.shields.io/badge/Velog-20c997?style=flat-square&logo=Vimeo&logoColor=white" width="42"/></a>
+<a href="mailto:sungjin0757@naver.com" ><img src="https://img.shields.io/badge/Naver-03C75A?style=flat-square&logo=Naver&logoColor=white" width="42"/></a>
+<a href="https://github.com/sungjin0757" targe="_blank" ><img src="https://img.shields.io/badge/Github-181717?style=flat-square&logo=Github&logoColor=white" width="42"/></a>
+
+***
+### Frontend
+### 🧑‍💻 김윤성
+<a href="mailto:rladbstjd96@naver.com" ><img src="https://img.shields.io/badge/Naver-03C75A?style=flat-square&logo=Naver&logoColor=white" width="42"/></a>
+<a href="https://github.com/f-dev-kys" targe="_blank" ><img src="https://img.shields.io/badge/Github-181717?style=flat-square&logo=Github&logoColor=white" width="42"/></a>
